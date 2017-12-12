@@ -1,0 +1,33 @@
+bcb_subtheme_header_image: none
+bcb_subtheme_header_default: 'http://jdf.local/themes/custom/bcb_subtheme/images/home-bg.jpg'
+bcb_subtheme_social_facebook: 'https://www.facebook.com/jflynn8'
+bcb_subtheme_social_twitter: 'https://twitter.com/jddoesdev'
+bcb_subtheme_social_github: 'https://github.com/jddoesdev'
+bcb_subtheme_social_drupal: 'https://drupal.org/u/dorficus'
+bcb_subtheme_social_instagram: ''
+bcb_subtheme_social_reddit: ''
+bcb_subtheme_social_flickr: ''
+bcb_subtheme_social_linkedin: 'https://linkedin.com/in/jflynn8'
+_core:
+  default_config_hash: ecUoHba-DnDlREzhd843daI6llngV_je9C-DeTlbXfI
+schemas:
+  bootstrap: 8000
+  bcb_subtheme: 8000
+favicon:
+  mimetype: image/vnd.microsoft.icon
+  path: profiles/contrib/lightning/favicon.ico
+  url: 'http://jdf.local/profiles/contrib/lightning/favicon.ico'
+  use_default: false
+features:
+  comment_user_picture: true
+  comment_user_verification: true
+  favicon: true
+  node_user_picture: true
+logo:
+  path: profiles/contrib/lightning/lightning.png
+  url: ''
+  use_default: false
+navbar_inverse: 1
+navbar_position: static-top
+table_responsive: '-1'
+table: ''

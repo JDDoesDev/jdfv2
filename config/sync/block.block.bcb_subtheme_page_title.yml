@@ -1,0 +1,20 @@
+uuid: 5ae182ca-9420-4943-8cb7-41a883cfabfc
+langcode: en
+status: true
+dependencies:
+  theme:
+    - bcb_subtheme
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: bcb_subtheme_page_title
+theme: bcb_subtheme
+region: content
+weight: -50
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility: {  }

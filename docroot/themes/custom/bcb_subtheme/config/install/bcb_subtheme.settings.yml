@@ -1,0 +1,17 @@
+#Theme Settings for Bootstrap Clean Blog
+
+# Header
+# --------------
+bcb_subtheme_header_image: ''
+bcb_subtheme_header_default: ''
+
+# Social links
+# --------------
+bcb_subtheme_social_facebook: 'https://www.facebook.com'
+bcb_subtheme_social_twitter: 'https://twitter.com'
+bcb_subtheme_social_github: 'https://github.com'
+bcb_subtheme_social_drupal: 'https://drupal.org'
+bcb_subtheme_social_instagram: 'https://instagram.com'
+bcb_subtheme_social_reddit: 'https://reddit.com'
+bcb_subtheme_social_flickr: 'https://flickr.com'
+bcb_subtheme_social_linkedin: 'https://linkedin.com'

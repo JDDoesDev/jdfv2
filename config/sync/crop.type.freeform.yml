@@ -7,7 +7,7 @@ _core:
 label: Freeform
 id: freeform
 description: 'Crops without enforcing any aspect ratio.'
-aspect_ratio: ''
+aspect_ratio: '16:9'
 soft_limit_width: null
 soft_limit_height: null
 hard_limit_width: null

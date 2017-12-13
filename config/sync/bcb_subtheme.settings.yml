@@ -13,6 +13,10 @@ _core:
 schemas:
   bootstrap: 8000
   bcb_subtheme: 8000
+navbar_inverse: 1
+navbar_position: static-top
+table_responsive: '-1'
+table: ''
 favicon:
   mimetype: image/vnd.microsoft.icon
   path: profiles/contrib/lightning/favicon.ico
@@ -27,7 +31,10 @@ logo:
   path: profiles/contrib/lightning/lightning.png
   url: ''
   use_default: false
-navbar_inverse: 1
-navbar_position: static-top
-table_responsive: '-1'
-table: ''
+region_wells:
+  header: ''
+  highlighted: ''
+  sidebar_first: ''
+  sidebar_second: ''
+  content: ''
+  footer: ''

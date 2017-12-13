@@ -8,6 +8,8 @@ base theme : bootstrap
 regions:
   header: Header
   highlighted: Highlighted
+  sidebar_first: Right Sidebar
+  sidebar_second: Left Sidebar
   content: Content
   footer: Footer
 

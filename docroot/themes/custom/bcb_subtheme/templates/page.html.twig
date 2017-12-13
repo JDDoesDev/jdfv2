@@ -118,11 +118,28 @@
   </div>
 </header>
 
+{# Sidebar First #}
+{% if page.sidebar_first %}
+  {% block sidebar_first %}
+    <aside class="col-sm-3" role="complementary">
+      {{ page.sidebar_first }}
+    </aside>
+  {% endblock %}
+{% endif %}
+
 <!-- Post Content -->
-<article>
+{%
+  set content_classes = [
+    page.sidebar_first and page.sidebar_second ? 'col-sm-6',
+    page.sidebar_first and page.sidebar_second is empty ? 'col-sm-9',
+    page.sidebar_second and page.sidebar_first is empty ? 'col-sm-9',
+    page.sidebar_first is empty and page.sidebar_second is empty ? 'col-sm-12'
+  ]
+%}
+<article {{ content_attributes.addClass(content_classes) }}>
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col-md-12">
         {{ page.highlighted }}
 
         {# Content #}
@@ -134,7 +151,14 @@
     </div>
   </div>
 </article>
-
+{# Sidebar Second #}
+{% if page.sidebar_second %}
+  {% block sidebar_second %}
+    <aside class="col-sm-3" role="complementary">
+      {{ page.sidebar_second }}
+    </aside>
+  {% endblock %}
+{% endif %}
 <hr>
 
 <!-- Footer -->

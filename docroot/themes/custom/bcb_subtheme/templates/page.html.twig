@@ -87,6 +87,9 @@
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
+{% if is_front == false %}
+  {% set header_image = (node.field_header_image.entity.fileuri | image_style('crop_freeform')) %}
+{% endif %}
 <header class="intro-header" style="background-image: url('{{ header_image }}')">
   <div class="container">
     <div class="row">

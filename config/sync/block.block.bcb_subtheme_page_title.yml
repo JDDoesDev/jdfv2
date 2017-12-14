@@ -1,6 +1,6 @@
 uuid: 5ae182ca-9420-4943-8cb7-41a883cfabfc
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
     - bcb_subtheme

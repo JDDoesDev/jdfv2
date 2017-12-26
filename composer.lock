@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4578667c37309dd348c98f2cd81b6202",
+    "content-hash": "c4a41e00e521b3abc9e99808805922a8",
     "packages": [
         {
             "name": "acquia/lightning",
@@ -3272,6 +3272,68 @@
             }
         },
         {
+            "name": "drupal/markdown",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/markdown",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/markdown-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "c236d097312b8140db5711645c491bcf938dca78"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "league/commonmark": "^0.15.0",
+                "michelf/php-markdown": "^1.6"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1496237343",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "barraponto",
+                    "homepage": "https://www.drupal.org/user/511760"
+                },
+                {
+                    "name": "frjo",
+                    "homepage": "https://www.drupal.org/user/5546"
+                },
+                {
+                    "name": "justin2pin",
+                    "homepage": "https://www.drupal.org/user/278450"
+                },
+                {
+                    "name": "sreynen",
+                    "homepage": "https://www.drupal.org/user/109890"
+                }
+            ],
+            "description": "Allows content to be submitted using Markdown, a simple plain-text syntax that is transformed into valid HTML.",
+            "homepage": "https://www.drupal.org/project/markdown",
+            "support": {
+                "source": "https://cgit.drupalcode.org/markdown",
+                "issues": "https://www.drupal.org/project/markdown"
+            }
+        },
+        {
             "name": "drupal/media_entity",
             "version": "2.0.0-alpha1",
             "source": {
@@ -5608,6 +5670,75 @@
             "time": "2017-09-01T08:23:26+00:00"
         },
         {
+            "name": "league/commonmark",
+            "version": "0.15.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "36d82f166e441dfa28643f8d01dd8bdd3a579adf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/36d82f166e441dfa28643f8d01dd8bdd3a579adf",
+                "reference": "36d82f166e441dfa28643f8d01dd8bdd3a579adf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.4.8"
+            },
+            "replace": {
+                "colinodell/commonmark-php": "*"
+            },
+            "require-dev": {
+                "cebe/markdown": "~1.0",
+                "erusev/parsedown": "~1.0",
+                "jgm/commonmark": "0.28",
+                "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "~1.2.0",
+                "phpunit/phpunit": "~4.3|~5.0",
+                "scrutinizer/ocular": "~1.1",
+                "symfony/finder": "~2.3|~3.0"
+            },
+            "suggest": {
+                "league/commonmark-extras": "Library of useful extensions including smart punctuation"
+            },
+            "bin": [
+                "bin/commonmark"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.16-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\CommonMark\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Colin O'Dell",
+                    "email": "colinodell@gmail.com",
+                    "homepage": "https://www.colinodell.com",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Markdown parser for PHP based on the CommonMark spec",
+            "homepage": "https://github.com/thephpleague/commonmark",
+            "keywords": [
+                "commonmark",
+                "markdown",
+                "parser"
+            ],
+            "time": "2017-10-26T15:41:07+00:00"
+        },
+        {
             "name": "league/event",
             "version": "2.1.2",
             "source": {
@@ -5789,6 +5920,57 @@
                 "xml"
             ],
             "time": "2017-09-04T12:26:28+00:00"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/1f51cc520948f66cd2af8cbc45a5ee175e774220",
+                "reference": "1f51cc520948f66cd2af8cbc45a5ee175e774220",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "https://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "https://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "https://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2016-10-29T18:58:20+00:00"
         },
         {
             "name": "mkalkbrenner/php-htmldiff-advanced",

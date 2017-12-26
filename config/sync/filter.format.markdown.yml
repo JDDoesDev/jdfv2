@@ -1,0 +1,23 @@
+uuid: 45e175ee-8bf4-4ce8-a788-aac42a2f049d
+langcode: en
+status: true
+dependencies:
+  module:
+    - markdown
+name: Markdown
+format: markdown
+weight: 0
+filters:
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  markdown:
+    id: markdown
+    provider: markdown
+    status: true
+    weight: 0
+    settings:
+      markdown_library: php-markdown

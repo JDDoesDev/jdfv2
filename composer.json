@@ -34,7 +34,8 @@
         "drupal/bootstrap": "^3.7",
         "drupal/google_analytics": "^2.2",
         "drupal/adsense": "^1.0",
-        "drush/drush": "^8.1"
+        "drush/drush": "^8.1",
+        "drupal/ckeditor_markdown": "^1.0"
     },
     "repositories": [
         {

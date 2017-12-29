@@ -87,7 +87,7 @@
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
-{% if is_front == false %}
+{% if node.label %}
   {% set header_image = (node.field_header_image.entity.fileuri | image_style('crop_freeform')) %}
 {% endif %}
 <header class="intro-header" style="background-image: url('{{ header_image }}')">
@@ -107,13 +107,24 @@
       {% else %}
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <div class="site-heading">
-            <h1>{% if node.label %} {{ node.label }} {% else %} {{ site_name }} {% endif %}</h1>
-            {% if site_slogan %}
+            <h1>
+              {% if node.label %}
+                {{ node.label }}
+              {% elseif term.label %}
+                {{ term.label}}
+              {% else %}
+                {{ site_name }}
+              {% endif %}
+            </h1>
               <hr class="small">
               <span class="subheading">
-                {{ site_slogan }}
+                {% if node.label %}
+                {% elseif term.label %}
+                  Posts categorized under {{ term.label }}
+                {% else %}
+                  {{ site_slogan }}
+                {% endif %}
               </span>
-            {% endif %}
           </div>
         </div>
       {% endif %}

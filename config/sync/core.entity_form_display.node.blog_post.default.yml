@@ -11,9 +11,9 @@ dependencies:
     - field.field.node.blog_post.field_tags
     - node.type.blog_post
   module:
-    - comment
     - content_moderation
     - datetime
+    - disqus
     - entity_browser
     - path
     - text
@@ -50,7 +50,7 @@ content:
     weight: 126
     settings: {  }
     third_party_settings: {  }
-    type: comment_default
+    type: disqus_comment
     region: content
   field_header_image:
     type: entity_browser_file

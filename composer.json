@@ -36,7 +36,8 @@
         "drupal/adsense": "^1.0",
         "drush/drush": "^8.1",
         "drupal/ckeditor_markdown": "^1.0",
-        "drupal/markdown": "^1.2"
+        "drupal/markdown": "^1.2",
+        "drupal/disqus": "^1.0@RC"
     },
     "repositories": [
         {

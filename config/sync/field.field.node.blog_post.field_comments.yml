@@ -1,4 +1,4 @@
-uuid: 891360a0-eda3-4bcd-920d-3e5d145786cc
+uuid: bb4afb9a-8831-4fb8-b219-f0ad5e48bba1
 langcode: en
 status: true
 dependencies:
@@ -6,7 +6,7 @@ dependencies:
     - field.storage.node.field_comments
     - node.type.blog_post
   module:
-    - comment
+    - disqus
 id: node.blog_post.field_comments
 field_name: field_comments
 entity_type: node
@@ -17,17 +17,8 @@ required: false
 translatable: false
 default_value:
   -
-    status: 2
-    cid: 0
-    last_comment_timestamp: 0
-    last_comment_name: null
-    last_comment_uid: 0
-    comment_count: 0
+    status: 1
+    identifier: ''
 default_value_callback: ''
-settings:
-  default_mode: 1
-  per_page: 50
-  anonymous: 0
-  form_location: true
-  preview: 1
-field_type: comment
+settings: {  }
+field_type: disqus_comment

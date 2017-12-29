@@ -11,7 +11,7 @@ dependencies:
     - image.style.crop_freeform
     - node.type.blog_post
   module:
-    - comment
+    - disqus
     - image
     - panelizer
     - text
@@ -45,11 +45,9 @@ content:
   field_comments:
     weight: 5
     label: above
-    settings:
-      view_mode: default
-      pager_id: 0
+    settings: {  }
     third_party_settings: {  }
-    type: comment_default
+    type: disqus_comment
     region: content
   field_header_image:
     weight: 0

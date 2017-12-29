@@ -1,0 +1,108 @@
+html, body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+form {
+  width: 80%;
+  margin: auto;
+  padding-top: 2em;
+}
+
+input, label, select {
+  display: block;
+  width: 50%;
+  clear: both;
+}
+input, select, textarea {
+  margin-bottom: 1em;
+}
+#formHolder {
+  display: inline-block;
+  width: 50%;
+  margin-bottom: 200px;
+}
+
+#buttonHolder {
+  display: block;
+  text-align: center;
+  margin: 2em 0;
+}
+.output {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 2em;
+  display: inline-block;
+  height: 750px;
+  min-height: 500px;
+}
+
+.json {
+  width: 100%;
+  height: 67%;
+}
+
+.openHours, .closeHours {
+  float: left;
+  width: 50%;
+}
+
+.days select {
+  width: 75%;
+}
+
+.days span {
+  float: left;
+  width: 30%;
+}
+.days {
+  clear: both;
+}
+.days label {
+  width: 5%;
+  display: block;
+  float: left;
+  clear: none;
+}
+.days span label {
+  width: 25%;
+}
+.days input {
+  width: 10%;
+  float: left;
+  clear: none;
+}
+.days span select {
+  width: 50%;
+  display: inline-block;
+}
+
+textarea[readonly] {
+  cursor: default;
+  opacity: 1;
+}

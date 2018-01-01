@@ -9,7 +9,7 @@ _core:
 id: bcb_subtheme_local_tasks
 theme: bcb_subtheme
 region: content
-weight: -40
+weight: -7
 provider: null
 plugin: local_tasks_block
 settings:

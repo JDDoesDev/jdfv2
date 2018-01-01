@@ -9,7 +9,7 @@ _core:
 id: bcb_subtheme_local_actions
 theme: bcb_subtheme
 region: content
-weight: -20
+weight: -7
 provider: null
 plugin: local_actions_block
 settings:

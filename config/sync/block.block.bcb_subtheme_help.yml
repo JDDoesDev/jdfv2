@@ -11,7 +11,7 @@ _core:
 id: bcb_subtheme_help
 theme: bcb_subtheme
 region: content
-weight: -30
+weight: -7
 provider: null
 plugin: help_block
 settings:

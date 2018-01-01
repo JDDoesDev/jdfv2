@@ -25,3 +25,21 @@ body {
   /*margin-top: 50px;*/
   display: none;
 }
+
+.view-content {
+  .field--name-body {
+    h2 {
+      font-size: 20px;
+      margin-top: 0.2em;
+    }
+    p {
+      font-size: 16px;
+      margin-top: 0.2em;
+    }
+  }
+}
+.node-readmore {
+  font-size: 14px;
+  font-weight: bold;
+
+}

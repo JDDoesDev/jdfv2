@@ -1,0 +1,26 @@
+uuid: dbf53deb-b6d4-4c48-98bc-2802377cfdff
+langcode: en
+status: true
+dependencies:
+  module:
+    - jdf_custom
+    - system
+  theme:
+    - bcb_subtheme
+id: socialblock
+theme: bcb_subtheme
+region: sidebar_first
+weight: -7
+provider: null
+plugin: social_block
+settings:
+  id: social_block
+  label: 'Social block'
+  provider: jdf_custom
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "/contact/*\r\n/contact"
+    negate: true
+    context_mapping: {  }

@@ -43,6 +43,7 @@ module:
   image: 0
   image_widget_crop: 0
   inline_entity_form: 0
+  jdf_custom: 0
   jsonapi: 0
   kint: 0
   layout_discovery: 0

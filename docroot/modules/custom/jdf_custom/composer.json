@@ -1,0 +1,14 @@
+{
+  "name": "drupal/jdf_custom",
+  "type": "drupal-module",
+  "description": "Custom stuff for jdf.com",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/jdf_custom",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/jdf_custom",
+    "source": "http://cgit.drupalcode.org/jdf_custom"
+  },
+  "require": { }
+}

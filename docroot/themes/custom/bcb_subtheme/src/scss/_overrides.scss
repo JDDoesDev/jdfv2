@@ -27,6 +27,11 @@ body {
 }
 
 .view-content {
+  h2 {
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
   .field--name-body {
     h2 {
       font-size: 20px;
@@ -42,4 +47,20 @@ body {
   font-size: 14px;
   font-weight: bold;
 
+}
+
+.region-sidebar-first {
+  h2 {
+    font-size: .75em;
+  }
+  a {
+    font-size: .75em;
+  }
+  .views-row {
+    margin: .3em 0;
+
+    a {
+      line-height: 1;
+    }
+  }
 }

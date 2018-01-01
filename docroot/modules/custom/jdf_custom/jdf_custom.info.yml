@@ -1,0 +1,5 @@
+name: JDF Custom
+type: module
+description: Custom stuff for jdf.com
+core: 8.x
+package: Custom

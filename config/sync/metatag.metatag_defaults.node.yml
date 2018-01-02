@@ -8,5 +8,10 @@ id: node
 label: Content
 tags:
   title: '[node:title] | [site:name]'
-  description: '[node:summary]'
   canonical_url: '[node:url]'
+  description: '[node:summary]'
+  twitter_cards_page_url: 'https://www.jamesdflynn.com'
+  twitter_cards_site: '@jddoesdev'
+  twitter_cards_title: '[node:title] | [site:name]'
+  twitter_cards_description: '[node:body]'
+  twitter_cards_type: summary

@@ -10,6 +10,10 @@ tags:
   title: '[node:title] | [site:name]'
   canonical_url: '[node:url]'
   description: '[node:summary]'
+  og_url: 'http://www.jamesdflynn.com'
+  og_site_name: 'JD and the Adventures in Web Development'
+  og_title: '[node:title]'
+  og_type: Blog
   twitter_cards_page_url: 'https://www.jamesdflynn.com'
   twitter_cards_site: '@jddoesdev'
   twitter_cards_title: '[node:title] | [site:name]'

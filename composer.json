@@ -37,7 +37,8 @@
         "drush/drush": "^8.1",
         "drupal/ckeditor_markdown": "^1.0",
         "drupal/markdown": "^1.2",
-        "drupal/disqus": "^1.0@RC"
+        "drupal/disqus": "^1.0@RC",
+        "drupal/sharethis": "^2.0@beta"
     },
     "repositories": [
         {

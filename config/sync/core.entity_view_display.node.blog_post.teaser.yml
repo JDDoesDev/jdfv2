@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.blog_post.body
     - field.field.node.blog_post.field_category
+    - field.field.node.blog_post.field_comments
     - field.field.node.blog_post.field_header_image
     - field.field.node.blog_post.field_tags
     - image.style.crop_thumbnail
@@ -50,5 +51,7 @@ content:
     third_party_settings: {  }
 hidden:
   field_category: true
+  field_comments: true
   field_tags: true
   scheduled_publication: true
+  sharethis: true

@@ -1,0 +1,55 @@
+button_option: stbc_hcount
+comments: 0
+late_load: 0
+location: content
+node_types:
+  blog_post: blog_post
+  landing_page: null
+  page: null
+option_extras:
+  'Google Plus One:plusone': 'Google Plus One:plusone'
+  'Facebook Like:fblike': 'Facebook Like:fblike'
+option_neworzero: 0
+option_onhover: 1
+option_shorten: 1
+service_option: '''Facebook:facebook'',''Twitter:twitter'',''LinkedIn:linkedin'',''Email:email'',''Delicious:delicious'',''Reddit:reddit'',''StumbleUpon:stumbleupon'''
+twitter_handle: JDDoesDev
+twitter_recommends: ''
+twitter_suffix: ''
+webform_options: ''
+weight: 10
+widget_option: st_multi
+cns:
+  donotcopy: null
+  hashaddress: null
+sharethisnodes:
+  article:
+    full: full
+  page:
+    full: full
+    diff: '0'
+    rss: '0'
+    search_index: '0'
+    search_result: '0'
+    teaser: '0'
+    token: '0'
+  blog_post:
+    diff: '0'
+    full: '0'
+    rss: '0'
+    search_index: '0'
+    search_result: '0'
+    teaser: '0'
+    token: '0'
+  landing_page:
+    diff: '0'
+    full: '0'
+    rss: '0'
+    search_index: '0'
+    search_result: '0'
+    teaser: '0'
+    token: '0'
+_core:
+  default_config_hash: OUePCWmQ_tUOCD4VF7-AP0maPJi2Y18f0JvNTgThhRQ
+publisherID: dr-f5505afb-3d38-2fa3-9f1f-c1f5da311955
+callesi: '0'

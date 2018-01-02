@@ -28,7 +28,7 @@ filters:
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
-    status: false
+    status: true
     weight: -44
     settings: {  }
   editor_file_reference:
@@ -40,7 +40,7 @@ filters:
   entity_embed:
     id: entity_embed
     provider: entity_embed
-    status: false
+    status: true
     weight: -49
     settings: {  }
   filter_html:
@@ -73,7 +73,7 @@ filters:
   filter_url:
     id: filter_url
     provider: filter
-    status: false
+    status: true
     weight: -41
     settings:
       filter_url_length: 72
@@ -86,7 +86,7 @@ filters:
   markdown:
     id: markdown
     provider: markdown
-    status: true
+    status: false
     weight: -50
     settings:
       markdown_library: php-markdown

@@ -38,7 +38,8 @@
         "drupal/ckeditor_markdown": "^1.0",
         "drupal/markdown": "^1.2",
         "drupal/disqus": "^1.0@RC",
-        "drupal/sharethis": "^2.0@beta"
+        "drupal/sharethis": "^2.0@beta",
+        "drupal/codesnippet": "^1.6"
     },
     "repositories": [
         {

@@ -1,4 +1,4 @@
-button_option: stbc_hcount
+button_option: stbc_button
 comments: 0
 late_load: 0
 location: content
@@ -12,7 +12,7 @@ option_extras:
 option_neworzero: 0
 option_onhover: 1
 option_shorten: 1
-service_option: '''Facebook:facebook'',''Twitter:twitter'',''LinkedIn:linkedin'',''Email:email'',''Delicious:delicious'',''Reddit:reddit'',''StumbleUpon:stumbleupon'''
+service_option: '''Facebook:facebook'',''Twitter:twitter'',''LinkedIn:linkedin'',''Email:email'',''Reddit:reddit'''
 twitter_handle: JDDoesDev
 twitter_recommends: ''
 twitter_suffix: ''

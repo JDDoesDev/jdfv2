@@ -39,7 +39,8 @@
         "drupal/markdown": "^1.2",
         "drupal/disqus": "^1.0@RC",
         "drupal/sharethis": "^2.0@beta",
-        "drupal/codesnippet": "^1.6"
+        "drupal/codesnippet": "^1.6",
+        "drupal/xmlsitemap": "^1.0@alpha"
     },
     "repositories": [
         {

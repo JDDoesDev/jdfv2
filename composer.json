@@ -41,7 +41,8 @@
         "drupal/sharethis": "^2.0@beta",
         "drupal/codesnippet": "^1.6",
         "drupal/xmlsitemap": "^1.0@alpha",
-        "drupal/simple_sitemap": "^2.11"
+        "drupal/simple_sitemap": "^2.11",
+        "drupal/codetag": "^1.1"
     },
     "repositories": [
         {

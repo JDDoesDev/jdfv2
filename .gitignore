@@ -12,3 +12,4 @@
 vendor/
 
 settings.php
+*.sql

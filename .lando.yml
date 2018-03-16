@@ -1,0 +1,4 @@
+name: jdf
+recipe: drupal8
+config:
+  webroot: docroot

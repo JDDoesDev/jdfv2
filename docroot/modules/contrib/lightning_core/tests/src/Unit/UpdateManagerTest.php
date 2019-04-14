@@ -9,8 +9,8 @@ use Symfony\Component\Console\Style\StyleInterface;
 /**
  * @coversDefaultClass \Drupal\lightning_core\UpdateManager
  *
- * @group lightning
  * @group lightning_core
+ * @group orca_public
  */
 class UpdateManagerTest extends UnitTestCase {
 
@@ -39,10 +39,18 @@ class UpdateManagerTest extends UnitTestCase {
    * @covers ::getTasks
    */
   public function testGetTasks() {
+    // Prevent 'undefined constant' errors caused by ModuleExtensionList using
+    // the DRUPAL_MINIMUM_PHP constant from bootstrap.inc, which is never loaded
+    // during this test.
+    if (! defined('DRUPAL_MINIMUM_PHP')) {
+      define('DRUPAL_MINIMUM_PHP', '5.5.9');
+    }
+
     $update_manager = new TestUpdateManager(
       new \ArrayIterator,
       $this->createMock('\Drupal\Core\DependencyInjection\ClassResolverInterface'),
-      $this->createMock('\Drupal\Core\Config\ConfigFactoryInterface')
+      $this->createMock('\Drupal\Core\Config\ConfigFactoryInterface'),
+      $this->createMock('\Drupal\Core\Extension\ModuleExtensionList')
     );
 
     $tasks = $update_manager->getTasks(new TestUpdateHandler);

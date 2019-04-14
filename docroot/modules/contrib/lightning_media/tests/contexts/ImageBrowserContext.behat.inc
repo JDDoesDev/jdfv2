@@ -2,9 +2,13 @@
 
 namespace Acquia\LightningExtension\Context;
 
+use Behat\Mink\Exception\ElementNotFoundException;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 
-class ImageBrowserContext extends DrupalSubContextBase {
+/**
+ * Contains step definitions for interacting with Lightning's image browsers.
+ */
+final class ImageBrowserContext extends DrupalSubContextBase {
 
   use AwaitTrait;
 
@@ -26,6 +30,27 @@ class ImageBrowserContext extends DrupalSubContextBase {
 
     // This might be vestigial.
     sleep(10);
+  }
+
+  /**
+   * Asserts that cropping is enabled for an uploaded image.
+   *
+   * @Then I should be able to crop the image
+   */
+  public function assertCrop() {
+    /** @var \Acquia\LightningExtension\Context\ElementContext $context */
+    $context = $this->getContext(ElementContext::class);
+
+    // There should always be a collapsible cropping area, but depending on the
+    // circumstances, the Freeform crop widget might either be a vertical tab
+    // inside that area, or its own cropping area. Try to account for both.
+    $crop = $context->assertOpenDetails('Crop image');
+    try {
+      $context->assertVerticalTab('Freeform', $crop);
+    }
+    catch (ElementNotFoundException $e) {
+      $context->assertDetails('Freeform');
+    }
   }
 
 }

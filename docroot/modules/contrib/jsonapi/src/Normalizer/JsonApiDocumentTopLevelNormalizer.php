@@ -3,31 +3,37 @@
 namespace Drupal\jsonapi\Normalizer;
 
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
-use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Uuid\Uuid;
-use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
-use Drupal\jsonapi\Context\CurrentContext;
-use Drupal\jsonapi\Context\FieldResolver;
-use Drupal\jsonapi\Exception\EntityAccessDeniedHttpException;
-use Drupal\jsonapi\Normalizer\Value\JsonApiDocumentTopLevelNormalizerValue;
-use Drupal\jsonapi\Resource\EntityCollection;
-use Drupal\jsonapi\LinkManager\LinkManager;
-use Drupal\jsonapi\Resource\JsonApiDocumentTopLevel;
+use Drupal\jsonapi\JsonApiResource\ErrorCollection;
+use Drupal\jsonapi\JsonApiResource\OmittedData;
+use Drupal\jsonapi\JsonApiResource\ResourceObject;
+use Drupal\jsonapi\JsonApiSpec;
+use Drupal\jsonapi\Normalizer\Value\CacheableOmission;
+use Drupal\jsonapi\JsonApiResource\JsonApiDocumentTopLevel;
+use Drupal\jsonapi\Normalizer\Value\CacheableNormalization;
 use Drupal\jsonapi\ResourceType\ResourceType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface;
 
 /**
- * Normalizes the top-level document according to the JSON API specification.
+ * Normalizes the top-level document according to the JSON:API specification.
  *
- * @see \Drupal\jsonapi\Resource\JsonApiDocumentTopLevel
+ * @internal JSON:API maintains no PHP API since its API is the HTTP API. This
+ *   class may change at any time and this will break any dependencies on it.
  *
- * @internal
+ * @see https://www.drupal.org/project/jsonapi/issues/3032787
+ * @see jsonapi.api.php
+ *
+ * @see \Drupal\jsonapi\JsonApiResource\JsonApiDocumentTopLevel
  */
 class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements DenormalizerInterface, NormalizerInterface {
 
@@ -37,20 +43,6 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
   protected $supportedInterfaceOrClass = JsonApiDocumentTopLevel::class;
 
   /**
-   * The link manager to get the links.
-   *
-   * @var \Drupal\jsonapi\LinkManager\LinkManager
-   */
-  protected $linkManager;
-
-  /**
-   * The current JSON API request context.
-   *
-   * @var \Drupal\jsonapi\Context\CurrentContext
-   */
-  protected $currentContext;
-
-  /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -58,51 +50,34 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
   protected $entityTypeManager;
 
   /**
-   * The JSON API resource type repository.
+   * The JSON:API resource type repository.
    *
    * @var \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface
    */
   protected $resourceTypeRepository;
 
   /**
-   * The field resolver.
-   *
-   * @var \Drupal\jsonapi\Context\FieldResolver
-   */
-  protected $fieldResolver;
-
-  /**
    * Constructs a JsonApiDocumentTopLevelNormalizer object.
    *
-   * @param \Drupal\jsonapi\LinkManager\LinkManager $link_manager
-   *   The link manager to get the links.
-   * @param \Drupal\jsonapi\Context\CurrentContext $current_context
-   *   The current context.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\jsonapi\ResourceType\ResourceTypeRepositoryInterface $resource_type_repository
-   *   The JSON API resource type repository.
-   * @param \Drupal\jsonapi\Context\FieldResolver $field_resolver
-   *   The JSON API field resolver.
+   *   The JSON:API resource type repository.
    */
-  public function __construct(LinkManager $link_manager, CurrentContext $current_context, EntityTypeManagerInterface $entity_type_manager, ResourceTypeRepositoryInterface $resource_type_repository, FieldResolver $field_resolver) {
-    $this->linkManager = $link_manager;
-    $this->currentContext = $current_context;
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, ResourceTypeRepositoryInterface $resource_type_repository) {
     $this->entityTypeManager = $entity_type_manager;
     $this->resourceTypeRepository = $resource_type_repository;
-    $this->fieldResolver = $field_resolver;
   }
 
   /**
    * {@inheritdoc}
    */
   public function denormalize($data, $class, $format = NULL, array $context = []) {
-    // Validate a few common errors in document formatting.
-    $this->validateRequestBody($data);
+    $resource_type = $context['resource_type'];
 
-    $context += [
-      'on_relationship' => $this->currentContext->isOnRelationship(),
-    ];
+    // Validate a few common errors in document formatting.
+    static::validateRequestBody($data, $resource_type);
+
     $normalized = [];
 
     if (!empty($data['data']['attributes'])) {
@@ -110,7 +85,6 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
     }
 
     if (!empty($data['data']['id'])) {
-      $resource_type = $this->resourceTypeRepository->getByTypeName($data['data']['type']);
       $uuid_key = $this->entityTypeManager->getDefinition($resource_type->getEntityTypeId())->getKey('uuid');
       $normalized[$uuid_key] = $data['data']['id'];
     }
@@ -152,7 +126,9 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
         }
         // In order to maintain the order ($delta) of the relationships, we need
         // to load the entities and create a mapping between id and uuid.
-        $related_entities = array_values($entity_storage->loadByProperties(['uuid' => $id_list]));
+        $uuid_key = $this->entityTypeManager
+          ->getDefinition($entity_type_id)->getKey('uuid');
+        $related_entities = array_values($entity_storage->loadByProperties([$uuid_key => $id_list]));
         $map = [];
         foreach ($related_entities as $related_entity) {
           $map[$related_entity->uuid()] = $related_entity->id();
@@ -163,8 +139,12 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
         // meta values from the relationship, whose deltas match with $id_list.
         $canonical_ids = [];
         foreach ($id_list as $delta => $uuid) {
-          if (empty($map[$uuid])) {
-            continue;
+          if (!isset($map[$uuid])) {
+            // @see \Drupal\jsonapi\Normalizer\EntityReferenceFieldNormalizer::normalize()
+            if ($uuid === 'virtual') {
+              continue;
+            }
+            throw new NotFoundHttpException(sprintf('The resource identified by `%s:%s` (given as a relationship item) could not be found.', $relationship['data'][$delta]['type'], $uuid));
           }
           $reference_item = [
             'target_id' => $map[$uuid],
@@ -193,114 +173,159 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
    * {@inheritdoc}
    */
   public function normalize($object, $format = NULL, array $context = []) {
-    if (empty($context['resource_type'])) {
-      $context['resource_type'] = $this->currentContext->getResourceType();
+    assert($object instanceof JsonApiDocumentTopLevel);
+    $data = $object->getData();
+    $document['jsonapi'] = CacheableNormalization::permanent([
+      'version' => JsonApiSpec::SUPPORTED_SPECIFICATION_VERSION,
+      'meta' => [
+        'links' => [
+          'self' => [
+            'href' => JsonApiSpec::SUPPORTED_SPECIFICATION_PERMALINK,
+          ],
+        ],
+      ],
+    ]);
+    if ($data instanceof ErrorCollection) {
+      $document['errors'] = $this->normalizeErrorDocument($object, $format, $context);
     }
-    $value_extractor = $this->buildNormalizerValue($object->getData(), $format, $context);
-    if (!empty($context['cacheable_metadata'])) {
-      $context['cacheable_metadata']->addCacheableDependency($value_extractor);
+    else {
+      // Add data.
+      // @todo: remove this if-else and just call $this->serializer->normalize($data...) in https://www.drupal.org/project/jsonapi/issues/3036285.
+      if ($data instanceof EntityReferenceFieldItemListInterface) {
+        $document['data'] = $this->normalizeEntityReferenceFieldItemList($object, $format, $context);
+      }
+      else {
+        $document['data'] = $this->serializer->normalize($data, $format, $context);
+      }
+      // Add includes.
+      $document['included'] = $this->serializer->normalize($object->getIncludes(), $format, $context)->omitIfEmpty();
+      // Add omissions and metadata.
+      $normalized_omissions = $this->normalizeOmissionsLinks($object->getOmissions(), $format, $context);
+      $meta = !$normalized_omissions instanceof CacheableOmission
+        ? array_merge($object->getMeta(), ['omitted' => $normalized_omissions->getNormalization()])
+        : $object->getMeta();
+      $document['meta'] = (new CacheableNormalization($normalized_omissions, $meta))->omitIfEmpty();
     }
-    $normalized = $value_extractor->rasterizeValue();
-    $included = array_filter($value_extractor->rasterizeIncludes());
-    if (!empty($included)) {
-      foreach ($included as $included_item) {
-        if ($included_item['data'] === FALSE) {
-          unset($included_item['data']);
-          $normalized = NestedArray::mergeDeep($normalized, $included_item);
-        }
-        else {
-          $normalized['included'][] = $included_item['data'];
-        }
+    // Add document links.
+    $document['links'] = $this->serializer->normalize($object->getLinks(), $format, $context)->omitIfEmpty();
+    // Every JSON:API document contains absolute URLs.
+    return CacheableNormalization::aggregate($document)->withCacheableDependency((new CacheableMetadata())->addCacheContexts(['url.site']));
+  }
+
+  /**
+   * Normalizes an error collection.
+   *
+   * @param \Drupal\jsonapi\JsonApiResource\JsonApiDocumentTopLevel $document
+   *   The document to normalize.
+   * @param string $format
+   *   The normalization format.
+   * @param array $context
+   *   The normalization context.
+   *
+   * @return \Drupal\jsonapi\Normalizer\Value\CacheableNormalization
+   *   The normalized document.
+   *
+   * @todo: refactor this to use CacheableNormalization::aggregate in https://www.drupal.org/project/jsonapi/issues/3036284.
+   */
+  protected function normalizeErrorDocument(JsonApiDocumentTopLevel $document, $format, array $context = []) {
+    $normalized_values = array_map(function (HttpExceptionInterface $exception) use ($format, $context) {
+      return $this->serializer->normalize($exception, $format, $context);
+    }, (array) $document->getData()->getIterator());
+    $cacheability = new CacheableMetadata();
+    $errors = [];
+    foreach ($normalized_values as $normalized_error) {
+      $cacheability->addCacheableDependency($normalized_error);
+      $errors = array_merge($errors, $normalized_error->getNormalization());
+    }
+    return new CacheableNormalization($cacheability, $errors);
+  }
+
+  /**
+   * Normalizes an entity reference field, i.e. a relationship document.
+   *
+   * @param \Drupal\jsonapi\JsonApiResource\JsonApiDocumentTopLevel $document
+   *   The document to normalize.
+   * @param string $format
+   *   The normalization format.
+   * @param array $context
+   *   The normalization context.
+   *
+   * @return \Drupal\jsonapi\Normalizer\Value\CacheableNormalization
+   *   The normalized document.
+   *
+   * @todo: remove this in https://www.drupal.org/project/jsonapi/issues/3036285.
+   */
+  protected function normalizeEntityReferenceFieldItemList(JsonApiDocumentTopLevel $document, $format, array $context = []) {
+    $data = $document->getData();
+    $parent_entity = $data->getEntity();
+    $resource_type = $this->resourceTypeRepository->get($parent_entity->getEntityTypeId(), $parent_entity->bundle());
+    $context['resource_object'] = ResourceObject::createFromEntity($resource_type, $parent_entity);
+    $normalized_relationship = $this->serializer->normalize($data, $format, $context);
+    assert($normalized_relationship instanceof CacheableNormalization);
+    unset($context['resource_object']);
+    return new CacheableNormalization($normalized_relationship, $normalized_relationship->getNormalization()['data']);
+  }
+
+  /**
+   * Normalizes omitted data into a set of omission links.
+   *
+   * @param \Drupal\jsonapi\JsonApiResource\OmittedData $omissions
+   *   The omitted response data.
+   * @param string $format
+   *   The normalization format.
+   * @param array $context
+   *   The normalization context.
+   *
+   * @return \Drupal\jsonapi\Normalizer\Value\CacheableNormalization|\Drupal\jsonapi\Normalizer\Value\CacheableOmission
+   *   The normalized omissions.
+   *
+   * @todo: refactor this to use link collections in https://www.drupal.org/project/jsonapi/issues/3036279.
+   */
+  protected function normalizeOmissionsLinks(OmittedData $omissions, $format, array $context = []) {
+    $normalized_omissions = array_map(function (HttpExceptionInterface $exception) use ($format, $context) {
+      return $this->serializer->normalize($exception, $format, $context);
+    }, $omissions->toArray());
+    $cacheability = CacheableMetadata::createFromObject(CacheableNormalization::aggregate($normalized_omissions));
+    if (empty($normalized_omissions)) {
+      return new CacheableOmission($cacheability);
+    }
+    $omission_links = [
+      'detail' => 'Some resources have been omitted because of insufficient authorization.',
+      'links' => [
+        'help' => [
+          'href' => 'https://www.drupal.org/docs/8/modules/json-api/filtering#filters-access-control',
+        ],
+      ],
+    ];
+    $link_hash_salt = Crypt::randomBytesBase64();
+    foreach ($normalized_omissions as $omission) {
+      $cacheability->addCacheableDependency($omission);
+      // Add the errors to the pre-existing errors.
+      foreach ($omission->getNormalization() as $error) {
+        // JSON:API links cannot be arrays and the spec generally favors link
+        // relation types as keys. 'item' is the right link relation type, but
+        // we need multiple values. To do that, we generate a meaningless,
+        // random value to use as a unique key. That value is a hash of a
+        // random salt and the link href. This ensures that the key is non-
+        // deterministic while letting use deduplicate the links by their
+        // href. The salt is *not* used for any cryptographic reason.
+        $link_key = 'item:' . static::getLinkHash($link_hash_salt, $error['links']['via']['href']);
+        $omission_links['links'][$link_key] = [
+          'href' => $error['links']['via']['href'],
+          'meta' => [
+            'rel' => 'item',
+            'detail' => $error['detail'],
+          ],
+        ];
       }
     }
-
-    return $normalized;
+    return new CacheableNormalization($cacheability, $omission_links);
   }
 
   /**
-   * Build the normalizer value.
-   *
-   * @return \Drupal\jsonapi\Normalizer\Value\JsonApiDocumentTopLevelNormalizerValue
-   *   The normalizer value.
+   * Performs minimal validation of the document.
    */
-  public function buildNormalizerValue($data, $format = NULL, array $context = []) {
-    if (empty($context['expanded'])) {
-      $context += $this->expandContext($context['request'], $context['resource_type']);
-    }
-
-    if ($data instanceof EntityReferenceFieldItemListInterface) {
-      return $this->serializer->normalize($data, $format, $context);
-    }
-    $is_collection = $data instanceof EntityCollection;
-    $include_count = $context['resource_type']->includeCount();
-    // To improve the logical workflow deal with an array at all times.
-    $entities = $is_collection ? $data->toArray() : [$data];
-    $context['has_next_page'] = $is_collection ? $data->hasNextPage() : FALSE;
-
-    if ($include_count) {
-      $context['total_count'] = $is_collection ? $data->getTotalCount() : 1;
-    }
-    $serializer = $this->serializer;
-    $normalizer_values = array_map(function ($entity) use ($format, $context, $serializer) {
-      return $serializer->normalize($entity, $format, $context);
-    }, $entities);
-
-    $link_context = [
-      'link_manager' => $this->linkManager,
-      'has_next_page' => $context['has_next_page'],
-    ];
-
-    if ($include_count) {
-      $link_context['total_count'] = $context['total_count'];
-    }
-
-    return new JsonApiDocumentTopLevelNormalizerValue($normalizer_values, $context, $link_context, $is_collection);
-  }
-
-  /**
-   * Expand the context information based on the current request context.
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The request to get the URL params from to expand the context.
-   * @param \Drupal\jsonapi\ResourceType\ResourceType $resource_type
-   *   The resource type to translate to internal fields.
-   *
-   * @return array
-   *   The expanded context.
-   */
-  protected function expandContext(Request $request, ResourceType $resource_type) {
-    // Translate ALL the includes from the public field names to the internal.
-    $includes = array_filter(explode(',', $request->query->get('include')));
-    $public_includes = array_map(function ($include_str) use ($resource_type) {
-      $resolved = $this->fieldResolver->resolveInternal(
-        $resource_type->getEntityTypeId(),
-        $resource_type->getBundle(),
-        trim($include_str)
-      );
-      // We don't need the entity information for the includes. Clean it.
-      return preg_replace('/\.entity\./', '.', $resolved);
-    }, $includes);
-    // Build the expanded context.
-    $context = [
-      'account' => NULL,
-      'sparse_fieldset' => NULL,
-      'resource_type' => NULL,
-      'include' => $public_includes,
-      'expanded' => TRUE,
-    ];
-    if ($request->query->get('fields')) {
-      $context['sparse_fieldset'] = array_map(function ($item) {
-        return explode(',', $item);
-      }, $request->query->get('fields'));
-    }
-
-    return $context;
-  }
-
-  /**
-   * Performs mimimal validation of the document.
-   */
-  protected static function validateRequestBody(array $document) {
+  protected static function validateRequestBody(array $document, ResourceType $resource_type) {
     // Ensure that the relationships key was not placed in the top level.
     if (isset($document['relationships']) && !empty($document['relationships'])) {
       throw new BadRequestHttpException("Found \"relationships\" within the document's top level. The \"relationships\" key must be within resource object.");
@@ -311,10 +336,32 @@ class JsonApiDocumentTopLevelNormalizer extends NormalizerBase implements Denorm
     }
     // Ensure that the client provided ID is a valid UUID.
     if (isset($document['data']['id']) && !Uuid::isValid($document['data']['id'])) {
-      // This should be a 422 response, but the JSON API specification dictates
-      // a 403 Forbidden response. We follow the specification.
-      throw new EntityAccessDeniedHttpException(NULL, AccessResult::forbidden(), '/data/id', 'IDs should be properly generated and formatted UUIDs as described in RFC 4122.');
+      throw new UnprocessableEntityHttpException('IDs should be properly generated and formatted UUIDs as described in RFC 4122.');
     }
+    // Ensure that no relationship fields are being set via the attributes
+    // resource object member.
+    if (isset($document['data']['attributes'])) {
+      $received_attribute_field_names = array_keys($document['data']['attributes']);
+      $relationship_field_names = array_keys($resource_type->getRelatableResourceTypes());
+      if ($relationship_fields_sent_as_attributes = array_intersect($received_attribute_field_names, $relationship_field_names)) {
+        throw new UnprocessableEntityHttpException(sprintf("The following relationship fields were provided as attributes: [ %s ]", implode(', ', $relationship_fields_sent_as_attributes)));
+      }
+    }
+  }
+
+  /**
+   * Hashes an omitted link.
+   *
+   * @param string $salt
+   *   A hash salt.
+   * @param string $link_href
+   *   The omitted link.
+   *
+   * @return string
+   *   A 7 character hash.
+   */
+  protected static function getLinkHash($salt, $link_href) {
+    return substr(str_replace(['-', '_'], '', Crypt::hashBase64($salt . $link_href)), 0, 7);
   }
 
 }

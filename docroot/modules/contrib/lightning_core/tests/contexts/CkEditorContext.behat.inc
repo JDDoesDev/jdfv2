@@ -9,7 +9,7 @@ use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 /**
  * Contains step definitions for working with CKEditor instances.
  */
-class CkEditorContext extends DrupalSubContextBase {
+final class CkEditorContext extends DrupalSubContextBase {
 
   /**
    * Asserts that a CKEditor instance exists and is fully loaded.
@@ -150,7 +150,7 @@ class CkEditorContext extends DrupalSubContextBase {
    * @return string|false
    *   The first CKEditor instance ID, or FALSE if there are no instances.
    */
-  protected function getDefault() {
+  private function getDefault() {
     $keys = $this->getKeys();
     return reset($keys);
   }
@@ -161,7 +161,7 @@ class CkEditorContext extends DrupalSubContextBase {
    * @return string[]
    *   The CKEditor instance IDs.
    */
-  protected function getKeys() {
+  private function getKeys() {
     $keys = $this
       ->getSession()
       ->evaluateScript('Object.keys(CKEDITOR.instances).join(",")');

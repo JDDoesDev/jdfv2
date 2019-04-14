@@ -1,0 +1,4 @@
+jdf:
+  uri: http://jdf.docksal
+  root: /var/www/docroot
+

@@ -1,4 +1,3 @@
-sudo: required
 dist: trusty
 language: php
 
@@ -13,83 +12,59 @@ php:
   - 7.1
 
 env:
-  - VERSION=HEAD
-  - VERSION=2.1.0
-  - VERSION=2.0.0
-  - VERSION=1.0.0-rc3
-  - VERSION=1.0.0-rc2
+  - VERSION=HEAD ORCA_FIXTURE_FLAGS='--dev --sut-only' ORCA_TEST_FLAGS=--sut-only
+  - VERSION=1.0.0-rc1 ORCA_FIXTURE_FLAGS='--dev --sut-only' ORCA_TEST_FLAGS=--sut-only
+  - VERSION=1.0.0-rc1
+  - VERSION=1.0.0-rc1 ORCA_FIXTURE_FLAGS=--dev
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: VERSION=1.0.0-rc1
+    - env: VERSION=1.0.0-rc1 ORCA_FIXTURE_FLAGS=--dev
 
 addons:
-  apt:
-    packages:
-    # Dependencies for Chrome.
-    - libappindicator1
-    - fonts-liberation
+  chrome: stable
 
 before_install:
-  - phpenv config-rm xdebug.ini
-  - composer self-update
-  - composer --version
-  # Initialize xvfb (see https://docs.travis-ci.com/user/gui-and-headless-browsers)
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-
-  # Download Chrome Driver
-  - LATEST_CHROMEDRIVER=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE)
-  - wget http://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
-  - chmod +x chromedriver
-  - mkdir -p $HOME/.composer/vendor/bin
-  - mv -f chromedriver $HOME/.composer/vendor/bin/
-  - rm chromedriver_linux64.zip
-
-  # Update Chrome.
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome-stable_current_amd64.deb
-  - rm google-chrome-stable_current_amd64.deb
-  - google-chrome --version
-
-install:
-  # Add Composer's local bin directory to the PATH so that we will be running
-  # our installed versions of Drush, PHPCS, Behat, PhantomJS, etc.
-  - export PATH="$HOME/.composer/vendor/bin:$TRAVIS_BUILD_DIR/vendor/bin:$PATH"
-
-  # composer install should fail on bad patches.
-  - export COMPOSER_EXIT_ON_PATCH_FAILURE=1
-
-  # Create the MySQL database and add a user for testing.
-  - mysql -u root -e "CREATE DATABASE lightning; CREATE USER 'lightning'@'localhost' IDENTIFIED BY 'lightning'; GRANT ALL ON lightning.* TO 'lightning'@'localhost';"
-
-  # Install the PECL YAML extension for strict parsing. yes is used to
-  # acknowledge all prompts.
-  - yes '' | pecl install yaml
-  # Tweak PHP configuration.
-  - echo 'max_execution_time = 120' >> drupal.php.ini;
-  - echo 'sendmail_path = /bin/true' >> drupal.php.ini;
-  - phpenv config-add drupal.php.ini
+  - phpenv config-add ./tests/travis.php.ini
   - phpenv rehash
 
-  # Build the code base. There is no lock file in the repo, so dependencies will
-  # always be renegotiated.
-  - composer install
-  # Install on top of standard for testing.
-  - lightning install "mysql\://lightning:lightning@127.0.0.1/lightning" standard 'http://127.0.0.1:8080'
-  # Restore database fixture from the version we're testing and run database and
-  # and Lightning config updates.
-  - lightning update $VERSION
+  - composer self-update
+  - composer --version
+  - google-chrome-stable --version
+
+  - export ORCA=$TRAVIS_BUILD_DIR/../orca
+  - export ORCA_FIXTURE=$ORCA-build
+  - export ORCA_SUT=drupal/lightning_api
+
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - export PATH="$ORCA/bin:$PATH"
+  - export PATH="$ORCA/vendor/bin:$PATH"
+  - export PATH="$ORCA_FIXTURE/vendor/bin:$PATH"
+
+  # Add the ORCA repository.
+  - composer config --global repositories.orca vcs "https://github.com/acquia/orca"
+  # Use a personal access token to authenticate with GitHub, to avoid being
+  # rate-limited. The token is configured in the Travis CI repository settings.
+  - composer config --global github-oauth.github.com $GITHUB_API_TOKEN
+
+install:
+  - composer create-project --stability dev --no-dev acquia/orca $ORCA
+  - "$ORCA/bin/travis/install 8.x-3.x"
+
+  # Run ORCA static analysis tools.
+  - orca static-analysis:run ./
+
+  # Use ORCA to build the code base.
+  - orca fixture:init -f --sut $ORCA_SUT $ORCA_FIXTURE_FLAGS
 
 before_script:
-  - drush runserver --default-server=builtin 8080 &>/dev/null &
-  - jdk_switcher use oraclejdk8
-  - sleep 5
+  - cd $ORCA_FIXTURE/docroot
+  - $TRAVIS_BUILD_DIR/update.sh $VERSION
 
 script:
-  - composer validate composer.json --no-check-all --ansi --no-interaction
-  - phpunit --config docroot/core --group lightning_api
-  - behat --config .behat.yml --tags lightning_api
+  - orca tests:run --sut $ORCA_SUT $ORCA_TEST_FLAGS
 
 after_failure:
-  - cd docroot
   - drush watchdog:show --count=100 --severity=Error --extended

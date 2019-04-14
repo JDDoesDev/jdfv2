@@ -9,8 +9,8 @@ use Drupal\lightning_core\UpdateManager;
 /**
  * @coversDefaultClass \Drupal\lightning_core\UpdateManager
  *
- * @group lightning
  * @group lightning_core
+ * @group orca_public
  */
 class UpdateManagerTest extends KernelTestBase {
 
@@ -48,6 +48,7 @@ class UpdateManagerTest extends KernelTestBase {
       $this->container->get('container.namespaces'),
       $this->container->get('class_resolver'),
       $this->container->get('config.factory'),
+      $this->container->get('extension.list.module'),
       $discovery->reveal()
     );
 

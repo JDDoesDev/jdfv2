@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\jsonapi\Unit\Routing;
 
-use Drupal\Core\Authentication\AuthenticationCollectorInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\jsonapi\ResourceType\ResourceType;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepository;
@@ -47,15 +46,13 @@ class RoutesTest extends UnitTestCase {
     $type_3->setRelatableResourceTypes([]);
     $resource_type_repository = $this->prophesize(ResourceTypeRepository::class);
     $resource_type_repository->all()->willReturn([$type_1, $type_2, $type_3]);
-    $resource_type_repository->getPathPrefix()->willReturn('jsonapi');
     $container = $this->prophesize(ContainerInterface::class);
     $container->get('jsonapi.resource_type.repository')->willReturn($resource_type_repository->reveal());
-    $auth_collector = $this->prophesize(AuthenticationCollectorInterface::class);
-    $auth_collector->getSortedProviders()->willReturn([
+    $container->getParameter('jsonapi.base_path')->willReturn('/jsonapi');
+    $container->getParameter('authentication_providers')->willReturn([
       'lorem' => [],
       'ipsum' => [],
     ]);
-    $container->get('authentication_collector')->willReturn($auth_collector->reveal());
 
     $this->routes['ok'] = Routes::create($container->reveal());
   }
@@ -67,20 +64,33 @@ class RoutesTest extends UnitTestCase {
     // Get the route collection and start making assertions.
     $routes = $this->routes['ok']->routes();
 
-    // Make sure that there are 4 routes for the non-internal resource.
-    $this->assertEquals(4, $routes->count());
+    // - 2 collection routes; GET & POST for the non-internal resource type.
+    // - 3 individual routes; GET, PATCH & DELETE for the non-internal resource
+    //   type.
+    // - 2 related routes; GET for the non-internal resource type relationships
+    //   fields: external & both.
+    // - 12 relationship routes; 3 fields * 4 HTTP methods.
+    //   `relationship` routes are generated even for internal target resource
+    //   types (`related` routes are not).
+    // - 1 for the JSON:API entry point.
+    $this->assertEquals(20, $routes->count());
 
     $iterator = $routes->getIterator();
     // Check the collection route.
     /** @var \Symfony\Component\Routing\Route $route */
     $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.collection');
     $this->assertSame('/jsonapi/entity_type_1/bundle_1_1', $route->getPath());
-    $this->assertSame('entity_type_1', $route->getRequirement('_entity_type'));
-    $this->assertSame('bundle_1_1', $route->getRequirement('_bundle'));
     $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
-    $this->assertEquals(['GET', 'POST'], $route->getMethods());
-    $this->assertSame(Routes::FRONT_CONTROLLER, $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
-    $this->assertSame('Drupal\jsonapi\Resource\JsonApiDocumentTopLevel', $route->getOption('serialization_class'));
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['GET'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':getCollection', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
+    // Check the collection POST route.
+    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.collection.post');
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1', $route->getPath());
+    $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['POST'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':createIndividual', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
   }
 
   /**
@@ -93,14 +103,37 @@ class RoutesTest extends UnitTestCase {
     // Check the individual route.
     /** @var \Symfony\Component\Routing\Route $route */
     $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.individual');
-    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity_type_1}', $route->getPath());
-    $this->assertSame('entity_type_1', $route->getRequirement('_entity_type'));
-    $this->assertSame('bundle_1_1', $route->getRequirement('_bundle'));
-    $this->assertEquals(['GET', 'PATCH', 'DELETE'], $route->getMethods());
-    $this->assertSame(Routes::FRONT_CONTROLLER, $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
-    $this->assertSame('Drupal\jsonapi\Resource\JsonApiDocumentTopLevel', $route->getOption('serialization_class'));
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity}', $route->getPath());
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['GET'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':getIndividual', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
     $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
-    $this->assertEquals(['entity_type_1' => ['type' => 'entity:entity_type_1']], $route->getOption('parameters'));
+    $this->assertEquals([
+      'entity' => ['type' => 'entity:entity_type_1'],
+      'resource_type' => ['type' => 'jsonapi_resource_type'],
+    ], $route->getOption('parameters'));
+
+    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.individual.patch');
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity}', $route->getPath());
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['PATCH'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':patchIndividual', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
+    $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
+    $this->assertEquals([
+      'entity' => ['type' => 'entity:entity_type_1'],
+      'resource_type' => ['type' => 'jsonapi_resource_type'],
+    ], $route->getOption('parameters'));
+
+    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.individual.delete');
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity}', $route->getPath());
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['DELETE'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':deleteIndividual', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
+    $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
+    $this->assertEquals([
+      'entity' => ['type' => 'entity:entity_type_1'],
+      'resource_type' => ['type' => 'jsonapi_resource_type'],
+    ], $route->getOption('parameters'));
   }
 
   /**
@@ -112,14 +145,16 @@ class RoutesTest extends UnitTestCase {
 
     // Check the related route.
     /** @var \Symfony\Component\Routing\Route $route */
-    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.related');
-    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity_type_1}/{related}', $route->getPath());
-    $this->assertSame('entity_type_1', $route->getRequirement('_entity_type'));
-    $this->assertSame('bundle_1_1', $route->getRequirement('_bundle'));
+    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.external.related');
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity}/external', $route->getPath());
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
     $this->assertEquals(['GET'], $route->getMethods());
-    $this->assertSame(Routes::FRONT_CONTROLLER, $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':getRelated', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
     $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
-    $this->assertEquals(['entity_type_1' => ['type' => 'entity:entity_type_1']], $route->getOption('parameters'));
+    $this->assertEquals([
+      'entity' => ['type' => 'entity:entity_type_1'],
+      'resource_type' => ['type' => 'jsonapi_resource_type'],
+    ], $route->getOption('parameters'));
   }
 
   /**
@@ -131,15 +166,16 @@ class RoutesTest extends UnitTestCase {
 
     // Check the relationships route.
     /** @var \Symfony\Component\Routing\Route $route */
-    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.relationship');
-    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity_type_1}/relationships/{related}', $route->getPath());
-    $this->assertSame('entity_type_1', $route->getRequirement('_entity_type'));
-    $this->assertSame('bundle_1_1', $route->getRequirement('_bundle'));
-    $this->assertEquals(['GET', 'POST', 'PATCH', 'DELETE'], $route->getMethods());
-    $this->assertSame(Routes::FRONT_CONTROLLER, $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
+    $route = $iterator->offsetGet('jsonapi.entity_type_1--bundle_1_1.both.relationship.get');
+    $this->assertSame('/jsonapi/entity_type_1/bundle_1_1/{entity}/relationships/both', $route->getPath());
+    $this->assertSame('entity_type_1--bundle_1_1', $route->getDefault(Routes::RESOURCE_TYPE_KEY));
+    $this->assertEquals(['GET'], $route->getMethods());
+    $this->assertSame(Routes::CONTROLLER_SERVICE_NAME . ':getRelationship', $route->getDefault(RouteObjectInterface::CONTROLLER_NAME));
     $this->assertSame(['lorem', 'ipsum'], $route->getOption('_auth'));
-    $this->assertEquals(['entity_type_1' => ['type' => 'entity:entity_type_1']], $route->getOption('parameters'));
-    $this->assertSame('Drupal\Core\Field\EntityReferenceFieldItemList', $route->getOption('serialization_class'));
+    $this->assertEquals([
+      'entity' => ['type' => 'entity:entity_type_1'],
+      'resource_type' => ['type' => 'jsonapi_resource_type'],
+    ], $route->getOption('parameters'));
   }
 
   /**
@@ -158,8 +194,21 @@ class RoutesTest extends UnitTestCase {
     return [
       ['jsonapi.entity_type_1--bundle_1_1.individual'],
       ['jsonapi.entity_type_1--bundle_1_1.collection'],
-      ['jsonapi.entity_type_1--bundle_1_1.related'],
-      ['jsonapi.entity_type_1--bundle_1_1.relationship'],
+      ['jsonapi.entity_type_1--bundle_1_1.internal.relationship.get'],
+      ['jsonapi.entity_type_1--bundle_1_1.internal.relationship.post'],
+      ['jsonapi.entity_type_1--bundle_1_1.internal.relationship.patch'],
+      ['jsonapi.entity_type_1--bundle_1_1.internal.relationship.delete'],
+      ['jsonapi.entity_type_1--bundle_1_1.external.related'],
+      ['jsonapi.entity_type_1--bundle_1_1.external.relationship.get'],
+      ['jsonapi.entity_type_1--bundle_1_1.external.relationship.post'],
+      ['jsonapi.entity_type_1--bundle_1_1.external.relationship.patch'],
+      ['jsonapi.entity_type_1--bundle_1_1.external.relationship.delete'],
+      ['jsonapi.entity_type_1--bundle_1_1.both.related'],
+      ['jsonapi.entity_type_1--bundle_1_1.both.relationship.get'],
+      ['jsonapi.entity_type_1--bundle_1_1.both.relationship.post'],
+      ['jsonapi.entity_type_1--bundle_1_1.both.relationship.patch'],
+      ['jsonapi.entity_type_1--bundle_1_1.both.relationship.delete'],
+      ['jsonapi.resource_list'],
     ];
   }
 
@@ -179,8 +228,9 @@ class RoutesTest extends UnitTestCase {
     return [
       ['jsonapi.entity_type_2--bundle_2_1.individual'],
       ['jsonapi.entity_type_2--bundle_2_1.collection'],
-      ['jsonapi.entity_type_2--bundle_2_1.related'],
-      ['jsonapi.entity_type_2--bundle_2_1.relationship'],
+      ['jsonapi.entity_type_2--bundle_2_1.collection.post'],
+      ['jsonapi.entity_type_2--bundle_2_1.internal.related'],
+      ['jsonapi.entity_type_2--bundle_2_1.internal.relationship'],
     ];
   }
 

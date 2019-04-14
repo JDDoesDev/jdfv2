@@ -7,19 +7,30 @@ namespace Composer\Autoload;
 class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
 {
     public static $files = array (
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
+        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        'cf97c57bfe0f23854afd2f3818abb7a0' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/create_uploaded_file.php',
+        '9bf37a3d0dad93e29cb4e1b1bfab04e9' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/marshal_headers_from_sapi.php',
+        'ce70dccb4bcc2efc6e94d2ee526e6972' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/marshal_method_from_sapi.php',
+        'f86420df471f14d568bfcb71e271b523' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/marshal_protocol_version_from_sapi.php',
+        'b87481e008a3700344428ae089e7f9e5' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/marshal_uri_from_sapi.php',
+        '0b0974a5566a1077e4f2e111341112c1' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_server.php',
+        '1ca3bc274755662169f9629d5412a1da' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_uploaded_files.php',
+        '40360c0b9b437e69bcbb7f1349ce029e' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/parse_cookie_header.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '2cffec82183ee1cea088009cef9a6fc3' => __DIR__ . '/..' . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
         'fbeead2280a8f3911a1fe6dd034f7d5e' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvancedInterface.php',
         '96f8d8288528d52059397cad6ec61f17' => __DIR__ . '/..' . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
         '5a12a5271c58108e0aa33355e6ac54ea' => __DIR__ . '/..' . '/drupal/console-core/src/functions.php',
-        'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        '952683d815ff0a7bf322b93c0be7e4e4' => __DIR__ . '/..' . '/chi-teck/drupal-code-generator/src/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -51,13 +62,17 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'T' => 
         array (
             'Twig\\' => 5,
+            'TYPO3\\PharStreamWrapper\\' => 24,
         ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php70\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Iconv\\' => 23,
+            'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Symfony\\Contracts\\' => 18,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\VarExporter\\' => 30,
             'Symfony\\Component\\VarDumper\\' => 28,
             'Symfony\\Component\\Validator\\' => 28,
             'Symfony\\Component\\Translation\\' => 30,
@@ -82,12 +97,13 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
             'Stecman\\Component\\Symfony\\Console\\BashCompletion\\' => 49,
+            'SelfUpdate\\' => 11,
             'Seld\\PharUtils\\' => 15,
             'Seld\\JsonLint\\' => 14,
-            'Seld\\CliPrompt\\' => 15,
         ),
         'R' => 
         array (
+            'Robo\\' => 5,
             'RedBeanPHP\\' => 11,
         ),
         'P' => 
@@ -113,12 +129,15 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             'League\\OAuth2\\Server\\' => 21,
             'League\\Event\\' => 13,
+            'League\\Container\\' => 17,
             'League\\CommonMark\\' => 18,
             'Lcobucci\\JWT\\' => 13,
         ),
         'J' => 
         array (
             'JsonSchema\\' => 11,
+            'JakubOnderka\\PhpConsoleHighlighter\\' => 35,
+            'JakubOnderka\\PhpConsoleColor\\' => 29,
         ),
         'I' => 
         array (
@@ -129,10 +148,19 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Grasmash\\YamlExpander\\' => 22,
+            'Grasmash\\Expander\\' => 18,
             'Goutte\\' => 7,
         ),
         'D' => 
         array (
+            'Drush\\Internal\\' => 15,
+            'Drush\\' => 6,
+            'Drupal\\Tests\\lightning_workflow\\' => 32,
+            'Drupal\\Tests\\lightning_media\\' => 29,
+            'Drupal\\Tests\\lightning_layout\\' => 30,
+            'Drupal\\Tests\\lightning_core\\' => 28,
+            'Drupal\\Tests\\lightning_api\\' => 27,
             'Drupal\\Driver\\' => 14,
             'Drupal\\Core\\' => 12,
             'Drupal\\Console\\Dotenv\\' => 22,
@@ -141,9 +169,11 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
             'Drupal\\Console\\' => 15,
             'Drupal\\Component\\' => 17,
             'DrupalComposer\\DrupalScaffold\\' => 30,
+            'DrupalCodeGenerator\\' => 20,
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Inflector\\' => 26,
+            'Doctrine\\Common\\Collections\\' => 28,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
@@ -151,8 +181,14 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'C' => 
         array (
+            'Consolidation\\SiteProcess\\' => 26,
+            'Consolidation\\SiteAlias\\' => 24,
             'Consolidation\\OutputFormatters\\' => 31,
+            'Consolidation\\Log\\' => 18,
+            'Consolidation\\Filter\\' => 21,
+            'Consolidation\\Config\\' => 21,
             'Consolidation\\AnnotatedCommand\\' => 31,
+            'Composer\\XdebugHandler\\' => 23,
             'Composer\\Spdx\\' => 14,
             'Composer\\Semver\\' => 16,
             'Composer\\Installers\\' => 20,
@@ -161,6 +197,7 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'B' => 
         array (
+            'Brumann\\Polyfill\\' => 17,
             'Behat\\Mink\\Driver\\' => 18,
             'Behat\\Mink\\' => 11,
         ),
@@ -220,6 +257,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
+        'TYPO3\\PharStreamWrapper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/typo3/phar-stream-wrapper/src',
+        ),
         'Symfony\\Polyfill\\Php70\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php70',
@@ -232,9 +273,21 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-iconv',
         ),
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Symfony\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/contracts',
+        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\VarExporter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/var-exporter',
         ),
         'Symfony\\Component\\VarDumper\\' => 
         array (
@@ -332,6 +385,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/stecman/symfony-console-completion/src',
         ),
+        'SelfUpdate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/self-update/src',
+        ),
         'Seld\\PharUtils\\' => 
         array (
             0 => __DIR__ . '/..' . '/seld/phar-utils/src',
@@ -340,9 +397,9 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/seld/jsonlint/src/Seld/JsonLint',
         ),
-        'Seld\\CliPrompt\\' => 
+        'Robo\\' => 
         array (
-            0 => __DIR__ . '/..' . '/seld/cli-prompt/src',
+            0 => __DIR__ . '/..' . '/consolidation/robo/src',
         ),
         'RedBeanPHP\\' => 
         array (
@@ -350,7 +407,7 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'Psy\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psy/psysh/src/Psy',
+            0 => __DIR__ . '/..' . '/psy/psysh/src',
         ),
         'Psr\\SimpleCache\\' => 
         array (
@@ -396,6 +453,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/league/event/src',
         ),
+        'League\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/container/src',
+        ),
         'League\\CommonMark\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/commonmark/src',
@@ -407,6 +468,14 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'JsonSchema\\' => 
         array (
             0 => __DIR__ . '/..' . '/justinrainbow/json-schema/src/JsonSchema',
+        ),
+        'JakubOnderka\\PhpConsoleHighlighter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
+        ),
+        'JakubOnderka\\PhpConsoleColor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
         ),
         'Interop\\Container\\' => 
         array (
@@ -424,9 +493,45 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Grasmash\\YamlExpander\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/grasmash/yaml-expander/src',
+        ),
+        'Grasmash\\Expander\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/grasmash/expander/src',
+        ),
         'Goutte\\' => 
         array (
             0 => __DIR__ . '/..' . '/fabpot/goutte/Goutte',
+        ),
+        'Drush\\Internal\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drush/drush/src/internal-forks',
+        ),
+        'Drush\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drush/drush/src',
+        ),
+        'Drupal\\Tests\\lightning_workflow\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/docroot/modules/contrib/lightning_workflow/tests/src',
+        ),
+        'Drupal\\Tests\\lightning_media\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/docroot/modules/contrib/lightning_media/tests/src',
+        ),
+        'Drupal\\Tests\\lightning_layout\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/docroot/modules/contrib/lightning_layout/tests/src',
+        ),
+        'Drupal\\Tests\\lightning_core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/docroot/modules/contrib/lightning_core/tests/src',
+        ),
+        'Drupal\\Tests\\lightning_api\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/docroot/modules/contrib/lightning_api/tests/src',
         ),
         'Drupal\\Driver\\' => 
         array (
@@ -460,6 +565,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/drupal-composer/drupal-scaffold/src',
         ),
+        'DrupalCodeGenerator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chi-teck/drupal-code-generator/src',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
@@ -472,6 +581,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
         ),
+        'Doctrine\\Common\\Collections\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/collections/lib/Doctrine/Common/Collections',
+        ),
         'Doctrine\\Common\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
@@ -483,18 +596,45 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+            1 => __DIR__ . '/..' . '/doctrine/event-manager/lib/Doctrine/Common',
+            2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
+            3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
         ),
         'Defuse\\Crypto\\' => 
         array (
             0 => __DIR__ . '/..' . '/defuse/php-encryption/src',
         ),
+        'Consolidation\\SiteProcess\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/site-process/src',
+        ),
+        'Consolidation\\SiteAlias\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/site-alias/src',
+        ),
         'Consolidation\\OutputFormatters\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/output-formatters/src',
         ),
+        'Consolidation\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/log/src',
+        ),
+        'Consolidation\\Filter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/filter-via-dot-access-data/src',
+        ),
+        'Consolidation\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/consolidation/config/src',
+        ),
         'Consolidation\\AnnotatedCommand\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/annotated-command/src',
+        ),
+        'Composer\\XdebugHandler\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/xdebug-handler/src',
         ),
         'Composer\\Spdx\\' => 
         array (
@@ -515,6 +655,10 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/composer/src/Composer',
+        ),
+        'Brumann\\Polyfill\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brumann/polyfill-unserialize/src',
         ),
         'Behat\\Mink\\Driver\\' => 
         array (
@@ -568,13 +712,13 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'S' => 
         array (
-            'Sunra\\PhpSimple\\HtmlDomParser' => 
-            array (
-                0 => __DIR__ . '/..' . '/sunra/php-simple-html-dom-parser/Src',
-            ),
             'Stack' => 
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
+            ),
+            'Solarium\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/solarium/solarium/library',
             ),
         ),
         'P' => 
@@ -584,15 +728,11 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
         ),
-        'J' => 
+        'K' => 
         array (
-            'JakubOnderka\\PhpConsoleHighlighter' => 
+            'KubAT\\PhpSimple\\HtmlDomParser' => 
             array (
-                0 => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src',
-            ),
-            'JakubOnderka\\PhpConsoleColor' => 
-            array (
-                0 => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src',
+                0 => __DIR__ . '/..' . '/kub-at/php-simple-html-dom-parser/src',
             ),
         ),
         'H' => 
@@ -615,10 +755,6 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'D' => 
         array (
-            'Drush' => 
-            array (
-                0 => __DIR__ . '/..' . '/drush/drush/lib',
-            ),
             'Drupal\\Tests\\Driver' => 
             array (
                 0 => __DIR__ . '/..' . '/drupal/drupal-driver/tests',
@@ -639,13 +775,17 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
             array (
                 0 => __DIR__ . '/..' . '/drupal/drupal-driver/src',
             ),
+            'Drupal\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/drupal/coder/coder_sniffer/Drupal',
+            ),
+            'DrupalPractice\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/drupal/coder/coder_sniffer/Drupal',
+            ),
             'Doctrine\\Common\\Lexer\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
-            ),
-            'Doctrine\\Common\\Collections\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
             'Dflydev\\PlaceholderResolver' => 
             array (
@@ -662,10 +802,6 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         ),
         'C' => 
         array (
-            'Consolidation' => 
-            array (
-                0 => __DIR__ . '/..' . '/drush/drush/lib',
-            ),
             'Caxy\\HtmlDiff' => 
             array (
                 0 => __DIR__ . '/..' . '/caxy/php-htmldiff/lib',
@@ -719,104 +855,8 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
         'File_Iterator_Factory' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Factory.php',
-        'Generic_Sniffs_Arrays_DisallowLongArraySyntaxSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Arrays/DisallowLongArraySyntaxSniff.php',
-        'Generic_Sniffs_Arrays_DisallowShortArraySyntaxSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Arrays/DisallowShortArraySyntaxSniff.php',
-        'Generic_Sniffs_Classes_DuplicateClassNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Classes/DuplicateClassNameSniff.php',
-        'Generic_Sniffs_Classes_OpeningBraceSameLineSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Classes/OpeningBraceSameLineSniff.php',
-        'Generic_Sniffs_CodeAnalysis_EmptyStatementSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/EmptyStatementSniff.php',
-        'Generic_Sniffs_CodeAnalysis_ForLoopShouldBeWhileLoopSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/ForLoopShouldBeWhileLoopSniff.php',
-        'Generic_Sniffs_CodeAnalysis_ForLoopWithTestFunctionCallSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/ForLoopWithTestFunctionCallSniff.php',
-        'Generic_Sniffs_CodeAnalysis_JumbledIncrementerSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/JumbledIncrementerSniff.php',
-        'Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/UnconditionalIfStatementSniff.php',
-        'Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/UnnecessaryFinalModifierSniff.php',
-        'Generic_Sniffs_CodeAnalysis_UnusedFunctionParameterSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/UnusedFunctionParameterSniff.php',
-        'Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/CodeAnalysis/UselessOverridingMethodSniff.php',
-        'Generic_Sniffs_Commenting_DocCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Commenting/DocCommentSniff.php',
-        'Generic_Sniffs_Commenting_FixmeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Commenting/FixmeSniff.php',
-        'Generic_Sniffs_Commenting_TodoSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Commenting/TodoSniff.php',
-        'Generic_Sniffs_ControlStructures_InlineControlStructureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/ControlStructures/InlineControlStructureSniff.php',
-        'Generic_Sniffs_Debug_CSSLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/CSSLintSniff.php',
-        'Generic_Sniffs_Debug_ClosureLinterSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/ClosureLinterSniff.php',
-        'Generic_Sniffs_Debug_ESLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/ESLintSniff.php',
-        'Generic_Sniffs_Debug_JSHintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Debug/JSHintSniff.php',
-        'Generic_Sniffs_Files_ByteOrderMarkSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/ByteOrderMarkSniff.php',
-        'Generic_Sniffs_Files_EndFileNewlineSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/EndFileNewlineSniff.php',
-        'Generic_Sniffs_Files_EndFileNoNewlineSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/EndFileNoNewlineSniff.php',
-        'Generic_Sniffs_Files_InlineHTMLSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/InlineHTMLSniff.php',
-        'Generic_Sniffs_Files_LineEndingsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/LineEndingsSniff.php',
-        'Generic_Sniffs_Files_LineLengthSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/LineLengthSniff.php',
-        'Generic_Sniffs_Files_LowercasedFilenameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/LowercasedFilenameSniff.php',
-        'Generic_Sniffs_Files_OneClassPerFileSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/OneClassPerFileSniff.php',
-        'Generic_Sniffs_Files_OneInterfacePerFileSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/OneInterfacePerFileSniff.php',
-        'Generic_Sniffs_Files_OneTraitPerFileSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Files/OneTraitPerFileSniff.php',
-        'Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Formatting/DisallowMultipleStatementsSniff.php',
-        'Generic_Sniffs_Formatting_MultipleStatementAlignmentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Formatting/MultipleStatementAlignmentSniff.php',
-        'Generic_Sniffs_Formatting_NoSpaceAfterCastSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Formatting/NoSpaceAfterCastSniff.php',
-        'Generic_Sniffs_Formatting_SpaceAfterCastSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Formatting/SpaceAfterCastSniff.php',
-        'Generic_Sniffs_Formatting_SpaceAfterNotSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Formatting/SpaceAfterNotSniff.php',
-        'Generic_Sniffs_Functions_CallTimePassByReferenceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Functions/CallTimePassByReferenceSniff.php',
-        'Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Functions/FunctionCallArgumentSpacingSniff.php',
-        'Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Functions/OpeningFunctionBraceBsdAllmanSniff.php',
-        'Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Functions/OpeningFunctionBraceKernighanRitchieSniff.php',
-        'Generic_Sniffs_Metrics_CyclomaticComplexitySniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Metrics/CyclomaticComplexitySniff.php',
-        'Generic_Sniffs_Metrics_NestingLevelSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Metrics/NestingLevelSniff.php',
-        'Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php',
-        'Generic_Sniffs_NamingConventions_ConstructorNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/NamingConventions/ConstructorNameSniff.php',
-        'Generic_Sniffs_NamingConventions_UpperCaseConstantNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
-        'Generic_Sniffs_PHP_BacktickOperatorSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/BacktickOperatorSniff.php',
-        'Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/CharacterBeforePHPOpeningTagSniff.php',
-        'Generic_Sniffs_PHP_ClosingPHPTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/ClosingPHPTagSniff.php',
-        'Generic_Sniffs_PHP_DeprecatedFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/DeprecatedFunctionsSniff.php',
-        'Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowAlternativePHPTagsSniff.php',
-        'Generic_Sniffs_PHP_DisallowShortOpenTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
-        'Generic_Sniffs_PHP_ForbiddenFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php',
-        'Generic_Sniffs_PHP_LowerCaseConstantSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/LowerCaseConstantSniff.php',
-        'Generic_Sniffs_PHP_LowerCaseKeywordSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/LowerCaseKeywordSniff.php',
-        'Generic_Sniffs_PHP_NoSilencedErrorsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/NoSilencedErrorsSniff.php',
-        'Generic_Sniffs_PHP_SAPIUsageSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/SAPIUsageSniff.php',
-        'Generic_Sniffs_PHP_SyntaxSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/SyntaxSniff.php',
-        'Generic_Sniffs_PHP_UpperCaseConstantSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/PHP/UpperCaseConstantSniff.php',
-        'Generic_Sniffs_Strings_UnnecessaryStringConcatSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/Strings/UnnecessaryStringConcatSniff.php',
-        'Generic_Sniffs_VersionControl_SubversionPropertiesSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/VersionControl/SubversionPropertiesSniff.php',
-        'Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/WhiteSpace/DisallowSpaceIndentSniff.php',
-        'Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/WhiteSpace/DisallowTabIndentSniff.php',
-        'Generic_Sniffs_WhiteSpace_ScopeIndentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Generic/Sniffs/WhiteSpace/ScopeIndentSniff.php',
         'JSON' => __DIR__ . '/..' . '/drexarj/disqus-php/disqusapi/json.php',
         'JSONTest' => __DIR__ . '/..' . '/drexarj/disqus-php/disqusapi/tests/json.php',
-        'MySource_Sniffs_CSS_BrowserSpecificStylesSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/CSS/BrowserSpecificStylesSniff.php',
-        'MySource_Sniffs_Channels_DisallowSelfActionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Channels/DisallowSelfActionsSniff.php',
-        'MySource_Sniffs_Channels_IncludeOwnSystemSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Channels/IncludeOwnSystemSniff.php',
-        'MySource_Sniffs_Channels_IncludeSystemSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Channels/IncludeSystemSniff.php',
-        'MySource_Sniffs_Channels_UnusedSystemSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Channels/UnusedSystemSniff.php',
-        'MySource_Sniffs_Commenting_FunctionCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Commenting/FunctionCommentSniff.php',
-        'MySource_Sniffs_Debug_DebugCodeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Debug/DebugCodeSniff.php',
-        'MySource_Sniffs_Debug_FirebugConsoleSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Debug/FirebugConsoleSniff.php',
-        'MySource_Sniffs_Objects_AssignThisSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Objects/AssignThisSniff.php',
-        'MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Objects/CreateWidgetTypeCallbackSniff.php',
-        'MySource_Sniffs_Objects_DisallowNewWidgetSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Objects/DisallowNewWidgetSniff.php',
-        'MySource_Sniffs_PHP_AjaxNullComparisonSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/PHP/AjaxNullComparisonSniff.php',
-        'MySource_Sniffs_PHP_EvalObjectFactorySniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/PHP/EvalObjectFactorySniff.php',
-        'MySource_Sniffs_PHP_GetRequestDataSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/PHP/GetRequestDataSniff.php',
-        'MySource_Sniffs_PHP_ReturnFunctionValueSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/PHP/ReturnFunctionValueSniff.php',
-        'MySource_Sniffs_Strings_JoinStringsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/MySource/Sniffs/Strings/JoinStringsSniff.php',
-        'PEAR_Sniffs_Classes_ClassDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Classes/ClassDeclarationSniff.php',
-        'PEAR_Sniffs_Commenting_ClassCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Commenting/ClassCommentSniff.php',
-        'PEAR_Sniffs_Commenting_FileCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Commenting/FileCommentSniff.php',
-        'PEAR_Sniffs_Commenting_FunctionCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Commenting/FunctionCommentSniff.php',
-        'PEAR_Sniffs_Commenting_InlineCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Commenting/InlineCommentSniff.php',
-        'PEAR_Sniffs_ControlStructures_ControlSignatureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/ControlStructures/ControlSignatureSniff.php',
-        'PEAR_Sniffs_ControlStructures_MultiLineConditionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/ControlStructures/MultiLineConditionSniff.php',
-        'PEAR_Sniffs_Files_IncludingFileSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Files/IncludingFileSniff.php',
-        'PEAR_Sniffs_Formatting_MultiLineAssignmentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Formatting/MultiLineAssignmentSniff.php',
-        'PEAR_Sniffs_Functions_FunctionCallSignatureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Functions/FunctionCallSignatureSniff.php',
-        'PEAR_Sniffs_Functions_FunctionDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Functions/FunctionDeclarationSniff.php',
-        'PEAR_Sniffs_Functions_ValidDefaultValueSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/Functions/ValidDefaultValueSniff.php',
-        'PEAR_Sniffs_NamingConventions_ValidClassNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/NamingConventions/ValidClassNameSniff.php',
-        'PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/NamingConventions/ValidFunctionNameSniff.php',
-        'PEAR_Sniffs_NamingConventions_ValidVariableNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/NamingConventions/ValidVariableNameSniff.php',
-        'PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/WhiteSpace/ObjectOperatorIndentSniff.php',
-        'PEAR_Sniffs_WhiteSpace_ScopeClosingBraceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/WhiteSpace/ScopeClosingBraceSniff.php',
-        'PEAR_Sniffs_WhiteSpace_ScopeIndentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PEAR/Sniffs/WhiteSpace/ScopeIndentSniff.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/AssertionFailedError.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
@@ -1022,44 +1062,6 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'PHP_CodeCoverage_Report_XML_Totals' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Report/XML/Totals.php',
         'PHP_CodeCoverage_Util' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Util.php',
         'PHP_CodeCoverage_Util_InvalidArgumentHelper' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage/Util/InvalidArgumentHelper.php',
-        'PHP_CodeSniffer' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer.php',
-        'PHP_CodeSniffer_CLI' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/CLI.php',
-        'PHP_CodeSniffer_DocGenerators_Generator' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/DocGenerators/Generator.php',
-        'PHP_CodeSniffer_DocGenerators_HTML' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/DocGenerators/HTML.php',
-        'PHP_CodeSniffer_DocGenerators_Markdown' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/DocGenerators/Markdown.php',
-        'PHP_CodeSniffer_DocGenerators_Text' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/DocGenerators/Text.php',
-        'PHP_CodeSniffer_Exception' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Exception.php',
-        'PHP_CodeSniffer_File' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/File.php',
-        'PHP_CodeSniffer_Fixer' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Fixer.php',
-        'PHP_CodeSniffer_Report' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Report.php',
-        'PHP_CodeSniffer_Reporting' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reporting.php',
-        'PHP_CodeSniffer_Reports_Cbf' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Cbf.php',
-        'PHP_CodeSniffer_Reports_Checkstyle' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Checkstyle.php',
-        'PHP_CodeSniffer_Reports_Csv' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Csv.php',
-        'PHP_CodeSniffer_Reports_Diff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Diff.php',
-        'PHP_CodeSniffer_Reports_Emacs' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Emacs.php',
-        'PHP_CodeSniffer_Reports_Full' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Full.php',
-        'PHP_CodeSniffer_Reports_Gitblame' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Gitblame.php',
-        'PHP_CodeSniffer_Reports_Hgblame' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Hgblame.php',
-        'PHP_CodeSniffer_Reports_Info' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Info.php',
-        'PHP_CodeSniffer_Reports_Json' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Json.php',
-        'PHP_CodeSniffer_Reports_Junit' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Junit.php',
-        'PHP_CodeSniffer_Reports_Notifysend' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Notifysend.php',
-        'PHP_CodeSniffer_Reports_Source' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Source.php',
-        'PHP_CodeSniffer_Reports_Summary' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Summary.php',
-        'PHP_CodeSniffer_Reports_Svnblame' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Svnblame.php',
-        'PHP_CodeSniffer_Reports_VersionControl' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/VersionControl.php',
-        'PHP_CodeSniffer_Reports_Xml' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Reports/Xml.php',
-        'PHP_CodeSniffer_Sniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Sniff.php',
-        'PHP_CodeSniffer_Standards_AbstractPatternSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/AbstractPatternSniff.php',
-        'PHP_CodeSniffer_Standards_AbstractScopeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/AbstractScopeSniff.php',
-        'PHP_CodeSniffer_Standards_AbstractVariableSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/AbstractVariableSniff.php',
-        'PHP_CodeSniffer_Standards_IncorrectPatternException' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/IncorrectPatternException.php',
-        'PHP_CodeSniffer_Tokenizers_CSS' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Tokenizers/CSS.php',
-        'PHP_CodeSniffer_Tokenizers_Comment' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Tokenizers/Comment.php',
-        'PHP_CodeSniffer_Tokenizers_JS' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Tokenizers/JS.php',
-        'PHP_CodeSniffer_Tokenizers_PHP' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Tokenizers/PHP.php',
-        'PHP_CodeSniffer_Tokens' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Tokens.php',
         'PHP_Timer' => __DIR__ . '/..' . '/phpunit/php-timer/src/Timer.php',
         'PHP_Token' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_TokenWithScope' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -1260,21 +1262,6 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
-        'PSR1_Sniffs_Classes_ClassDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR1/Sniffs/Classes/ClassDeclarationSniff.php',
-        'PSR1_Sniffs_Files_SideEffectsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR1/Sniffs/Files/SideEffectsSniff.php',
-        'PSR1_Sniffs_Methods_CamelCapsMethodNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR1/Sniffs/Methods/CamelCapsMethodNameSniff.php',
-        'PSR2_Sniffs_Classes_ClassDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Classes/ClassDeclarationSniff.php',
-        'PSR2_Sniffs_Classes_PropertyDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Classes/PropertyDeclarationSniff.php',
-        'PSR2_Sniffs_ControlStructures_ControlStructureSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/ControlStructures/ControlStructureSpacingSniff.php',
-        'PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/ControlStructures/ElseIfDeclarationSniff.php',
-        'PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/ControlStructures/SwitchDeclarationSniff.php',
-        'PSR2_Sniffs_Files_ClosingTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Files/ClosingTagSniff.php',
-        'PSR2_Sniffs_Files_EndFileNewlineSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Files/EndFileNewlineSniff.php',
-        'PSR2_Sniffs_Methods_FunctionCallSignatureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Methods/FunctionCallSignatureSniff.php',
-        'PSR2_Sniffs_Methods_FunctionClosingBraceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Methods/FunctionClosingBraceSniff.php',
-        'PSR2_Sniffs_Methods_MethodDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Methods/MethodDeclarationSniff.php',
-        'PSR2_Sniffs_Namespaces_NamespaceDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Namespaces/NamespaceDeclarationSniff.php',
-        'PSR2_Sniffs_Namespaces_UseDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/PSR2/Sniffs/Namespaces/UseDeclarationSniff.php',
         'ParseError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
         'SebastianBergmann\\Comparator\\ArrayComparator' => __DIR__ . '/..' . '/sebastian/comparator/src/ArrayComparator.php',
         'SebastianBergmann\\Comparator\\Comparator' => __DIR__ . '/..' . '/sebastian/comparator/src/Comparator.php',
@@ -1313,112 +1300,9 @@ class ComposerStaticInitaedc6de5a30836e9ca1d241be6daa346
         'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => __DIR__ . '/..' . '/sebastian/recursion-context/src/InvalidArgumentException.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',
-        'Squiz_Sniffs_Arrays_ArrayBracketSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Arrays/ArrayBracketSpacingSniff.php',
-        'Squiz_Sniffs_Arrays_ArrayDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Arrays/ArrayDeclarationSniff.php',
-        'Squiz_Sniffs_CSS_ClassDefinitionClosingBraceSpaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ClassDefinitionClosingBraceSpaceSniff.php',
-        'Squiz_Sniffs_CSS_ClassDefinitionNameSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ClassDefinitionNameSpacingSniff.php',
-        'Squiz_Sniffs_CSS_ClassDefinitionOpeningBraceSpaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ClassDefinitionOpeningBraceSpaceSniff.php',
-        'Squiz_Sniffs_CSS_ColonSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ColonSpacingSniff.php',
-        'Squiz_Sniffs_CSS_ColourDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ColourDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_DisallowMultipleStyleDefinitionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/DisallowMultipleStyleDefinitionsSniff.php',
-        'Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/DuplicateClassDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/DuplicateStyleDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_EmptyClassDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/EmptyClassDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_EmptyStyleDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/EmptyStyleDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_ForbiddenStylesSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ForbiddenStylesSniff.php',
-        'Squiz_Sniffs_CSS_IndentationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/IndentationSniff.php',
-        'Squiz_Sniffs_CSS_LowercaseStyleDefinitionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/LowercaseStyleDefinitionSniff.php',
-        'Squiz_Sniffs_CSS_MissingColonSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/MissingColonSniff.php',
-        'Squiz_Sniffs_CSS_NamedColoursSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/NamedColoursSniff.php',
-        'Squiz_Sniffs_CSS_OpacitySniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/OpacitySniff.php',
-        'Squiz_Sniffs_CSS_SemicolonSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/SemicolonSpacingSniff.php',
-        'Squiz_Sniffs_CSS_ShorthandSizeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/CSS/ShorthandSizeSniff.php',
-        'Squiz_Sniffs_Classes_ClassDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/ClassDeclarationSniff.php',
-        'Squiz_Sniffs_Classes_ClassFileNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/ClassFileNameSniff.php',
-        'Squiz_Sniffs_Classes_DuplicatePropertySniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/DuplicatePropertySniff.php',
-        'Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/LowercaseClassKeywordsSniff.php',
-        'Squiz_Sniffs_Classes_SelfMemberReferenceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/SelfMemberReferenceSniff.php',
-        'Squiz_Sniffs_Classes_ValidClassNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Classes/ValidClassNameSniff.php',
-        'Squiz_Sniffs_Commenting_BlockCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/BlockCommentSniff.php',
-        'Squiz_Sniffs_Commenting_ClassCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/ClassCommentSniff.php',
-        'Squiz_Sniffs_Commenting_ClosingDeclarationCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/ClosingDeclarationCommentSniff.php',
-        'Squiz_Sniffs_Commenting_DocCommentAlignmentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/DocCommentAlignmentSniff.php',
-        'Squiz_Sniffs_Commenting_EmptyCatchCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/EmptyCatchCommentSniff.php',
-        'Squiz_Sniffs_Commenting_FileCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/FileCommentSniff.php',
-        'Squiz_Sniffs_Commenting_FunctionCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/FunctionCommentSniff.php',
-        'Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/FunctionCommentThrowTagSniff.php',
-        'Squiz_Sniffs_Commenting_InlineCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/InlineCommentSniff.php',
-        'Squiz_Sniffs_Commenting_LongConditionClosingCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/LongConditionClosingCommentSniff.php',
-        'Squiz_Sniffs_Commenting_PostStatementCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/PostStatementCommentSniff.php',
-        'Squiz_Sniffs_Commenting_VariableCommentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Commenting/VariableCommentSniff.php',
-        'Squiz_Sniffs_ControlStructures_ControlSignatureSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/ControlSignatureSniff.php',
-        'Squiz_Sniffs_ControlStructures_ElseIfDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/ElseIfDeclarationSniff.php',
-        'Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/ForEachLoopDeclarationSniff.php',
-        'Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/ForLoopDeclarationSniff.php',
-        'Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/InlineIfDeclarationSniff.php',
-        'Squiz_Sniffs_ControlStructures_LowercaseDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/LowercaseDeclarationSniff.php',
-        'Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/ControlStructures/SwitchDeclarationSniff.php',
-        'Squiz_Sniffs_Debug_JSLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Debug/JSLintSniff.php',
-        'Squiz_Sniffs_Debug_JavaScriptLintSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Debug/JavaScriptLintSniff.php',
-        'Squiz_Sniffs_Files_FileExtensionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Files/FileExtensionSniff.php',
-        'Squiz_Sniffs_Formatting_OperatorBracketSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Formatting/OperatorBracketSniff.php',
-        'Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/FunctionDeclarationArgumentSpacingSniff.php',
-        'Squiz_Sniffs_Functions_FunctionDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/FunctionDeclarationSniff.php',
-        'Squiz_Sniffs_Functions_FunctionDuplicateArgumentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/FunctionDuplicateArgumentSniff.php',
-        'Squiz_Sniffs_Functions_GlobalFunctionSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/GlobalFunctionSniff.php',
-        'Squiz_Sniffs_Functions_LowercaseFunctionKeywordsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/LowercaseFunctionKeywordsSniff.php',
-        'Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Functions/MultiLineFunctionDeclarationSniff.php',
-        'Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/NamingConventions/ValidFunctionNameSniff.php',
-        'Squiz_Sniffs_NamingConventions_ValidVariableNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/NamingConventions/ValidVariableNameSniff.php',
-        'Squiz_Sniffs_Objects_DisallowObjectStringIndexSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Objects/DisallowObjectStringIndexSniff.php',
-        'Squiz_Sniffs_Objects_ObjectInstantiationSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Objects/ObjectInstantiationSniff.php',
-        'Squiz_Sniffs_Objects_ObjectMemberCommaSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Objects/ObjectMemberCommaSniff.php',
-        'Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Operators/ComparisonOperatorUsageSniff.php',
-        'Squiz_Sniffs_Operators_IncrementDecrementUsageSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Operators/IncrementDecrementUsageSniff.php',
-        'Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Operators/ValidLogicalOperatorsSniff.php',
-        'Squiz_Sniffs_PHP_CommentedOutCodeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/CommentedOutCodeSniff.php',
-        'Squiz_Sniffs_PHP_DisallowBooleanStatementSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowBooleanStatementSniff.php',
-        'Squiz_Sniffs_PHP_DisallowComparisonAssignmentSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowComparisonAssignmentSniff.php',
-        'Squiz_Sniffs_PHP_DisallowInlineIfSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowInlineIfSniff.php',
-        'Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowMultipleAssignmentsSniff.php',
-        'Squiz_Sniffs_PHP_DisallowObEndFlushSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowObEndFlushSniff.php',
-        'Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DisallowSizeFunctionsInLoopsSniff.php',
-        'Squiz_Sniffs_PHP_DiscouragedFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/DiscouragedFunctionsSniff.php',
-        'Squiz_Sniffs_PHP_EmbeddedPhpSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/EmbeddedPhpSniff.php',
-        'Squiz_Sniffs_PHP_EvalSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/EvalSniff.php',
-        'Squiz_Sniffs_PHP_ForbiddenFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/ForbiddenFunctionsSniff.php',
-        'Squiz_Sniffs_PHP_GlobalKeywordSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/GlobalKeywordSniff.php',
-        'Squiz_Sniffs_PHP_HeredocSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/HeredocSniff.php',
-        'Squiz_Sniffs_PHP_InnerFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/InnerFunctionsSniff.php',
-        'Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/LowercasePHPFunctionsSniff.php',
-        'Squiz_Sniffs_PHP_NonExecutableCodeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/PHP/NonExecutableCodeSniff.php',
-        'Squiz_Sniffs_Scope_MemberVarScopeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Scope/MemberVarScopeSniff.php',
-        'Squiz_Sniffs_Scope_MethodScopeSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Scope/MethodScopeSniff.php',
-        'Squiz_Sniffs_Scope_StaticThisUsageSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Scope/StaticThisUsageSniff.php',
-        'Squiz_Sniffs_Strings_ConcatenationSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Strings/ConcatenationSpacingSniff.php',
-        'Squiz_Sniffs_Strings_DoubleQuoteUsageSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Strings/DoubleQuoteUsageSniff.php',
-        'Squiz_Sniffs_Strings_EchoedStringsSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/Strings/EchoedStringsSniff.php',
-        'Squiz_Sniffs_WhiteSpace_CastSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/CastSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/ControlStructureSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_FunctionClosingBraceSpaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/FunctionClosingBraceSpaceSniff.php',
-        'Squiz_Sniffs_WhiteSpace_FunctionOpeningBraceSpaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/FunctionOpeningBraceSpaceSniff.php',
-        'Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/FunctionSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/LanguageConstructSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_LogicalOperatorSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/LogicalOperatorSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/MemberVarSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/ObjectOperatorSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/OperatorSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_PropertyLabelSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/PropertyLabelSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/ScopeClosingBraceSniff.php',
-        'Squiz_Sniffs_WhiteSpace_ScopeKeywordSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/ScopeKeywordSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_SemicolonSpacingSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SemicolonSpacingSniff.php',
-        'Squiz_Sniffs_WhiteSpace_SuperfluousWhitespaceSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Squiz/Sniffs/WhiteSpace/SuperfluousWhitespaceSniff.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TwitterAPIExchange' => __DIR__ . '/..' . '/j7mbo/twitter-api-php/TwitterAPIExchange.php',
         'TypeError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/TypeError.php',
-        'Zend_Sniffs_Debug_CodeAnalyzerSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Debug/CodeAnalyzerSniff.php',
-        'Zend_Sniffs_Files_ClosingTagSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/Files/ClosingTagSniff.php',
-        'Zend_Sniffs_NamingConventions_ValidVariableNameSniff' => __DIR__ . '/..' . '/squizlabs/php_codesniffer/CodeSniffer/Standards/Zend/Sniffs/NamingConventions/ValidVariableNameSniff.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

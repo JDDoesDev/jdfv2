@@ -6,7 +6,7 @@ use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 
 /**
- * JSON API integration test for the "ImageStyle" config entity type.
+ * JSON:API integration test for the "ImageStyle" config entity type.
  *
  * @group jsonapi
  */
@@ -79,23 +79,23 @@ class ImageStyleTest extends ResourceTestBase {
    */
   protected function getExpectedDocument() {
     $self_url = Url::fromUri('base:/jsonapi/image_style/image_style/' . $this->entity->uuid())->setAbsolute()->toString(TRUE)->getGeneratedUrl();
-    return [
+    $doc = [
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $self_url],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'image_style--image_style',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url],
         ],
         'attributes' => [
           'dependencies' => [],
@@ -105,6 +105,7 @@ class ImageStyleTest extends ResourceTestBase {
               'id' => 'image_scale_and_crop',
               'weight' => 0,
               'data' => [
+                'anchor' => 'center-center',
                 'width' => 120,
                 'height' => 121,
               ],
@@ -112,12 +113,15 @@ class ImageStyleTest extends ResourceTestBase {
           ],
           'label' => 'Camelids',
           'langcode' => 'en',
-          'name' => 'camelids',
           'status' => TRUE,
-          'uuid' => $this->entity->uuid(),
+          'drupal_internal__name' => 'camelids',
         ],
       ],
     ];
+    if (floatval(\Drupal::VERSION) < 8.6) {
+      unset($doc['data']['attributes']['effects'][$this->effectUuid]['data']['anchor']);
+    }
+    return $doc;
   }
 
   /**

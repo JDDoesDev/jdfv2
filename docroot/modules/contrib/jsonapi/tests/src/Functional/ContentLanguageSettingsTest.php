@@ -3,12 +3,13 @@
 namespace Drupal\Tests\jsonapi\Functional;
 
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\language\Entity\ContentLanguageSettings;
 use Drupal\node\Entity\NodeType;
 
 /**
- * JSON API integration test for "ContentLanguageSettings" config entity type.
+ * JSON:API integration test for "ContentLanguageSettings" config entity type.
  *
  * @group jsonapi
  */
@@ -73,19 +74,19 @@ class ContentLanguageSettingsTest extends ResourceTestBase {
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $self_url],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'language_content_settings--language_content_settings',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url],
         ],
         'attributes' => [
           'default_langcode' => 'site_default',
@@ -94,13 +95,12 @@ class ContentLanguageSettingsTest extends ResourceTestBase {
               'node.type.camelids',
             ],
           ],
-          'id' => 'node.camelids',
           'langcode' => 'en',
           'language_alterable' => FALSE,
           'status' => TRUE,
           'target_bundle' => 'camelids',
           'target_entity_type_id' => 'node',
-          'uuid' => $this->entity->uuid(),
+          'drupal_internal__id' => 'node.camelids',
         ],
       ],
     ];
@@ -118,6 +118,36 @@ class ContentLanguageSettingsTest extends ResourceTestBase {
    */
   protected function getExpectedCacheContexts(array $sparse_fieldset = NULL) {
     return Cache::mergeContexts(parent::getExpectedCacheContexts(), ['languages:language_interface']);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function createAnotherEntity($key) {
+    NodeType::create([
+      'name' => 'Llamaids',
+      'type' => 'llamaids',
+    ])->save();
+
+    $entity = ContentLanguageSettings::create([
+      'target_entity_type_id' => 'node',
+      'target_bundle' => 'llamaids',
+    ]);
+    $entity->setDefaultLangcode('site_default');
+    $entity->save();
+
+    return $entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static function getExpectedCollectionCacheability(AccountInterface $account, array $collection, array $sparse_fieldset = NULL, $filtered = FALSE) {
+    $cacheability = parent::getExpectedCollectionCacheability($account, $collection, $sparse_fieldset, $filtered);
+    if (static::entityAccess(reset($collection), 'view', $account)->isAllowed()) {
+      $cacheability->addCacheContexts(['languages:language_interface']);
+    }
+    return $cacheability;
   }
 
 }

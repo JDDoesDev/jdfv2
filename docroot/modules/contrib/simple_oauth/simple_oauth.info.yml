@@ -6,11 +6,11 @@ package: Authentication
 configure: oauth2_token.settings
 dependencies:
   - drupal:system (>=8.3)
-  - serialization
-  - consumers
+  - drupal:serialization
+  - consumers:consumers (>=8.x-1.0-beta3)
 
-# Information added by Drupal.org packaging script on 2018-02-06
-version: '8.x-3.5'
+# Information added by Drupal.org packaging script on 2019-02-10
+version: '8.x-3.14'
 core: '8.x'
 project: 'simple_oauth'
-datestamp: 1517905686
+datestamp: 1549832290

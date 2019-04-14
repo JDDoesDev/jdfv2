@@ -5,20 +5,21 @@ namespace Drupal\Tests\jsonapi\Functional;
 use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Entity\Vocabulary;
-use Drupal\Tests\rest\Functional\BcTimestampNormalizerUnixTestTrait;
+use Drupal\Tests\jsonapi\Traits\CommonCollectionFilterAccessTestPatternsTrait;
 use GuzzleHttp\RequestOptions;
 
 /**
- * JSON API integration test for the "Term" content entity type.
+ * JSON:API integration test for the "Term" content entity type.
  *
  * @group jsonapi
  */
 class TermTest extends ResourceTestBase {
 
-  use BcTimestampNormalizerUnixTestTrait;
+  use CommonCollectionFilterAccessTestPatternsTrait;
 
   /**
    * {@inheritdoc}
@@ -59,10 +60,6 @@ class TermTest extends ResourceTestBase {
         break;
 
       case 'POST':
-        // @todo Remove this when JSON API requires Drupal 8.5 or newer.
-        if (floatval(\Drupal::VERSION) < 8.5) {
-          $this->grantPermissionsToTestedRole(['administer taxonomy']);
-        }
         $this->grantPermissionsToTestedRole(['create terms in camelids']);
         break;
 
@@ -124,12 +121,26 @@ class TermTest extends ResourceTestBase {
     $expected_parent_normalization = FALSE;
     switch ($parent_term_ids) {
       case [0]:
-        // @todo This is missing the root parent, fix this in https://www.drupal.org/project/jsonapi/issues/2940339
         $expected_parent_normalization = [
-          'data' => [],
+          'data' => [
+            [
+              'id' => 'virtual',
+              'type' => 'taxonomy_term--camelids',
+              'meta' => [
+                'links' => [
+                  'help' => [
+                    'href' => 'https://www.drupal.org/docs/8/modules/json-api/core-concepts#virtual',
+                    'meta' => [
+                      'about' => "Usage and meaning of the 'virtual' resource identifier.",
+                    ],
+                  ],
+                ],
+              ],
+            ],
+          ],
           'links' => [
-            'related' => $self_url . '/parent',
-            'self' => $self_url . '/relationships/parent',
+            'related' => ['href' => $self_url . '/parent'],
+            'self' => ['href' => $self_url . '/relationships/parent'],
           ],
         ];
         break;
@@ -143,8 +154,8 @@ class TermTest extends ResourceTestBase {
             ],
           ],
           'links' => [
-            'related' => $self_url . '/parent',
-            'self' => $self_url . '/relationships/parent',
+            'related' => ['href' => $self_url . '/parent'],
+            'self' => ['href' => $self_url . '/relationships/parent'],
           ],
         ];
         break;
@@ -152,15 +163,28 @@ class TermTest extends ResourceTestBase {
       case [0, 2]:
         $expected_parent_normalization = [
           'data' => [
-            // @todo This is missing the root parent, fix this in https://www.drupal.org/project/jsonapi/issues/2940339
+            [
+              'id' => 'virtual',
+              'type' => 'taxonomy_term--camelids',
+              'meta' => [
+                'links' => [
+                  'help' => [
+                    'href' => 'https://www.drupal.org/docs/8/modules/json-api/core-concepts#virtual',
+                    'meta' => [
+                      'about' => "Usage and meaning of the 'virtual' resource identifier.",
+                    ],
+                  ],
+                ],
+              ],
+            ],
             [
               'id' => Term::load(2)->uuid(),
               'type' => 'taxonomy_term--camelids',
             ],
           ],
           'links' => [
-            'related' => $self_url . '/parent',
-            'self' => $self_url . '/relationships/parent',
+            'related' => ['href' => $self_url . '/parent'],
+            'self' => ['href' => $self_url . '/relationships/parent'],
           ],
         ];
         break;
@@ -178,46 +202,44 @@ class TermTest extends ResourceTestBase {
             ],
           ],
           'links' => [
-            'related' => $self_url . '/parent',
-            'self' => $self_url . '/relationships/parent',
+            'related' => ['href' => $self_url . '/parent'],
+            'self' => ['href' => $self_url . '/relationships/parent'],
           ],
         ];
         break;
     }
 
-    // @todo Remove this when JSON API requires Drupal 8.6 or newer.
+    // @todo Remove this when JSON:API requires Drupal 8.6 or newer.
     if (floatval(\Drupal::VERSION) < 8.6) {
       $expected_parent_normalization = [
         'data' => [],
         'links' => [
-          'related' => $self_url . '/parent',
-          'self' => $self_url . '/relationships/parent',
+          'related' => ['href' => $self_url . '/parent'],
+          'self' => ['href' => $self_url . '/relationships/parent'],
         ],
       ];
     }
 
-    $document = [
+    $expected_document = [
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $self_url],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'taxonomy_term--camelids',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url],
         ],
         'attributes' => [
-          'changed' => $this->entity->getChangedTime(),
-          // @todo uncomment this in https://www.drupal.org/project/jsonapi/issues/2929932
-          /* 'changed' => $this->formatExpectedTimestampItemValues($this->entity->getChangedTime()), */
+          'changed' => (new \DateTime())->setTimestamp($this->entity->getChangedTime())->setTimezone(new \DateTimeZone('UTC'))->format(\DateTime::RFC3339),
           'default_langcode' => TRUE,
           'description' => [
             'value' => 'It is a little known fact that llamas cannot count higher than seven.',
@@ -231,9 +253,8 @@ class TermTest extends ResourceTestBase {
             'pid' => 1,
             'langcode' => 'en',
           ],
-          'tid' => 1,
-          'uuid' => $this->entity->uuid(),
           'weight' => 0,
+          'drupal_internal__tid' => 1,
         ],
         'relationships' => [
           'parent' => $expected_parent_normalization,
@@ -243,18 +264,63 @@ class TermTest extends ResourceTestBase {
               'type' => 'taxonomy_vocabulary--taxonomy_vocabulary',
             ],
             'links' => [
-              'related' => $self_url . '/vid',
-              'self' => $self_url . '/relationships/vid',
+              'related' => ['href' => $self_url . '/vid'],
+              'self' => ['href' => $self_url . '/relationships/vid'],
             ],
           ],
         ],
       ],
     ];
-    // @todo Remove this when JSON API requires Drupal 8.5 or newer.
-    if (floatval(\Drupal::VERSION) < 8.5) {
-      unset($document['data']['attributes']['description']['processed']);
+
+    if (floatval(\Drupal::VERSION) >= 8.6) {
+      $expected_document['data']['attributes']['status'] = TRUE;
     }
-    return $document;
+    if (floatval(\Drupal::VERSION) >= 8.7) {
+      $expected_document['data']['attributes']['drupal_internal__revision_id'] = 1;
+      $expected_document['data']['attributes']['revision_created'] = (new \DateTime())->setTimestamp($this->entity->getRevisionCreationTime())->setTimezone(new \DateTimeZone('UTC'))->format(\DateTime::RFC3339);
+      $expected_document['data']['attributes']['revision_log_message'] = NULL;
+      // @todo Attempt to remove this in https://www.drupal.org/project/drupal/issues/2933518.
+      $expected_document['data']['attributes']['revision_translation_affected'] = TRUE;
+      $expected_document['data']['relationships']['revision_user'] = [
+        'data' => NULL,
+        'links' => [
+          'related' => [
+            'href' => $self_url . '/revision_user',
+          ],
+          'self' => [
+            'href' => $self_url . '/relationships/revision_user',
+          ],
+        ],
+      ];
+    }
+
+    return $expected_document;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getExpectedGetRelationshipDocumentData($relationship_field_name, EntityInterface $entity = NULL) {
+    $data = parent::getExpectedGetRelationshipDocumentData($relationship_field_name, $entity);
+    if ($relationship_field_name === 'parent' && floatval(\Drupal::VERSION) >= 8.6) {
+      $data = [
+        0 => [
+          'id' => 'virtual',
+          'type' => 'taxonomy_term--camelids',
+          'meta' => [
+            'links' => [
+              'help' => [
+                'href' => 'https://www.drupal.org/docs/8/modules/json-api/core-concepts#virtual',
+                'meta' => [
+                  'about' => "Usage and meaning of the 'virtual' resource identifier.",
+                ],
+              ],
+            ],
+          ],
+        ],
+      ];
+    }
+    return $data;
   }
 
   /**
@@ -281,13 +347,11 @@ class TermTest extends ResourceTestBase {
   protected function getExpectedUnauthorizedAccessMessage($method) {
     switch ($method) {
       case 'GET':
-        return "The 'access content' permission is required.";
+        return floatval(\Drupal::VERSION) >= 8.6
+          ? "The 'access content' permission is required and the taxonomy term must be published."
+          : "The 'access content' permission is required.";
 
       case 'POST':
-        // @todo Remove this when JSON API requires Drupal 8.5 or newer.
-        if (floatval(\Drupal::VERSION) < 8.5) {
-          return "The 'administer taxonomy' permission is required.";
-        }
         return "The following permissions are required: 'create terms in camelids' OR 'administer taxonomy'.";
 
       case 'PATCH':
@@ -302,6 +366,17 @@ class TermTest extends ResourceTestBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function getExpectedUnauthorizedAccessCacheability() {
+    $cacheability = parent::getExpectedUnauthorizedAccessCacheability();
+    if (floatval(\Drupal::VERSION) >= 8.6) {
+      $cacheability->addCacheableDependency($this->entity);
+    }
+    return $cacheability;
+  }
+
+  /**
    * Tests PATCHing a term's path.
    *
    * For a negative test, see the similar test coverage for Node.
@@ -312,12 +387,14 @@ class TermTest extends ResourceTestBase {
   public function testPatchPath() {
     $this->setUpAuthorization('GET');
     $this->setUpAuthorization('PATCH');
+    $this->config('jsonapi.settings')->set('read_only', FALSE)->save(TRUE);
 
     // @todo Remove line below in favor of commented line in https://www.drupal.org/project/jsonapi/issues/2878463.
-    $url = Url::fromRoute(sprintf('jsonapi.%s.individual', static::$resourceTypeName), [static::$entityTypeId => $this->entity->uuid()]);
+    $url = Url::fromRoute(sprintf('jsonapi.%s.individual', static::$resourceTypeName), ['entity' => $this->entity->uuid()]);
     /* $url = $this->entity->toUrl('jsonapi'); */
     $request_options = [];
     $request_options[RequestOptions::HEADERS]['Accept'] = 'application/vnd.api+json';
+    $request_options[RequestOptions::HEADERS]['Content-Type'] = 'application/vnd.api+json';
     $request_options = NestedArray::mergeDeep($request_options, $this->getAuthenticationRequestOptions());
 
     // GET term's current normalization.
@@ -341,11 +418,6 @@ class TermTest extends ResourceTestBase {
    * {@inheritdoc}
    */
   protected function getExpectedCacheTags(array $sparse_fieldset = NULL) {
-    // @todo Remove this when JSON API requires Drupal 8.5 or newer.
-    if (floatval(\Drupal::VERSION) < 8.5) {
-      return parent::getExpectedCacheTags($sparse_fieldset);
-    }
-
     $tags = parent::getExpectedCacheTags($sparse_fieldset);
     if ($sparse_fieldset === NULL || in_array('description', $sparse_fieldset)) {
       $tags = Cache::mergeTags($tags, ['config:filter.format.plain_text', 'config:filter.settings']);
@@ -357,11 +429,6 @@ class TermTest extends ResourceTestBase {
    * {@inheritdoc}
    */
   protected function getExpectedCacheContexts(array $sparse_fieldset = NULL) {
-    // @todo Remove this when JSON API requires Drupal 8.5 or newer.
-    if (floatval(\Drupal::VERSION) < 8.5) {
-      return parent::getExpectedCacheContexts($sparse_fieldset);
-    }
-
     $contexts = parent::getExpectedCacheContexts($sparse_fieldset);
     if ($sparse_fieldset === NULL || in_array('description', $sparse_fieldset)) {
       $contexts = Cache::mergeContexts($contexts, ['languages:language_interface', 'theme']);
@@ -394,7 +461,7 @@ class TermTest extends ResourceTestBase {
     $this->entity->set('parent', $parent_term_ids)->save();
 
     // @todo Remove line below in favor of commented line in https://www.drupal.org/project/jsonapi/issues/2878463.
-    $url = Url::fromRoute(sprintf('jsonapi.%s.individual', static::$resourceTypeName), [static::$entityTypeId => $this->entity->uuid()]);
+    $url = Url::fromRoute(sprintf('jsonapi.%s.individual', static::$resourceTypeName), ['entity' => $this->entity->uuid()]);
     /* $url = $this->entity->toUrl('jsonapi'); */
     $request_options = [];
     $request_options[RequestOptions::HEADERS]['Accept'] = 'application/vnd.api+json';
@@ -422,6 +489,25 @@ class TermTest extends ResourceTestBase {
         [3, 2],
       ],
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function testRelated() {
+    $this->markTestSkipped('Remove this in https://www.drupal.org/project/jsonapi/issues/2940339');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function testCollectionFilterAccess() {
+    if (floatval(\Drupal::VERSION) >= 8.6) {
+      $this->doTestCollectionFilterAccessForPublishableEntities('name', 'access content', 'administer taxonomy');
+    }
+    else {
+      $this->doTestCollectionFilterAccessBasedOnPermissions('name', 'access content');
+    }
   }
 
 }

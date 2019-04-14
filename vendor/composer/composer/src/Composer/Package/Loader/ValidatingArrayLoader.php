@@ -12,7 +12,6 @@
 
 namespace Composer\Package\Loader;
 
-use Composer\Package;
 use Composer\Package\BasePackage;
 use Composer\Semver\Constraint\Constraint;
 use Composer\Package\Version\VersionParser;
@@ -103,13 +102,8 @@ class ValidatingArrayLoader implements LoaderInterface
             }
         }
 
-        if (isset($this->config['license'])) {
-            if (is_string($this->config['license'])) {
-                $this->validateRegex('license', '[A-Za-z0-9+. ()-]+');
-            } else {
-                $this->validateFlatArray('license', '[A-Za-z0-9+. ()-]+');
-            }
-
+        // check for license validity on newly updated branches
+        if (isset($this->config['license']) && (!$releaseDate || $releaseDate->getTimestamp() >= strtotime('-8days'))) {
             if (is_array($this->config['license']) || is_string($this->config['license'])) {
                 $licenses = (array) $this->config['license'];
 
@@ -132,28 +126,6 @@ class ValidatingArrayLoader implements LoaderInterface
                         'If the software is closed-source, you may use "proprietary" as license.',
                         json_encode($this->config['license'])
                     );
-                } else if (!$releaseDate || $releaseDate->format('Y-m-d H:i:s') >= '2018-01-20 00:00:00') { // only warn for deprecations for releases/branches that follow the introduction of deprecated licenses
-                    foreach ($licenses as $license) {
-                        $spdxLicense = $licenseValidator->getLicenseByIdentifier($license);
-                        if ($spdxLicense && $spdxLicense[3]) {
-                            if (preg_match('{^[AL]?GPL-[123](\.[01])?\+$}i', $license)) {
-                                $this->warnings[] = sprintf(
-                                    'License "%s" is a deprecated SPDX license identifier, use "'.str_replace('+', '', $license).'-or-later" instead',
-                                    $license
-                                );
-                            } elseif (preg_match('{^[AL]?GPL-[123](\.[01])?$}i', $license)) {
-                                $this->warnings[] = sprintf(
-                                    'License "%s" is a deprecated SPDX license identifier, use "'.$license.'-only" or "'.$license.'-or-later" instead',
-                                    $license
-                                );
-                            } else {
-                                $this->warnings[] = sprintf(
-                                    'License "%s" is a deprecated SPDX license identifier, see https://spdx.org/licenses/',
-                                    $license
-                                );
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -189,7 +161,7 @@ class ValidatingArrayLoader implements LoaderInterface
         }
 
         if ($this->validateArray('support') && !empty($this->config['support'])) {
-            foreach (array('issues', 'forum', 'wiki', 'source', 'email', 'irc', 'docs', 'rss') as $key) {
+            foreach (array('issues', 'forum', 'wiki', 'source', 'email', 'irc', 'docs', 'rss', 'chat') as $key) {
                 if (isset($this->config['support'][$key]) && !is_string($this->config['support'][$key])) {
                     $this->errors[] = 'support.'.$key.' : invalid value, must be a string';
                     unset($this->config['support'][$key]);
@@ -206,7 +178,7 @@ class ValidatingArrayLoader implements LoaderInterface
                 unset($this->config['support']['irc']);
             }
 
-            foreach (array('issues', 'forum', 'wiki', 'source', 'docs') as $key) {
+            foreach (array('issues', 'forum', 'wiki', 'source', 'docs', 'chat') as $key) {
                 if (isset($this->config['support'][$key]) && !$this->filterUrl($this->config['support'][$key])) {
                     $this->warnings[] = 'support.'.$key.' : invalid value ('.$this->config['support'][$key].'), must be an http/https URL';
                     unset($this->config['support'][$key]);
@@ -362,6 +334,38 @@ class ValidatingArrayLoader implements LoaderInterface
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    public static function hasPackageNamingError($name, $isLink = false)
+    {
+        if (preg_match(PlatformRepository::PLATFORM_PACKAGE_REGEX, $name)) {
+            return;
+        }
+
+        if (!preg_match('{^[a-z0-9]([_.-]?[a-z0-9]+)*/[a-z0-9]([_.-]?[a-z0-9]+)*$}iD', $name)) {
+            return $name.' is invalid, it should have a vendor name, a forward slash, and a package name. The vendor and package name can be words separated by -, . or _. The complete name should match "[a-z0-9]([_.-]?[a-z0-9]+)*/[a-z0-9]([_.-]?[a-z0-9]+)*".';
+        }
+
+        $reservedNames = array('nul', 'con', 'prn', 'aux', 'com1', 'com2', 'com3', 'com4', 'com5', 'com6', 'com7', 'com8', 'com9', 'lpt1', 'lpt2', 'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9');
+        $bits = explode('/', strtolower($name));
+        if (in_array($bits[0], $reservedNames, true) || in_array($bits[1], $reservedNames, true)) {
+            return $name.' is reserved, package and vendor names can not match any of: '.implode(', ', $reservedNames).'.';
+        }
+
+        if (preg_match('{\.json$}', $name)) {
+            return $name.' is invalid, package names can not end in .json, consider renaming it or perhaps using a -json suffix instead.';
+        }
+
+        if (preg_match('{[A-Z]}', $name)) {
+            if ($isLink) {
+                return $name.' is invalid, it should not contain uppercase characters. Please use '.strtolower($name).' instead.';
+            }
+
+            $suggestName = preg_replace('{(?:([a-z])([A-Z])|([A-Z])([A-Z][a-z]))}', '\\1\\3-\\2\\4', $name);
+            $suggestName = strtolower($suggestName);
+
+            return $name.' is invalid, it should not contain uppercase characters. We suggest using '.$suggestName.' instead.';
+        }
     }
 
     private function validateRegex($property, $regex, $mandatory = false)

@@ -5,41 +5,11 @@
  * Contains Search API integration for Lightning.
  */
 
+use Drupal\Core\DestructableInterface;
 use Drupal\node\NodeTypeInterface;
 use Drupal\search_api\Entity\Index;
 use Drupal\views\Entity\View;
-
-/**
- * Implements hook_modules_installed().
- */
-function lightning_search_modules_installed(array $modules) {
-  if (\Drupal::isConfigSyncing()) {
-    return;
-  }
-
-  if (in_array('lightning_dev', $modules, TRUE)) {
-    /** @var \Drupal\block\BlockInterface $block */
-    $block = entity_create('block', [
-      'id' => 'seven_search',
-      'theme' => 'seven',
-      'region' => 'content',
-      'plugin' => 'views_exposed_filter_block:search-page',
-    ]);
-    $block->setVisibilityConfig('request_path', [
-      'pages' => '/search',
-    ]);
-    $block->save();
-
-    /** @var \Drupal\views\ViewEntityInterface $view */
-    $view = entity_load('view', 'search');
-    $display = &$view->getDisplay('default');
-    $display['display_options']['cache'] = [
-      'type' => 'none',
-      'options' => [],
-    ];
-    $view->save();
-  }
-}
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_insert().
@@ -135,6 +105,16 @@ function lightning_search_views_data_alter(array &$data) {
  */
 function lightning_search_entity_insert() {
   if (PHP_SAPI === 'cli') {
-    \Drupal::service('search_api.post_request_indexing')->onKernelTerminate();
+    $indexer = Drupal::service('search_api.post_request_indexing');
+
+    // In Search API 1.8 and later, the indexer implements this interface.
+    if ($indexer instanceof DestructableInterface) {
+      $indexer->destruct();
+    }
+    // Previously, the indexer would subscribe to the HTTP kernel termination
+    // event.
+    elseif ($indexer instanceof EventSubscriberInterface) {
+      $indexer->onKernelTerminate();
+    }
   }
 }

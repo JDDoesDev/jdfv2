@@ -24,7 +24,8 @@ abstract class ApiTestBase extends BrowserTestBase {
    */
   protected function setUp() {
     parent::setUp();
-
+    // Allow writing via JSON:API.
+    $this->config('jsonapi.settings')->set('read_only', FALSE)->save();
     // Generate and store keys for use by OAuth.
     $this->generateKeys();
   }
@@ -61,7 +62,7 @@ abstract class ApiTestBase extends BrowserTestBase {
     $url = Url::fromRoute('lightning_api.generate_keys');
     $this->drupalGet($url);
     $values = [
-      'dir' => drupal_realpath('temporary://'),
+      'dir' => \Drupal::service('file_system')->realpath('temporary://'),
       'private_key' => 'private.key',
       'public_key' => 'public.key',
     ];

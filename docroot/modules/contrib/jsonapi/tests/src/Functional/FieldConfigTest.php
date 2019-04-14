@@ -2,13 +2,15 @@
 
 namespace Drupal\Tests\jsonapi\Functional;
 
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
 
 /**
- * JSON API integration test for the "FieldConfig" config entity type.
+ * JSON:API integration test for the "FieldConfig" config entity type.
  *
  * @group jsonapi
  */
@@ -78,19 +80,19 @@ class FieldConfigTest extends ResourceTestBase {
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $self_url],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'field_config--field_config',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url],
         ],
         'attributes' => [
           'bundle' => 'camelids',
@@ -109,14 +111,13 @@ class FieldConfigTest extends ResourceTestBase {
           'entity_type' => 'node',
           'field_name' => 'field_llama',
           'field_type' => 'text',
-          'id' => 'node.camelids.field_llama',
           'label' => 'field_llama',
           'langcode' => 'en',
           'required' => FALSE,
           'settings' => [],
           'status' => TRUE,
           'translatable' => TRUE,
-          'uuid' => $this->entity->uuid(),
+          'drupal_internal__id' => 'node.camelids.field_llama',
         ],
       ],
     ];
@@ -134,6 +135,42 @@ class FieldConfigTest extends ResourceTestBase {
    */
   protected function getExpectedUnauthorizedAccessMessage($method) {
     return "The 'administer node fields' permission is required.";
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function createAnotherEntity($key) {
+    NodeType::create([
+      'name' => 'Pachyderms',
+      'type' => 'pachyderms',
+    ])->save();
+
+    $field_storage = FieldStorageConfig::create([
+      'field_name' => 'field_pachyderm',
+      'entity_type' => 'node',
+      'type' => 'text',
+    ]);
+    $field_storage->save();
+
+    $entity = FieldConfig::create([
+      'field_storage' => $field_storage,
+      'bundle' => 'pachyderms',
+    ]);
+    $entity->save();
+
+    return $entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static function entityAccess(EntityInterface $entity, $operation, AccountInterface $account) {
+    // Also clear the 'field_storage_config' entity access handler cache because
+    // the 'field_config' access handler delegates access to it.
+    // @see \Drupal\field\FieldConfigAccessControlHandler::checkAccess()
+    \Drupal::entityTypeManager()->getAccessControlHandler('field_storage_config')->resetCache();
+    return parent::entityAccess($entity, $operation, $account);
   }
 
 }

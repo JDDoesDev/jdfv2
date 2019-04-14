@@ -7,7 +7,7 @@ use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 /**
  * Contains step definitions for working with views.
  */
-class ViewsContext extends DrupalSubContextBase {
+final class ViewsContext extends DrupalSubContextBase {
 
   use AwaitTrait;
 

@@ -26,12 +26,38 @@ class SchemataSchemaNormalizer extends JsonApiNormalizerBase {
     $generated_url = SchemaUrl::fromSchema($this->format, $this->describedFormat, $entity)
       ->toString(TRUE);
     // Create the array of normalized fields, starting with the URI.
+    /** @var \Drupal\jsonapi\ResourceType\ResourceTypeRepository $resource_type_repository */
+    $resource_type_repository = \Drupal::service('jsonapi.resource_type.repository');
+    $resource_type = $resource_type_repository->get(
+      $entity->getEntityTypeId(),
+      $entity->getBundleId() ?: $entity->getEntityTypeId()
+    );
     $normalized = [
       '$schema' => 'http://json-schema.org/draft-04/schema#',
       'id' => $generated_url->getGeneratedUrl(),
       'type' => 'object',
+      'required' => ['data'],
+      'additionalProperties' => FALSE,
+      'properties' => [
+        'data' => [
+          'type' => 'object',
+          'properties' => [
+            'type' => [
+              'type' => 'string',
+              'title' => 'type',
+              'description' => t('Resource type'),
+              'enum' => [$resource_type->getTypeName()]
+            ],
+            'id' => [
+              'type' => 'string',
+              'title' => t('Resource ID'),
+              'format' => 'uuid',
+              'maxLength' => 128,
+            ],
+          ],
+        ]
+      ]
     ];
-    $normalized = array_merge($normalized, $entity->getMetadata());
 
     // Stash schema request parameters.
     $context['entityTypeId'] = $entity->getEntityTypeId();
@@ -43,9 +69,24 @@ class SchemataSchemaNormalizer extends JsonApiNormalizerBase {
       $format,
       $context
     );
-    $normalized = NestedArray::mergeDeep($normalized, $properties);
-
-    return $normalized;
+    $properties = ['properties' => ['data' => $properties]];
+    $links = [
+      'properties' => [
+        'links' => [
+          'type' => 'object',
+          'description' => t('Entity links'),
+          'properties' => [
+            'self' => [
+              'type' => 'string',
+              'format' => 'uri',
+              'description' => t('The absolute link to this entity.'),
+            ],
+          ],
+        ],
+      ],
+    ];
+    $links = ['properties' => ['data' => $links]];
+    return NestedArray::mergeDeep($normalized, $entity->getMetadata(), $properties, $links);
   }
 
   /**

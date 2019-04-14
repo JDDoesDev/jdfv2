@@ -2,15 +2,20 @@
 
 namespace Drupal\jsonapi\StackMiddleware;
 
+use Symfony\Component\HttpFoundation\AcceptHeader;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * Sets the 'api_json' format on all requests to JSON API-managed routes.
+ * Sets the 'api_json' for requests with a JSON:API Content-Type header.
  *
- * @internal
+ * @internal JSON:API maintains no PHP API since its API is the HTTP API. This
+ *   class may change at any time and this will break any dependencies on it.
+ *
+ * @see https://www.drupal.org/project/jsonapi/issues/3032787
+ * @see jsonapi.api.php
  */
-class FormatSetter implements HttpKernelInterface {
+final class FormatSetter implements HttpKernelInterface {
 
   /**
    * The wrapped HTTP kernel.
@@ -33,34 +38,11 @@ class FormatSetter implements HttpKernelInterface {
    * {@inheritdoc}
    */
   public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = TRUE) {
-    if (static::isJsonApiRequest($request)) {
+    $accepted = AcceptHeader::fromString($request->headers->get('Accept'));
+    if ($accepted->get('application/vnd.api+json')) {
       $request->setRequestFormat('api_json');
     }
-
     return $this->httpKernel->handle($request, $type, $catch);
-  }
-
-  /**
-   * Checks whether the current request is a JSON API request.
-   *
-   * Inspects:
-   * - request path (uses a heuristic, because e.g. language negotiation may use
-   *   path prefixes)
-   * - 'Accept' request header value.
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The current request.
-   *
-   * @return bool
-   *   Whether the current request is a JSON API request.
-   */
-  protected static function isJsonApiRequest(Request $request) {
-    return strpos($request->getPathInfo(), '/jsonapi/') !== FALSE
-      &&
-      // Check if the 'Accept' header includes the JSON API MIME type.
-      count(array_filter($request->getAcceptableContentTypes(), function ($accept) {
-        return strpos($accept, 'application/vnd.api+json') === 0;
-      }));
   }
 
 }

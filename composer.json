@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "drupal/drupal-extension": "~3.3.0",
+        "drupal/drupal-extension": "~3.4.0",
         "behat/mink": "~1.7",
         "behat/mink-goutte-driver": "~1.2",
         "jcalderonzumba/gastonjs": "~1.0.2",
@@ -22,8 +22,8 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~3.1.0",
-        "drupal/core": "~8.5.0",
+        "acquia/lightning": "~3.2.7",
+        "drupal/core": "^8.6.0",
         "drupal/bootstrap_clean_blog": "^1.0@RC",
         "drupal/bootstrap_paragraphs": "2.x",
         "drupal/devel": "^1.2",
@@ -34,7 +34,7 @@
         "drupal/bootstrap": "^3.7",
         "drupal/google_analytics": "^2.2",
         "drupal/adsense": "^1.0",
-        "drush/drush": "^8.1",
+        "drush/drush": "^9.0",
         "drupal/ckeditor_markdown": "^1.0",
         "drupal/markdown": "^1.2",
         "drupal/disqus": "^1.0@RC",

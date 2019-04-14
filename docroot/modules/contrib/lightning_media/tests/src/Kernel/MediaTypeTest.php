@@ -4,17 +4,16 @@ namespace Drupal\Tests\lightning_media\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\lightning_core\ConfigHelper as Config;
-use Drupal\Tests\media\Functional\MediaFunctionalTestCreateMediaTypeTrait;
+use Drupal\Tests\media\Traits\MediaTypeCreationTrait;
 
 /**
  * Tests of API-level Lightning functionality related to media types.
  *
- * @group lightning
  * @group lightning_media
  */
 class MediaTypeTest extends KernelTestBase {
 
-  use MediaFunctionalTestCreateMediaTypeTrait;
+  use MediaTypeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -44,7 +43,7 @@ class MediaTypeTest extends KernelTestBase {
    * Tests that field_media_in_library is auto-cloned for new media bundles.
    */
   public function testCloneMediaInLibraryField() {
-    $type = $this->createMediaType([], 'file')->id();
+    $type = $this->createMediaType('file')->id();
 
     /** @var \Drupal\media\MediaInterface $media */
     $media = $this->container

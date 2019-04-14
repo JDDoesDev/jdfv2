@@ -12,7 +12,7 @@ use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 /**
  * Contains miscellaneous step definitions for working with HTML elements.
  */
-class ElementContext extends DrupalSubContextBase {
+final class ElementContext extends DrupalSubContextBase {
 
   /**
    * Asserts that an element is empty.
@@ -284,17 +284,21 @@ class ElementContext extends DrupalSubContextBase {
    * Asserts the existence of a <details> element by its summary text.
    *
    * @param string $summary
-   *   The exact summary text.
+   *   The summary text (case-insensitive).
    * @param ElementInterface $container
    *   The element in which to search for the <details> element.
    *
    * @return \Behat\Mink\Element\NodeElement|bool
    *   The <details> element, or FALSE if it was not found.
    */
-  protected function findDetails($summary, ElementInterface $container) {
+  private function findDetails($summary, ElementInterface $container) {
+    $lowercase_summary = mb_strtolower($summary);
+
     /** @var \Behat\Mink\Element\NodeElement $element */
     foreach ($container->findAll('css', 'details > summary') as $element) {
-      if ($element->getText() == $summary) {
+      $lowercase_element_text = mb_strtolower($element->getText());
+
+      if ($lowercase_element_text === $lowercase_summary) {
         return $element->getParent();
       }
     }
@@ -437,6 +441,20 @@ class ElementContext extends DrupalSubContextBase {
   }
 
   /**
+   * Asserts that a number of elements match a CSS selector.
+   *
+   * @param string $selector
+   *   The selector.
+   * @param int $n
+   *   The number of elements expected to match the selector.
+   *
+   * @Then exactly :n element(s) should match :selector
+   */
+  public function matchExactly($selector, $n) {
+    $this->assertSession()->elementsCount('css', $selector, $n);
+  }
+
+  /**
    * Asserts that a block with a specific plugin ID is present.
    *
    * @param string $plugin_id
@@ -474,7 +492,7 @@ class ElementContext extends DrupalSubContextBase {
    * @return ElementInterface
    *   The list of contextual links.
    */
-  protected function assertContextualLinks(ElementInterface $element) {
+  private function assertContextualLinks(ElementInterface $element) {
     return $this->assertSession()
       ->elementExists('css', 'ul.contextual-links', $element);
   }
@@ -490,7 +508,7 @@ class ElementContext extends DrupalSubContextBase {
    * @return ElementInterface
    *   The contextual link.
    */
-  protected function assertContextualLink(ElementInterface $element, $link_class) {
+  private function assertContextualLink(ElementInterface $element, $link_class) {
     return $this->assertSession()
       ->elementExists('css', "li.$link_class", $this->assertContextualLinks($element));
   }

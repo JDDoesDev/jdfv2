@@ -2,16 +2,41 @@
 
 namespace Acquia\LightningExtension\Context;
 
+use Behat\Behat\Hook\Scope\ScenarioScope;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\ExpectationException;
+use Drupal\Component\Serialization\Json;
 use Drupal\Component\Utility\Html;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
+use Webmozart\Assert\Assert;
 
 /**
  * Contains step definitions for interacting with entity browser instances.
  */
-class EntityBrowserContext extends DrupalSubContextBase {
+final class EntityBrowserContext extends DrupalSubContextBase {
 
   use AwaitTrait;
+
+  /**
+   * Indicates if the current scenario uses JavaScript.
+   *
+   * @var bool
+   */
+  private $isJS;
+
+  /**
+   * Performs pre-scenario tasks.
+   *
+   * @BeforeScenario
+   */
+  public function setUp(ScenarioScope $scope) {
+    // Check if the feature or scenario has the 'javascript' tag.
+    $tags = array_merge(
+      $scope->getScenario()->getTags(),
+      $scope->getFeature()->getTags()
+    );
+    $this->isJS = in_array('javascript', $tags, TRUE);
+  }
 
   /**
    * Gets all items in an entity browser.
@@ -22,7 +47,7 @@ class EntityBrowserContext extends DrupalSubContextBase {
    * @return \Behat\Mink\Element\NodeElement[]
    *   An array of items in the entity browser.
    */
-  protected function getItems($browser_id = NULL) {
+  private function getItems($browser_id = NULL) {
     if ($browser_id) {
       $selector = 'form#entity-browser-' . Html::cleanCssIdentifier($browser_id) . '-form';
     }
@@ -111,17 +136,183 @@ class EntityBrowserContext extends DrupalSubContextBase {
   public function submit() {
     $session = $this->getSession();
 
-    // The entity browser frame will be destroyed, so we need to switch into
-    // the main window and reach into the frame to submit the form...ugh.
-    $frame = $session->evaluateScript('frameElement.name');
-    $session->switchToWindow();
+    $button = $this->assertSession()
+      ->elementExists('css', '[data-drupal-selector="edit-submit"]')
+      ->getXpath();
 
-    // @TODO: Make this smarter, because we can't be sure that #edit-submit
-    // exists at all, or that it's the correct submit button.
-    $session->executeScript('frames["' . $frame . '"].document.forms[0].querySelector("#edit-submit").click()');
+    $frame = $session->evaluateScript('window.name') ?: $session->evaluateScript('window.active_iframe.name');
+    assert(! empty($frame));
 
-    sleep(10);
+    // Switch out of the iFrame, because it will be destroyed as soon as we
+    // press the button.
+    $session->switchToIFrame();
+
+    // If there are single quotes in the button's XPath query, WebDriver needs
+    // them to be escaped.
+    if ($session->getDriver() instanceof Selenium2Driver) {
+      $button = addslashes($button);
+    }
+    $js = <<<END
+document.evaluate('$button', window.$frame.document, null).iterateNext().click();
+END;
+    $session->executeScript($js);
     $this->awaitAjax();
+  }
+
+  /**
+   * Opens an entity browser.
+   *
+   * @param string $id
+   *   The entity browser ID.
+   */
+  public function open($id) {
+    $this->isJS ? $this->openJS($id) : $this->openNoJS($id);
+  }
+
+  /**
+   * Opens an entity browser using JavaScript.
+   *
+   * @param string $id
+   *   The entity browser ID.
+   */
+  private function openJS($id) {
+    $settings = $this->getEntityBrowserSettings($id);
+
+    $this->assertSession()
+      ->elementExists('css', '.entity-browser-handle[data-uuid="' . $settings['uuid'] . '"]')
+      ->click();
+
+    $frame = "window.entity_browser_iframe_$id";
+    $this->awaitExpression($frame);
+    $this->awaitExpression("$frame.document.readyState === 'complete'");
+  }
+
+  /**
+   * Opens an entity browser without using JavaScript.
+   *
+   * @param string $id
+   *   The entity browser ID.
+   */
+  private function openNoJS($id) {
+    $settings = $this->getEntityBrowserSettings($id);
+    Assert::notEmpty($settings['src']);
+    $this->visitPath($settings['src']);
+  }
+
+  /**
+   * Returns settings for a single entity browser.
+   *
+   * @param string $id
+   *   The entity browser ID (not UUID).
+   *
+   * @return array
+   *   The settings for the entity browser.
+   *
+   * @throws \Exception
+   *   If there is not exactly one entity browser with the given ID.
+   */
+  private function getEntityBrowserSettings($id) {
+    $filter = function (array $settings) use ($id) {
+      return $settings['entity_browser_id'] === $id;
+    };
+
+    $settings = array_filter($this->getAllEntityBrowserSettings(), $filter);
+    Assert::count($settings, 1);
+
+    return reset($settings);
+  }
+
+  /**
+   * Returns settings for all entity browser instances on the page.
+   *
+   * @return array[]
+   *   The settings for all entity browser instances, keyed by UUID.
+   */
+  private function getAllEntityBrowserSettings() {
+    $settings = $this->getAllSettings();
+
+    Assert::isArray($settings['entity_browser']);
+    Assert::notEmpty($settings['entity_browser']);
+
+    $display_types = \Drupal::service('plugin.manager.entity_browser.display')
+      ->getDefinitions();
+
+    $settings = array_intersect_key($settings['entity_browser'], $display_types);
+
+    $all = [];
+    foreach ($settings as $display_type => $instances) {
+      foreach ($instances as $uuid => $instance) {
+        $instance['display_type'] = $display_type;
+        $instance['uuid'] = $uuid;
+        $all[$uuid] = $instance;
+      }
+    }
+    return $all;
+  }
+
+  /**
+   * Returns all Drupal JavaScript settings on the page.
+   *
+   * @return mixed[]
+   *   The decoded settings.
+   */
+  private function getAllSettings() {
+    $settings = $this->assertSession()
+      ->elementExists('css', 'script[type="application/json"][data-drupal-selector="drupal-settings-json"]')
+      ->getText();
+
+    return Json::decode($settings);
+  }
+
+  /**
+   * Selects several items from an entity browser.
+   *
+   * @param int $count
+   *   The number of items to select.
+   * @param string $id
+   *   The entity browser ID.
+   *
+   * @When I select :count item(s) from the :id entity browser
+   */
+  public function selectItems($count, $id) {
+    $this->isJS ? $this->switchJS($id) : $this->switchNoJS($id);
+    $this->switchToEBTab('Library');
+    $this->awaitAjax();
+    for ($n = 0; $n < $count; $n++) {
+      $this->select($n + 1);
+    }
+    $this->submit();
+    $this->awaitAjax();
+  }
+
+  /**
+   * Switches to an entity browser using JavaScript.
+   *
+   * @param string $id
+   *   The entity browser ID.
+   */
+  private function switchJS($id) {
+    $this->assertSession()
+      ->elementExists('named', ['button', 'Add media'])
+      ->press();
+
+    $iframe_id = $this
+      ->awaitElement('iframe[name="entity_browser_iframe_' . $id . '"]', 30)
+      ->getAttribute('id');
+
+    $this->getSession()->switchToIFrame($iframe_id);
+  }
+
+  /**
+   * Switches to an entity browser without using JavaScript.
+   *
+   * @param string $id
+   *   The entity browser ID.
+   */
+  private function switchNoJS($id) {
+    $settings = $this->getEntityBrowserSettings($id);
+    Assert::notEmpty($settings['src']);
+    $this->visitPath($settings['src']);
   }
 
 }

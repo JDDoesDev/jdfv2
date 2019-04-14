@@ -1,0 +1,7 @@
+prod:
+  uri: www.jamesdflynn.com
+  root: /var/www/jdf/docroot
+  host: 45.55.209.196
+  user: root
+  paths:
+    dump-dir: /mnt/tmp/

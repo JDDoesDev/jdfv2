@@ -3,12 +3,14 @@ name: Scheduler
 type: module
 description: 'Allows you to schedule changes in moderation state.'
 package: Lightning
+configure: lightning_scheduler.settings
 dependencies:
-  - content_moderation
-  - datetime
+  - drupal:content_moderation
+  - drupal:datetime
+  - lightning_core:lightning_core
 
-# Information added by Drupal.org packaging script on 2018-03-07
-version: '8.x-1.1'
+# Information added by Drupal.org packaging script on 2019-04-04
+version: '8.x-3.6'
 core: '8.x'
 project: 'lightning_workflow'
-datestamp: 1520445489
+datestamp: 1554389295

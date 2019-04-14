@@ -11,7 +11,7 @@ use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 /**
  * Allows test modules to be installed during a scenario and uninstalled after.
  */
-class TestModuleContext extends DrupalSubContextBase {
+final class TestModuleContext extends DrupalSubContextBase {
 
   /**
    * Determines the test modules to install during the scenario.
@@ -22,7 +22,7 @@ class TestModuleContext extends DrupalSubContextBase {
    * @return string[]
    *   The test modules to install.
    */
-  protected function getModules(ScenarioScope $scope) {
+  private function getModules(ScenarioScope $scope) {
     $modules = [];
 
     $tags = array_merge(
@@ -49,7 +49,11 @@ class TestModuleContext extends DrupalSubContextBase {
     $modules = $this->getModules($scope);
 
     if ($modules) {
-      $this->getDriver()->bootstrap();
+      // Bootstrap Drupal if needed.
+      $driver = $this->getDriver();
+      if (! $driver->isBootstrapped()) {
+        $driver->bootstrap();
+      }
 
       // Ensure that test directories are scanned for modules.
       $settings = Settings::getAll();

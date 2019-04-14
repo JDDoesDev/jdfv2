@@ -1,6 +1,8 @@
+# Drupal Lightning
+![Lightning logo of a bolt of lightning](https://raw.githubusercontent.com/acquia/lightning/8.x-3.x/lightning-logo.png)
+
 [![Build Status](https://travis-ci.org/acquia/lightning.svg?branch=8.x-3.x)](https://travis-ci.org/acquia/lightning)
 
-# Drupal Lightning
 Lightning's mission is to enable developers to create great authoring
 experiences and empower editorial teams.
 
@@ -30,6 +32,13 @@ Lightning as its base profile][sub-profile documentation]. Lightning includes a
 Drupal Console command (`lightning:subprofile`) which will generate a
 sub-profile for you.
 
+#### Installing from exported config
+If you have a config export of a site built with Lighting, you can install it
+using the [Config Installer](https://drupal.org/project/config_installer)
+profile. This profile is fully supported by Lightning (we even run our tests
+against it). You can find more information about installing Lightning from
+exported config [here](https://lightning.acquia.com/blog/using-configuration-installer-lightning).
+
 ## What Lightning Does
 Through custom, contrib, and core modules plus configuration, Lightning aims to
 target four functional areas:
@@ -43,12 +52,14 @@ The current version of media includes the following functionality:
 * The ability to place media into the text area and have it fully embedded as it
   will appear in the live entity. The following media types are currently
   supported:
+  * Audio files
   * Tweets
   * Instagram posts
-  * Videos (YouTube and Vimeo supported out of the box)
+  * Videos (YouTube, Vimeo, and files are supported out of the box)
   * Images
 * Drag-and-drop bulk image uploads.
 * Image cropping.
+* Support for creating slideshows and carousels of media assets.
 * Ability to create new media through the media library (/media/add)
 * Ability to embed tweets, Instagrams, and YouTube/Vimeo videos directly into
   CKEditor by pasting the video URL
@@ -121,10 +132,10 @@ to request features or bug fixes.
   replicated to the image field. This is due to a limitation of Entity Browser's
   API.
 * Some of the Lightning contributed media module listed above might not yet be
-  compatible with the Core Media entity.
+  compatible with the core Media module.
 * Using the bulk upload feature in environments with a load balancer might
   result in some images not being saved.
-  
+
 ### Inherited profiles
 Drush is not aware of the concept of inherited profiles and as a result, you
 will be unable to uninstall dependencies of any parent profile using Drush. You
@@ -134,6 +145,41 @@ for Drush which allow you to uninstall dependencies of parent profiles.
 
 * [Drush 9 inherited profile dependencies patch](https://www.drupal.org/files/issues/2902643-2--drush-master.patch).
 
+## Contributing
+Issues are tracked on [drupal.org][issue_queue]. Contributions can be provided
+either as traditional patches or as pull requests on our [GitHub clone][github].
+
+Each Lightning component also has a drupal.org issue queue:
+
+* [API](https://www.drupal.org/project/issues/lightning_api)
+* [Core](https://www.drupal.org/project/issues/lightning_core)
+* [Layout](https://www.drupal.org/project/issues/lightning_layout)
+* [Media](https://www.drupal.org/project/issues/lightning_media)
+* [Workflow](https://www.drupal.org/project/issues/lightning_workflow)
+
+### Local Development
+Lightning has a dev dependency on [Lightning Dev][lightning_dev] which provides
+tools to aid in developing and contributing to Lightning. To install locally:
+
+1. Clone this repo:
+  ```
+  $ git clone git@github.com:acquia/lightning.git
+  ```
+  
+1. Install dependencies:
+  ```
+  $ cd lightning
+  $ composer install
+  ```
+
+This will create a fully functional docroot with a git-ignored copy of the
+profile files inside the `docroot/contrib/lightning`. You can modify those files
+directly, then use the provided `composer pull` command to move the changes back
+into the VCS controlled directory.
+
+Lightning is still compatible with PHP 5.6, but you will need PHP >= 7.0.8 in
+order to build a local version of Lightning in this way.
+
 [issue_queue]: https://www.drupal.org/project/issues/lightning "Lightning Issue Queue"
 [meta_release]: https://www.drupal.org/node/2670686 "Lightning Meta Releases Issue"
 [template]: https://github.com/acquia/lightning-project "Composer-based project template"
@@ -141,3 +187,5 @@ for Drush which allow you to uninstall dependencies of parent profiles.
 [lightning_composer_project]: https://github.com/acquia/lightning-project
 [demo_videos]: http://lightning.acquia.com/blog/lightning-user-stories-demonstrations "Lightning user story demonstration videos"
 [sub-profile documentation]: https://github.com/acquia/lightning/wiki/Lightning-as-a-Base-Profile "Lightning sub-profile documentation"
+[github]: https://github.com/acquia/lightning "GitHub clone"
+[lightning_dev]: https://github.com/acquia/lightning-dev "Lightning Dev repository"

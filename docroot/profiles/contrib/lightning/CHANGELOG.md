@@ -1,3 +1,173 @@
+## 3.2.7
+* Updated Lightning Core to 3.9, which:
+  * Security updated Drupal core to 8.6.13 (SA-CORE-2019-004).
+  * Removed deprecated function calls. (Issue #3034195)
+* Updated Lightning API to 3.5, which:
+  * Adds support for Drupal core 8.7.
+  * Updates Consumers module to 1.9 and unpins its Composer
+    constraint.
+* Updated Lightning Media to 3.8, which:
+  * Adds support for Drupal core 8.7.
+  * Updates Entity Browser to 2.1.
+  * Adds a link to the settings form on the module list page.
+    (Issue #3033650)
+  * Adds descriptions to administrative links. (Issue #3034042)
+* Updated Lightning Layout to 1.7, which:
+  * Adds support for Drupal core 8.7.
+  * Adds a description to an administrative link. (Issue #3034041)
+* Updated Lightning Workflow to 3.5, which:
+  * Adds support for Drupal core 8.7.
+  * Fixed missing configure button for Lightning Scheduler module in
+    list page. (Issue #3034047)
+  * Replaces entity_load() calls with entity load(). (Issue #3033637)
+  * Adds a missing description in Lightning Scheduler module in
+    links.menu.yml file. (Issue #3034048)
+
+## 3.2.6
+* Updated Lightning Core to 3.7, which:
+  * Security updated Drupal core to 8.6.10 (SA-CORE-2019-003).
+  * Security updated Metatag to 1.8 (SA-CONTRIB-2019-021).
+  * Now supports attaching pictures to user accounts, and includes a Compact
+    display which displays the user's picture and name, both optionally linked
+    to the user's profile. (Issue #3026959)
+  * Now includes a "Long (12-hour)" date format, which formats dates and times
+    like "April 1, 2019 at 4:20 PM".
+  * Fixed a bug where Lightning's utility to convert descendant profiles to the
+    Drupal 8.6-compatible format would fail if the active profile was itself a
+    descendant profile. (Issue #2997990)
+  * Fixed an "undefined index" bug that could happen when processing form elements
+    which can have legends. (Issue #3018499)
+  * Namespaced all declared dependencies. (Issue #2995711)
+* Updated Lightning API to 3.4, which:
+  * Security updated JSON API to 2.3 (SA-CONTRIB-2019-019).
+* Updated Lightning Media to 3.6, which has the following changes:
+  * The media browser is now displayed in a modal dialog by default, which
+  is activated by pressing the "Add media" button. When embedding media in
+  the WYSIWYG editor, the media browser is unchanged (the entity browser
+  used for WYSIWYG has been split out into a completely separate entity
+  browser configuration in order to facilitate this). (GitHub #80)
+
+## 3.2.5
+* Security updated Acquia Connector to 1.16 (SA-CONTRIB-2019-014)
+* Updated Consumers to 1.8.
+* Updated JSON:API to 2.1.
+
+## 3.2.4
+* Updated Lightning Core to 3.5, which:
+  * Security updated Drupal core to 8.6.6.
+  * Will automatically clear all persistent caches _before_ running database
+    updates with Drush 9.
+* Updated Lightning API to 3.2, which introduces no user-facing changes.
+* Updated Lightning Layout to 1.6, which introduces no user-facing changes.
+* Updated Lightning Media to 3.5, which:
+  * Added a configuration option to control whether newly-created media fields
+    (i.e., entity reference fields which reference media items) will be
+    configured to use the media browser by default. (Issue #2945153)
+  * Made the "Show in media library" field non-translatable by default in every
+    media type included with Lightning Media. (Issue #3014913)
+* Updated Lightning Workflow to 3.3, which:
+  * Made the time steps in Lightning Scheduler's UI configurable.
+    (Issue #2981050)
+  * Fixed a bug in the Moderation History where the users and timestamps didn't
+    correctly correspond to the actual revisions. (Issue #3022898)
+  * Updated Moderation Dashboard to its latest stable version.
+  * Refactored underlying scheduler UI code to be less sensitive to time zones.
+  * Added project namespaces to all stated dependencies. (Issue #2999322)
+* Changes were made to the internal testing infrastructure, but nothing that
+  will affect users of Lightning.
+
+## 3.2.3
+* Lightning API now defaults to the 2.x branch of the JSON:API module.
+  [See the release notes for the 2.x branch](https://www.drupal.org/project/jsonapi/releases/8.x-2.0-beta1).
+
+  If you must use the 1.x branch, you can switch to it with the following commands:
+
+  ```
+  composer require drupal/lightning_api:^2.7 --no-update
+  composer update drupal/lightning_api --with-all-dependencies
+  ```
+* Updated Lightning Layout to 1.5.
+* Updated Lightning Media to 3.4.
+* Updated Lightning Workflow to 3.2.
+
+## 3.2.2
+* Updated Lightning Core to 3.2, which security updates Drupal core
+  to 8.6.2.
+
+## 3.2.1
+* Updated Lightning Media to 3.1.
+* Updated Lightning Workflow to 3.1.
+
+## 3.2.0
+* Updated Lightning Core to 3.0, which requires Drupal core 8.6.0.
+* Updated Lightning Workflow to 3.0.
+* Updated Lightning Media to 3.0.
+* The `lightning:subprofile` command is no longer compatible with the
+  sub-profile system from Drupal 8.5.x. The `dependencies` list is replaced by
+  `install`, `base profile` is the name of the base profile instead of an
+  array, and all excluded modules and themes are listed in a single `exclude`
+  array. (#585)
+
+## 3.1.7
+* Lightning API has been updated to 2.7, which fixes a persistent warning that
+  could occur as a result of the OpenAPI module's beta2 update.
+* Lightning Workflow has been updated to 2.4, which fixes an incompatibility
+  between Lightning Scheduler and Inline Entity Form.
+
+## 3.1.6
+* Lightning API has been updated to 2.6, which updates the OpenAPI module
+  suite to 1.0-beta2.
+* Lightning Media has been updated to 2.4, which:
+  * Includes a new component providing support for locally hosted audio files.
+  * Now supports locally hosted video files.
+* Lightning Workflow has been updated to 2.3, which includes Moderation
+  Sidebar.
+* Lightning Layout has been updated to 1.4.
+* Lightning Core has been updated to 2.9.
+* Lightning now includes optional support for comments. (#590)
+* Lightning now installs Pathauto by default. (#588)
+
+## 3.1.5
+* Security updated Drupal core to 8.5.6. (SA-CORE-2018-005)
+* Lightning API has been update to 2.5, which:
+  * Updates several of its dependencies that no longer need to be patched or
+    pinned as a result.
+  * Is now compatible with Drupal core 8.6 in addition 8.5.
+* Lightning Layout has been updated to 1.3, which has bug fixes and changes to
+  make it compatible with Drupal core 8.6 in addition to 8.5.
+* Lightning Workflow has been updated to 2.2, which includes several bug fixes.
+
+## 3.1.4
+* Lightning Workflow has been updated to 2.0.0-rc2, which includes a completely
+  rewritten Lightning Scheduler.
+* Lightning API has been updated to 2.3.0, which includes an updated version of
+  Simple OAuth.
+* Lightning Layout has been updated to 1.2.0, which includes updated versions
+  of Panels and Panelizer.
+* Lightning Media has been updated to 2.2.0, which includes an updated version
+  of Video Embed Field.
+
+## 3.1.3
+* Drupal core has been security updated to 8.5.3. (SA-2018-004)
+* Lightning API has been updated to 2.2.0, which includes a security update
+  to JSON API.
+
+## 3.1.2
+* Drupal core has been security update to 8.5.2. (SA-2018-003)
+* Lightning Core has been updated to 2.3.0 to fix an incompatibility with
+  Search API 1.8.0.
+
+## 3.1.1
+* Drupal core has been security update to 8.5.1 (SA-2018-002)
+* Lightning API has been updated to 2.1.0 which security updates JSON API to
+  1.14.0. (Issue #2955026 and SA-CONTRIB-2018-016)
+* Lightning Workflow has been updated to 1.2.0 which adds the permission to view
+  unpublished content and revisions when Lightning Roles (part of Lightning
+  Core) is installed.
+* Lightning Core has been updated to 2.2.0 which now checks to ensure no
+  existing config exists of the same name when renaming the configuration which
+  stores extension's version numbers. (Issue #2955072)
+
 ## 3.1.0
 * Drupal core has been updated to 8.5.0.
 * Lightning API has been updated to 2.0.0, which patches Simple OAuth to make it
@@ -8,7 +178,7 @@
   * Updates Crop API to RC1.
   * Modifies any configured Media-related actions to use the new, generic action
     plugins provided by core.
-* Behat contexts used for testing were moved into the 
+* Behat contexts used for testing were moved into the
   `Acquia\LightningExtension\Context` namespace.
 
 ## 3.0.3
@@ -30,11 +200,11 @@
   * Reads the previous version from config and, as a result, no longer requires
     nor accepts the `version` argument.
   * Usage:
-  
+
   ```
   drush update:lightning
   # To run all available configuration updates without any prompting, use:
-  drush update:lightning --no-inetraction 
+  drush update:lightning --no-interaction
   ```
   * Note: Configuration updates from versions of Lightning < 3.0.0 will not be
     run when using the updated command. You should update to the last available
@@ -62,7 +232,7 @@
 ## 3.0.0
 * Lightning's components are no longer bundled with the profile. They are now
   packaged as separate components and located alongside other Drupal modules.
-  (Issue #2925010) 
+  (Issue #2925010)
 * The following unused modules have been removed from the build manifest
   (Issue #2927527):
   * Scheduled Updates
@@ -143,12 +313,12 @@
   Console command. (GitHub #462)
 * OAuth key pairs:
   * Lightning will no longer try to guess where keys should be stored and won't
-    generate the keys until an administrator triggers that action. (GitHub #445) 
+    generate the keys until an administrator triggers that action. (GitHub #445)
   * Key pairs are now generated with 600 permissions. (GitHub #443)
   * Better error messages are shown if the system encounters an error when
     generating OAuth key pairs. (GitHub #440)
 * Lightning no longer patches Drush and therefore has no opinion about which
-  version of Drush you use in your project. (GitHub #459) 
+  version of Drush you use in your project. (GitHub #459)
 * Page manager is no longer included in the codebase. (GitHub #466)
 * You can now choose to hide the links to API docs shown on entity bundles via a
   config option. (GitHub #435)
@@ -192,7 +362,7 @@
 ## 2.1.6
 * Lightning now provides a Display Plugin for images embedded via CKEditor that
   allows editors to select an image style, alt text, and other settings each
-  time an image is embedded. (Issue #2784699) 
+  time an image is embedded. (Issue #2784699)
 * You can now select and insert media items from a single-cardinality media
   browser with a double-click. (Issue #2888535)
 * Added documentation about the known incompatibility between Workbench
@@ -325,7 +495,7 @@
 * Scheduled updates now clearly display what is scheduled to happen and when,
   and multiple updates can be created for basic pages. (Issue #2688411)
 * Fixed a bug where reverting the layout of a forward revision of a landing page
-  also reverted the layout of the published version. (Issue #2754649) 
+  also reverted the layout of the published version. (Issue #2754649)
 * Fixed a bug where Lightning Media failed to validate file size and dimension
   constraints. (Issue #2796683)
 * The *.features.yml files were removed from our older features that had them.
@@ -467,7 +637,7 @@
 * Most of the configuration previously provided as part of the
   Lightning install profile has been moved into Lightning Core.
   (#2773519)
-* The "publish" and "unpublish" actions have been removed from the 
+* The "publish" and "unpublish" actions have been removed from the
   administrative Content view, because they do not make sense with
   Workbench Moderation enabled. (#2705931)
 * Fixed a regression caused by changes in Panelizer. (#2790699)
@@ -504,7 +674,7 @@
 * Fixed a PHP notice arising from the media asset preview handler. (PR #140)
 
 ## 1.02
-* Updated core to 8.1.7 (Security Release) and all contrib modules to latest 
+* Updated core to 8.1.7 (Security Release) and all contrib modules to latest
   available releases.
 * It's now possible to define which Lightning extensions will be enabled by
   listing them in ```lightning.extend.yml```. (#2765627)

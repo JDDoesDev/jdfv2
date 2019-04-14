@@ -6,8 +6,8 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\lightning_core\UpdateManager;
 
 /**
- * @group lightning
  * @group lightning_core
+ * @group orca_public
  */
 class ModuleInstallTest extends KernelTestBase {
 
@@ -56,6 +56,7 @@ class ModuleInstallTest extends KernelTestBase {
       $this->container->get('container.namespaces'),
       $this->container->get('class_resolver'),
       $this->container->get('config.factory'),
+      $this->container->get('extension.list.module'),
       $discovery->reveal()
     ));
 

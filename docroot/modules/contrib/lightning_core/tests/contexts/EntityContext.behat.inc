@@ -13,7 +13,7 @@ use Drupal\user\EntityOwnerInterface;
 /**
  * Contains miscellaneous step definitions for working with Drupal entities.
  */
-class EntityContext extends DrupalSubContextBase {
+final class EntityContext extends DrupalSubContextBase {
 
   /**
    * IDs of entities created during the scenario, divided into sets keyed by
@@ -21,7 +21,7 @@ class EntityContext extends DrupalSubContextBase {
    *
    * @var array
    */
-  protected $trash = [];
+  private $trash = [];
 
   /**
    * Saves an entity, ensuring automatic clean-up.
@@ -88,8 +88,8 @@ class EntityContext extends DrupalSubContextBase {
    *
    * @throws \Exception if there are no entities to visit.
    *
-   * @When I visit a(n) :entity_type
-   * @When I visit a(n) :bundle :entity_type
+   * @When I visit (?:a|an) :entity_type
+   * @When I visit (?:a|an) :bundle :entity_type
    */
   public function visitEntity($entity_type, $bundle = NULL) {
     $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
@@ -151,7 +151,7 @@ class EntityContext extends DrupalSubContextBase {
    * @return int
    *   How many entities exist of the given type and bundle.
    */
-  protected function count($entity_type, $bundle = NULL) {
+  private function count($entity_type, $bundle = NULL) {
     $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
 
     $query = $storage->getQuery()->count();
@@ -205,7 +205,7 @@ class EntityContext extends DrupalSubContextBase {
    * @return string
    *   A formatted entity count string, e.g. '33 content items'.
    */
-  protected function formatCount($entity_type, $n) {
+  private function formatCount($entity_type, $n) {
     $entity_type = \Drupal::entityTypeManager()->getDefinition($entity_type);
 
     return (string) new Plural(
@@ -246,12 +246,8 @@ class EntityContext extends DrupalSubContextBase {
    * {@inheritdoc}
    */
   protected function getUser() {
-    try {
-      return parent::getUser()->uid;
-    }
-    catch (\Exception $e) {
-      return 0;
-    }
+    $user = $this->getUserManager()->getCurrentUser();
+    return $user ? $user->uid : 0;
   }
 
   /**

@@ -2,21 +2,22 @@
 
 namespace Drupal\Tests\jsonapi\Functional;
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
 use Drupal\media\Entity\MediaType;
-use Drupal\Tests\rest\Functional\BcTimestampNormalizerUnixTestTrait;
+use Drupal\Tests\jsonapi\Traits\CommonCollectionFilterAccessTestPatternsTrait;
 use Drupal\user\Entity\User;
 
 /**
- * JSON API integration test for the "Media" content entity type.
+ * JSON:API integration test for the "Media" content entity type.
  *
  * @group jsonapi
  */
 class MediaTest extends ResourceTestBase {
 
-  use BcTimestampNormalizerUnixTestTrait;
+  use CommonCollectionFilterAccessTestPatternsTrait;
 
   /**
    * {@inheritdoc}
@@ -32,6 +33,11 @@ class MediaTest extends ResourceTestBase {
    * {@inheritdoc}
    */
   protected static $resourceTypeName = 'media--camelids';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $resourceTypeIsVersionable = TRUE;
 
   /**
    * {@inheritdoc}
@@ -57,31 +63,27 @@ class MediaTest extends ResourceTestBase {
         break;
 
       case 'POST':
-        // @todo Remove this modification when JSON API requires Drupal 8.5 or newer, and do an early return above instead.
-        if (floatval(\Drupal::VERSION) < 8.5) {
-          $this->grantPermissionsToTestedRole(['create media']);
-        }
-        $this->grantPermissionsToTestedRole(['create camelids media']);
+        $this->grantPermissionsToTestedRole(['create camelids media', 'access content']);
         break;
 
       case 'PATCH':
-        // @todo Remove this modification when JSON API requires Drupal 8.5 or newer, and do an early return above instead.
-        if (floatval(\Drupal::VERSION) < 8.5) {
-          $this->grantPermissionsToTestedRole(['update any media']);
-        }
         $this->grantPermissionsToTestedRole(['edit any camelids media']);
         // @todo Remove this in https://www.drupal.org/node/2824851.
         $this->grantPermissionsToTestedRole(['access content']);
         break;
 
       case 'DELETE':
-        // @todo Remove this modification when JSON API requires Drupal 8.5 or newer, and do an early return above instead.
-        if (floatval(\Drupal::VERSION) < 8.5) {
-          $this->grantPermissionsToTestedRole(['delete any media']);
-        }
         $this->grantPermissionsToTestedRole(['delete any camelids media']);
         break;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUpRevisionAuthorization($method) {
+    parent::setUpRevisionAuthorization($method);
+    $this->grantPermissionsToTestedRole(['view all media revisions']);
   }
 
   /**
@@ -115,18 +117,23 @@ class MediaTest extends ResourceTestBase {
     $file->setPermanent();
     $file->save();
 
+    // @see \Drupal\Tests\jsonapi\Functional\MediaTest::testPostIndividual()
+    $post_file = File::create([
+      'uri' => 'public://llama2.txt',
+    ]);
+    $post_file->setPermanent();
+    $post_file->save();
+
     // Create a "Llama" media item.
-    // @todo Remove this modification when JSON API requires Drupal 8.5 or newer, and do an early return above instead.
-    $file_field_name = floatval(\Drupal::VERSION) >= 8.5 ? 'field_media_file' : 'field_media_file_1';
     $media = Media::create([
       'bundle' => 'camelids',
-      $file_field_name => [
+      'field_media_file' => [
         'target_id' => $file->id(),
       ],
     ]);
     $media
       ->setName('Llama')
-      ->setPublished(TRUE)
+      ->setPublished()
       ->setCreatedTime(123456789)
       ->setOwnerId($this->account->id())
       ->setRevisionUserId($this->account->id())
@@ -140,47 +147,44 @@ class MediaTest extends ResourceTestBase {
    */
   protected function getExpectedDocument() {
     $file = File::load(1);
-    $thumbnail = File::load(2);
+    $thumbnail = File::load(3);
     $author = User::load($this->entity->getOwnerId());
-    $self_url = Url::fromUri('base:/jsonapi/media/camelids/' . $this->entity->uuid())->setAbsolute()->toString(TRUE)->getGeneratedUrl();
-    $normalization = [
+    $base_url = Url::fromUri('base:/jsonapi/media/camelids/' . $this->entity->uuid())->setAbsolute();
+    $self_url = clone $base_url;
+    $version_identifier = 'id:' . $this->entity->getRevisionId();
+    $self_url = $self_url->setOption('query', ['resourceVersion' => $version_identifier]);
+    $version_query_string = '?resourceVersion=' . urlencode($version_identifier);
+    $data = [
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $base_url->toString()],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'media--camelids',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url->toString()],
         ],
         'attributes' => [
-          'mid' => 1,
-          'vid' => 1,
           'langcode' => 'en',
           'name' => 'Llama',
           'status' => TRUE,
-          'created' => 123456789,
-          // @todo uncomment this in https://www.drupal.org/project/jsonapi/issues/2929932
-          /* 'created' => $this->formatExpectedTimestampItemValues(123456789), */
-          'changed' => $this->entity->getChangedTime(),
-          // @todo uncomment this in https://www.drupal.org/project/jsonapi/issues/2929932
-          /* 'changed' => $this->formatExpectedTimestampItemValues($this->entity->getChangedTime()), */
-          'revision_created' => (int) $this->entity->getRevisionCreationTime(),
-          // @todo uncomment this in https://www.drupal.org/project/jsonapi/issues/2929932
-          /* 'revision_created' => $this->formatExpectedTimestampItemValues((int) $this->entity->getRevisionCreationTime()), */
+          'created' => '1973-11-29T21:33:09+00:00',
+          'changed' => (new \DateTime())->setTimestamp($this->entity->getChangedTime())->setTimezone(new \DateTimeZone('UTC'))->format(\DateTime::RFC3339),
+          'revision_created' => (new \DateTime())->setTimestamp($this->entity->getRevisionCreationTime())->setTimezone(new \DateTimeZone('UTC'))->format(\DateTime::RFC3339),
           'default_langcode' => TRUE,
           'revision_log_message' => NULL,
           // @todo Attempt to remove this in https://www.drupal.org/project/drupal/issues/2933518.
           'revision_translation_affected' => TRUE,
-          'uuid' => $this->entity->uuid(),
+          'drupal_internal__mid' => 1,
+          'drupal_internal__vid' => 1,
         ],
         'relationships' => [
           'field_media_file' => [
@@ -193,24 +197,32 @@ class MediaTest extends ResourceTestBase {
               'type' => 'file--file',
             ],
             'links' => [
-              'related' => $self_url . '/field_media_file',
-              'self' => $self_url . '/relationships/field_media_file',
+              'related' => [
+                'href' => $base_url->toString() . '/field_media_file' . $version_query_string,
+              ],
+              'self' => [
+                'href' => $base_url->toString() . '/relationships/field_media_file' . $version_query_string,
+              ],
             ],
           ],
           'thumbnail' => [
             'data' => [
               'id' => $thumbnail->uuid(),
               'meta' => [
-                'alt' => 'Thumbnail',
-                'width' => '180',
-                'height' => '180',
-                'title' => 'Llama',
+                'alt' => '',
+                'width' => 180,
+                'height' => 180,
+                'title' => NULL,
               ],
               'type' => 'file--file',
             ],
             'links' => [
-              'related' => $self_url . '/thumbnail',
-              'self' => $self_url . '/relationships/thumbnail',
+              'related' => [
+                'href' => $base_url->toString() . '/thumbnail' . $version_query_string,
+              ],
+              'self' => [
+                'href' => $base_url->toString() . '/relationships/thumbnail' . $version_query_string,
+              ],
             ],
           ],
           'bundle' => [
@@ -219,8 +231,12 @@ class MediaTest extends ResourceTestBase {
               'type' => 'media_type--media_type',
             ],
             'links' => [
-              'related' => $self_url . '/bundle',
-              'self' => $self_url . '/relationships/bundle',
+              'related' => [
+                'href' => $base_url->toString() . '/bundle' . $version_query_string,
+              ],
+              'self' => [
+                'href' => $base_url->toString() . '/relationships/bundle' . $version_query_string,
+              ],
             ],
           ],
           'uid' => [
@@ -229,8 +245,12 @@ class MediaTest extends ResourceTestBase {
               'type' => 'user--user',
             ],
             'links' => [
-              'related' => $self_url . '/uid',
-              'self' => $self_url . '/relationships/uid',
+              'related' => [
+                'href' => $base_url->toString() . '/uid' . $version_query_string,
+              ],
+              'self' => [
+                'href' => $base_url->toString() . '/relationships/uid' . $version_query_string,
+              ],
             ],
           ],
           'revision_user' => [
@@ -239,33 +259,47 @@ class MediaTest extends ResourceTestBase {
               'type' => 'user--user',
             ],
             'links' => [
-              'related' => $self_url . '/revision_user',
-              'self' => $self_url . '/relationships/revision_user',
+              'related' => [
+                'href' => $base_url->toString() . '/revision_user' . $version_query_string,
+              ],
+              'self' => [
+                'href' => $base_url->toString() . '/relationships/revision_user' . $version_query_string,
+              ],
             ],
           ],
         ],
       ],
     ];
-    // @todo Remove this modification when JSON API requires Drupal 8.5 or newer, and do an early return above instead.
-    if (floatval(\Drupal::VERSION) < 8.5) {
-      unset($normalization['data']['attributes']['revision_default']);
-      $normalization['data']['relationships']['field_media_file_1'] = $normalization['data']['relationships']['field_media_file'];
-      $normalization['data']['relationships']['field_media_file_1']['links']['related'] .= '_1';
-      $normalization['data']['relationships']['field_media_file_1']['links']['self'] .= '_1';
-      unset($normalization['data']['relationships']['field_media_file']);
+    // @todo Make this unconditional when JSON:API requires Drupal 8.6 or newer.
+    if (floatval(\Drupal::VERSION) < 8.6) {
+      $data['data']['relationships']['thumbnail']['data']['meta']['alt'] = 'Thumbnail';
+      $data['data']['relationships']['thumbnail']['data']['meta']['title'] = 'Llama';
     }
-    return $normalization;
+    return $data;
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getPostDocument() {
+    $file = File::load(2);
     return [
       'data' => [
         'type' => 'media--camelids',
         'attributes' => [
           'name' => 'Dramallama',
+        ],
+        'relationships' => [
+          'field_media_file' => [
+            'data' => [
+              'id' => $file->uuid(),
+              'meta' => [
+                'description' => 'This file is better!',
+                'display' => NULL,
+              ],
+              'type' => 'file--file',
+            ],
+          ],
         ],
       ],
     ];
@@ -279,9 +313,25 @@ class MediaTest extends ResourceTestBase {
       case 'GET';
         return "The 'view media' permission is required and the media item must be published.";
 
+      case 'POST':
+        return "The following permissions are required: 'administer media' OR 'create media' OR 'create camelids media'.";
+
+      case 'PATCH':
+        return "The following permissions are required: 'update any media' OR 'update own media' OR 'camelids: edit any media' OR 'camelids: edit own media'.";
+
+      case 'DELETE':
+        return "The following permissions are required: 'delete any media' OR 'delete own media' OR 'camelids: delete any media' OR 'camelids: delete own media'.";
+
       default:
         return '';
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEditorialPermissions() {
+    return array_merge(parent::getEditorialPermissions(), ['view any unpublished content']);
   }
 
   /**
@@ -293,28 +343,37 @@ class MediaTest extends ResourceTestBase {
       ->addCacheTags(['media:1']);
   }
 
+  // @codingStandardsIgnoreStart
   /**
    * {@inheritdoc}
    */
   public function testPostIndividual() {
-    $this->markTestSkipped('POSTing File Media items is not supported until https://www.drupal.org/node/1927648 is solved.');
+    // @todo Mimic \Drupal\Tests\rest\Functional\EntityResource\Media\MediaResourceTestBase::testPost()
+    // @todo Later, use https://www.drupal.org/project/jsonapi/issues/2958554 to upload files rather than the REST module.
+    parent::testPostIndividual();
   }
+  // @codingStandardsIgnoreEnd
 
   /**
    * {@inheritdoc}
    *
    * @todo Determine if this override should be removed in https://www.drupal.org/project/jsonapi/issues/2952522
    */
-  protected function getExpectedGetRelationshipDocumentData($relationship_field_name) {
-    $data = parent::getExpectedGetRelationshipDocumentData($relationship_field_name);
+  protected function getExpectedGetRelationshipDocumentData($relationship_field_name, EntityInterface $entity = NULL) {
+    $data = parent::getExpectedGetRelationshipDocumentData($relationship_field_name, $entity);
     switch ($relationship_field_name) {
       case 'thumbnail':
         $data['meta'] = [
-          'alt' => 'Thumbnail',
-          'width' => '180',
-          'height' => '180',
-          'title' => 'Llama',
+          'alt' => '',
+          'width' => 180,
+          'height' => 180,
+          'title' => NULL,
         ];
+        // @todo Make this unconditional when JSON:API requires Drupal 8.6 or newer.
+        if (floatval(\Drupal::VERSION) < 8.6) {
+          $data['meta']['alt'] = 'Thumbnail';
+          $data['meta']['title'] = 'Llama';
+        }
         return $data;
 
       case 'field_media_file':
@@ -327,6 +386,23 @@ class MediaTest extends ResourceTestBase {
       default:
         return $data;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @todo Remove this in https://www.drupal.org/node/2824851.
+   */
+  protected function doTestRelationshipMutation(array $request_options) {
+    $this->grantPermissionsToTestedRole(['access content']);
+    parent::doTestRelationshipMutation($request_options);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function testCollectionFilterAccess() {
+    $this->doTestCollectionFilterAccessForPublishableEntities('name', 'view media', 'administer media');
   }
 
 }

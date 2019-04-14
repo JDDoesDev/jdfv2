@@ -4,9 +4,8 @@ namespace Drupal\user\ContextProvider;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Entity\EntityManagerInterface;
-use Drupal\Core\Plugin\Context\Context;
-use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\Core\Plugin\Context\ContextProviderInterface;
+use Drupal\Core\Plugin\Context\EntityContext;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -54,9 +53,14 @@ class CurrentUserContext implements ContextProviderInterface {
       // @todo Do not validate protected fields to avoid bug in TypedData,
       //   remove this in https://www.drupal.org/project/drupal/issues/2934192.
       $current_user->_skipProtectedUserFieldConstraint = TRUE;
+
+      $context = EntityContext::fromEntity($current_user, $this->t('Current user'));
+    }
+    else {
+      // If not user is available, provide an empty context object.
+      $context = EntityContext::fromEntityTypeId('user', $this->t('Current user'));
     }
 
-    $context = new Context(new ContextDefinition('entity:user', $this->t('Current user')), $current_user);
     $cacheability = new CacheableMetadata();
     $cacheability->setCacheContexts(['user']);
     $context->addCacheableDependency($cacheability);

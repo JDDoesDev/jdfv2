@@ -1,5 +1,7 @@
 <?php
 
+@trigger_error('SetXMLPropertyTask is deprecated and will be removed from Lightning 4.x.', E_USER_DEPRECATED);
+
 /**
  * @file
  * Contains SetXMLPropertyTask.

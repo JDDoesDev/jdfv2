@@ -29,26 +29,37 @@ class EmbedCode extends EntityFormProxy {
       ],
       '#ajax' => [
         'event' => 'change',
-        'wrapper' => 'entity',
+        'wrapper' => 'entity-form',
         'method' => 'html',
         'callback' => [static::class, 'ajax'],
       ],
+      // I don't know why, but this is needed to display error messages.
+      '#limit_validation_errors' => [
+        ['input'],
+      ],
     ];
-
     return $form;
   }
 
   /**
    * {@inheritdoc}
    */
+  protected function getCurrentValue(FormStateInterface $form_state) {
+    $value = parent::getCurrentValue($form_state);
+    return trim($value);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function validate(array &$form, FormStateInterface $form_state) {
-    $value = trim($this->getInputValue($form_state));
+    $value = $this->getCurrentValue($form_state);
 
     if ($value) {
       parent::validate($form, $form_state);
     }
-    else {
-      $form_state->setError($form['widget'], $this->t('You must enter a URL or embed code.'));
+    elseif ($form_state->isSubmitted()) {
+      $form_state->setError($form['widget']['input'], $this->t('You must enter a URL or embed code.'));
     }
   }
 

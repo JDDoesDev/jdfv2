@@ -8,14 +8,11 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\jsonapi\Context\FieldResolver;
-use Drupal\jsonapi\Exception\EntityAccessDeniedHttpException;
 use Drupal\jsonapi\ResourceType\ResourceType;
 use Drupal\jsonapi\Normalizer\JsonApiDocumentTopLevelNormalizer;
-use Drupal\jsonapi\LinkManager\LinkManager;
-use Drupal\jsonapi\Context\CurrentContext;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Argument;
-use Symfony\Component\Routing\Route;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Drupal\jsonapi\ResourceType\ResourceTypeRepository;
@@ -39,8 +36,6 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
    * {@inheritdoc}
    */
   public function setUp() {
-    $link_manager = $this->prophesize(LinkManager::class);
-    $current_context_manager = $this->prophesize(CurrentContext::class);
     $resource_type_repository = $this->prophesize(ResourceTypeRepository::class);
     $field_resolver = $this->prophesize(FieldResolver::class);
 
@@ -71,14 +66,7 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
     $entity_type->getKey('uuid')->willReturn('uuid');
     $entity_type_manager->getDefinition('node')->willReturn($entity_type->reveal());
 
-    $current_route = $this->prophesize(Route::class);
-    $current_route->getDefault('_on_relationship')->willReturn(FALSE);
-
-    $current_context_manager->isOnRelationship()->willReturn(FALSE);
-
     $this->normalizer = new JsonApiDocumentTopLevelNormalizer(
-      $link_manager->reveal(),
-      $current_context_manager->reveal(),
       $entity_type_manager->reveal(),
       $resource_type_repository->reveal(),
       $field_resolver->reveal()
@@ -101,9 +89,9 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
    * @dataProvider denormalizeProvider
    */
   public function testDenormalize($input, $expected) {
-    $context = [
-      'resource_type' => new ResourceType($this->randomMachineName(), $this->randomMachineName(), FieldableEntityInterface::class),
-    ];
+    $resource_type = new ResourceType('node', 'article', FieldableEntityInterface::class);
+    $resource_type->setRelatableResourceTypes([]);
+    $context = ['resource_type' => $resource_type];
     $denormalized = $this->normalizer->denormalize($input, NULL, 'api_json', $context);
     $this->assertSame($expected, $denormalized);
   }
@@ -229,15 +217,15 @@ class JsonApiDocumentTopLevelNormalizerTest extends UnitTestCase {
 
     if ($expect_exception) {
       $this->setExpectedException(
-        EntityAccessDeniedHttpException::class,
+        UnprocessableEntityHttpException::class,
         'IDs should be properly generated and formatted UUIDs as described in RFC 4122.'
       );
     }
 
     $denormalized = $this->normalizer->denormalize($data, NULL, 'api_json', [
       'resource_type' => new ResourceType(
-        $this->randomMachineName(),
-        $this->randomMachineName(),
+        'node',
+        'article',
         FieldableEntityInterface::class
       ),
     ]);

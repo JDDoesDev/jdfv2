@@ -9,6 +9,7 @@ use Drupal\user\Entity\Role;
 /**
  * @group lightning
  * @group lightning_roles
+ * @group orca_public
  */
 class ContentRoleTest extends KernelTestBase {
 
@@ -37,14 +38,19 @@ class ContentRoleTest extends KernelTestBase {
     ]);
     $node_type->save();
 
-    $roles = [
+    $role_ids = [
       $node_type->id() . '_creator',
       $node_type->id() . '_reviewer',
     ];
-    $this->assertCount(2, Role::loadMultiple($roles));
+    $roles = Role::loadMultiple($role_ids);
+    $this->assertCount(2, $roles);
+
+    foreach ($roles as $role) {
+      $this->assertSame(FALSE, $role->get('is_admin'));
+    }
 
     $node_type->delete();
-    $this->assertEmpty(Role::loadMultiple($roles));
+    $this->assertEmpty(Role::loadMultiple($role_ids));
   }
 
 }

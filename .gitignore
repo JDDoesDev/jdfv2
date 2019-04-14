@@ -7,3 +7,6 @@
 
 /docroot/sites/default/settings.php
 *.sql
+/vendor
+/docroot/core
+

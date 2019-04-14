@@ -7,7 +7,7 @@ use Drupal\Core\Url;
 use Drupal\node\Entity\NodeType;
 
 /**
- * JSON API integration test for the "EntityViewDisplay" config entity type.
+ * JSON:API integration test for the "EntityViewDisplay" config entity type.
  *
  * @group jsonapi
  */
@@ -70,23 +70,23 @@ class EntityViewDisplayTest extends ResourceTestBase {
    */
   protected function getExpectedDocument() {
     $self_url = Url::fromUri('base:/jsonapi/entity_view_display/entity_view_display/' . $this->entity->uuid())->setAbsolute()->toString(TRUE)->getGeneratedUrl();
-    return [
+    $document = [
       'jsonapi' => [
         'meta' => [
           'links' => [
-            'self' => 'http://jsonapi.org/format/1.0/',
+            'self' => ['href' => 'http://jsonapi.org/format/1.0/'],
           ],
         ],
         'version' => '1.0',
       ],
       'links' => [
-        'self' => $self_url,
+        'self' => ['href' => $self_url],
       ],
       'data' => [
         'id' => $this->entity->uuid(),
         'type' => 'entity_view_display--entity_view_display',
         'links' => [
-          'self' => $self_url,
+          'self' => ['href' => $self_url],
         ],
         'attributes' => [
           'bundle' => 'camelids',
@@ -105,15 +105,19 @@ class EntityViewDisplayTest extends ResourceTestBase {
             ],
           ],
           'hidden' => [],
-          'id' => 'node.camelids.default',
           'langcode' => 'en',
           'mode' => 'default',
           'status' => TRUE,
           'targetEntityType' => 'node',
-          'uuid' => $this->entity->uuid(),
+          'drupal_internal__id' => 'node.camelids.default',
         ],
       ],
     ];
+    if (floatval(\Drupal::VERSION) >= 8.6) {
+      $document['data']['attributes']['content']['links']['settings'] = [];
+      $document['data']['attributes']['content']['links']['third_party_settings'] = [];
+    }
+    return $document;
   }
 
   /**
@@ -133,13 +137,21 @@ class EntityViewDisplayTest extends ResourceTestBase {
   /**
    * {@inheritdoc}
    */
-  public function testGetIndividual() {
-    // @todo Remove when JSON API requires Drupal 8.5 or newer.
-    // @see https://www.drupal.org/project/drupal/issues/2866666
-    if (floatval(\Drupal::VERSION) < 8.5) {
-      $this->markTestSkipped('EntityViewisplay entities had a dysfunctional access control handler until 8.5, this is necessary for this test coverage to work.');
-    }
-    return parent::testGetIndividual();
+  protected function createAnotherEntity($key) {
+    NodeType::create([
+      'name' => 'Pachyderms',
+      'type' => 'pachyderms',
+    ])->save();
+
+    $entity = EntityViewDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'pachyderms',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+    $entity->save();
+
+    return $entity;
   }
 
 }

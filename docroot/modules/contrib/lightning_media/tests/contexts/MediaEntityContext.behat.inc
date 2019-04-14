@@ -9,8 +9,24 @@ use Drupal\Component\Utility\Random;
 use Drupal\DrupalExtension\Context\DrupalSubContextBase;
 use Drupal\file\Entity\File;
 use Drupal\media\Entity\Media;
+use Drupal\Tests\lightning_media\FixtureContext;
 
-class MediaEntityContext extends DrupalSubContextBase {
+/**
+ * Contains step definitions for interacting with media entities.
+ */
+final class MediaEntityContext extends DrupalSubContextBase {
+
+  /**
+   * @BeforeScenario
+   */
+  public function setUp() {
+    // Automatically delete all media items created by the user during this
+    // scenario.
+    /** @var FixtureContext $fixtureContext */
+    if ($fixtureContext = $this->getContext(FixtureContext::class)) {
+      $fixtureContext->trackUserContent($this->getUserManager(), 'media');
+    }
+  }
 
   /**
    * Creates a set of media items from tabular data.
@@ -30,10 +46,14 @@ class MediaEntityContext extends DrupalSubContextBase {
    * @Then I should be visiting a media item
    */
   public function assertMediaItemPage() {
-    $this->assertSession()->addressMatches('/\/media\/[0-9]+$/');
+    $assert = $this->assertSession();
+
+    // The path must start with "/media/" and end with "/ID"; the bundle may be
+    // in the middle if Pathauto is installed.
+    $assert->addressMatches('#^/media/([\w-]+/)?\d+$#');
 
     try {
-      $this->assertSession()->statusCodeEquals(200);
+      $assert->statusCodeEquals(200);
     }
     catch (UnsupportedDriverActionException $e) {
       // This isn't a critically important assertion, so don't worry about it.
@@ -142,6 +162,17 @@ class MediaEntityContext extends DrupalSubContextBase {
       ]);
       $context->save($media->setPublished());
     }
+  }
+
+  /**
+   * Asserts that a slideshow of media assets is present on the page.
+   *
+   * @Then I should see a slideshow of media assets
+   */
+  public function assertSlideshow() {
+    $assert = $this->assertSession();
+    $assert->elementExists('css', 'button.slick-prev.slick-arrow');
+    $assert->elementExists('css', 'button.slick-next.slick-arrow');
   }
 
 }

@@ -76,5 +76,4 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  scheduled_publication: true
+hidden: {  }

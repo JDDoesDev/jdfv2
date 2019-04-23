@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - entity_browser.browser.image_browser
     - field.field.node.blog_post.body
     - field.field.node.blog_post.field_category
     - field.field.node.blog_post.field_comments
@@ -12,9 +11,7 @@ dependencies:
     - node.type.blog_post
   module:
     - content_moderation
-    - datetime
     - disqus
-    - entity_browser
     - path
     - text
 id: node.blog_post.default
@@ -52,19 +49,6 @@ content:
     third_party_settings: {  }
     type: disqus_comment
     region: content
-  field_header_image:
-    type: entity_browser_file
-    weight: 122
-    settings:
-      entity_browser: image_browser
-      field_widget_edit: true
-      field_widget_remove: true
-      view_mode: default
-      preview_image_style: thumbnail
-      open: true
-      selection_mode: selection_append
-    region: content
-    third_party_settings: {  }
   field_tags:
     weight: 125
     settings:
@@ -92,12 +76,6 @@ content:
       display_label: true
     weight: 15
     region: content
-    third_party_settings: {  }
-  scheduled_publication:
-    type: datetime_default
-    weight: 20
-    region: content
-    settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
@@ -130,4 +108,5 @@ content:
       placeholder: ''
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_header_image: true

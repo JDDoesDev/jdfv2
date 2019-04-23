@@ -71,6 +71,8 @@ content:
   content_moderation_control:
     weight: -20
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_meta_tags:
     type: metatag_empty_formatter
     region: content
@@ -83,6 +85,11 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
+  sharethis:
+    weight: 10
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   workbench_moderation_control:
     weight: -20
     settings: {  }
@@ -91,4 +98,3 @@ content:
 hidden:
   body: true
   panelizer: true
-  scheduled_publication: true

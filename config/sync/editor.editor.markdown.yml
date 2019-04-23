@@ -1,0 +1,13 @@
+uuid: c1baba2c-e660-496b-9b4e-4a85c82e481e
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.markdown
+  module:
+    - tui_editor
+format: markdown
+editor: tui_editor
+settings:
+  saveHTMLToTextarea: 1
+image_upload: {  }

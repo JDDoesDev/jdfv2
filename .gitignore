@@ -5,11 +5,13 @@
 /docroot/core
 /docroot/modules/contrib
 /docroot/themes/contrib
+/docroot/profiles/contrib
 /docroot/themes/custom/bcb_subtheme/node_modules
 
 # Ignore Composer-managed dependencies.
 
 /docroot/sites/default/settings.php
+/docroot/sites/settings.local.php
 *.sql
 /vendor/
 

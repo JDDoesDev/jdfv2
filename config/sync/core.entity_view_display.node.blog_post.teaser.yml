@@ -53,5 +53,4 @@ hidden:
   field_category: true
   field_comments: true
   field_tags: true
-  scheduled_publication: true
   sharethis: true

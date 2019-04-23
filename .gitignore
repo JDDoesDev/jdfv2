@@ -2,11 +2,14 @@
 
 # Ignore non-custom parts of Drupal.
 /docroot/sites/default/files
+/docroot/core
+/docroot/modules/contrib
+/docroot/themes/custom/bcb_subtheme/node_modules
 
 # Ignore Composer-managed dependencies.
 
 /docroot/sites/default/settings.php
 *.sql
-/vendor
-/docroot/core
+/vendor/
 
+/.vscode/

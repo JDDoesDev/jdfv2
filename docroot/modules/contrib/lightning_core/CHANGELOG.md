@@ -1,3 +1,6 @@
+## 3.10.0
+* Security updated Drupal core to 8.6.15.
+
 ## 3.9.0
 * Security updated Drupal core to 8.6.13 (SA-CORE-2019-004).
 

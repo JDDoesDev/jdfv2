@@ -23,7 +23,7 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "acquia/lightning": "~3.2.7",
-        "drupal/core": "^8.6.0",
+        "drupal/core": "8.6.16",
         "drupal/bootstrap_clean_blog": "^1.0@RC",
         "drupal/bootstrap_paragraphs": "2.x",
         "drupal/devel": "^2.0",
@@ -45,7 +45,8 @@
         "drupal/codetag": "^1.1",
         "drupal/ctools": "^3.0",
         "drupal/tui_editor": "^1.9",
-        "drupal/honeypot": "^1.29"
+        "drupal/honeypot": "^1.29",
+        "drupal/redirect": "^1.3"
     },
     "repositories": [
         {
@@ -95,6 +96,11 @@
                 "type:drupal-drush"
             ]
         },
-        "enable-patching": true
+        "enable-patching": true,
+        "patches": {
+            "drupal/sharethis": {
+              "Strings in brackets": "https://www.drupal.org/files/issues/Error-operator-not-supported-for-strings-2885710-12128018.patch"
+            }
+        }
     }
 }

@@ -1,0 +1,9 @@
+uuid: 43c10fea-c707-4054-a868-efcfc426aa9f
+langcode: en
+status: true
+dependencies: {  }
+name: 'Conference Type'
+vid: conference_type
+description: ''
+hierarchy: 0
+weight: 0

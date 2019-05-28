@@ -6,8 +6,8 @@ dependencies:
     - field.storage.node.field_conference
     - node.type.event
     - taxonomy.vocabulary.conference_type
-id: node.event.field_co
-field_name: field_co
+id: node.event.field_conference
+field_name: field_conference
 entity_type: node
 bundle: event
 label: 'Conference Type'

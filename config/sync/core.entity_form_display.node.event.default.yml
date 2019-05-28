@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.event.body
-    - field.field.node.event.field_co
+    - field.field.node.event.field_conference
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
     - field.field.node.event.field_session_title
@@ -37,7 +37,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_co:
+  field_conference:
     weight: 124
     settings:
       match_operator: CONTAINS

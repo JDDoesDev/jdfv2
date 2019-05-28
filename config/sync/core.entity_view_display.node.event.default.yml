@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.event.body
-    - field.field.node.event.field_co
+    - field.field.node.event.field_conference
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
     - field.field.node.event.field_session_title
@@ -27,7 +27,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-  field_co:
+  field_conference:
     weight: 104
     label: above
     settings:

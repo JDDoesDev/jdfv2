@@ -14,7 +14,7 @@ module:
   stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
-graylist: null
+graylist: {  }
 graylist_dependents: false
 graylist_skip_equal: true
 weight: 0

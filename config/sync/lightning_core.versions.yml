@@ -8,10 +8,10 @@ block: 0.0.0
 block_content: 0.0.0
 bootstrap_paragraphs: 0.0.0
 breakpoint: 0.0.0
-ckeditor: 0.0.0
-ckeditor_markdown: 0.0.0
-codesnippet: 0.0.0
-codetag: 0.0.0
+ckeditor: 8.6.16
+ckeditor_markdown: 1.1.0
+codesnippet: 1.6.0
+codetag: 1.1.0
 comment: 0.0.0
 config: 0.0.0
 consumers: 0.0.0

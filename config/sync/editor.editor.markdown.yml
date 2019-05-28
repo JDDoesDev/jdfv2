@@ -1,13 +1,103 @@
-uuid: c1baba2c-e660-496b-9b4e-4a85c82e481e
+uuid: 3384cd11-f893-4368-8206-6c5142f5ce0c
 langcode: en
 status: true
 dependencies:
   config:
     - filter.format.markdown
   module:
-    - tui_editor
+    - ckeditor
 format: markdown
-editor: tui_editor
+editor: ckeditor
 settings:
-  saveHTMLToTextarea: 1
-image_upload: {  }
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+            - Underline
+            - Strike
+            - Superscript
+            - Subscript
+            - Format
+            - Markdown
+            - RemoveFormat
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
+            - JustifyBlock
+            - Outdent
+            - Indent
+            - HorizontalRule
+        -
+          name: Links
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+            - media_browser
+        -
+          name: Tools
+          items:
+            - Source
+            - CodeSnippet
+            - Code
+            - node
+  plugins:
+    stylescombo:
+      styles: ''
+    language:
+      language_list: un
+    codesnippet:
+      highlight_style: github
+      highlight_languages:
+        apache: apache
+        bash: bash
+        css: css
+        coffeescript: coffeescript
+        dart: dart
+        dockerfile: dockerfile
+        dust: dust
+        gherkin: gherkin
+        go: go
+        haml: haml
+        handlebars: handlebars
+        ini: ini
+        json: json
+        java: java
+        javascript: javascript
+        less: less
+        makefile: makefile
+        markdown: markdown
+        nginx: nginx
+        php: php
+        perl: perl
+        powershell: powershell
+        puppet: puppet
+        python: python
+        ruby: ruby
+        scss: scss
+        sql: sql
+        twig: twig
+        typescript: typescript
+        xml: xml
+        yaml: yaml
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

@@ -4,6 +4,7 @@ status: false
 dependencies: {  }
 id: local
 label: local
+description: ''
 folder: ../config/local
 module:
   dblog: 0
@@ -13,7 +14,7 @@ module:
   stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
-graylist:
+graylist: null
 graylist_dependents: false
 graylist_skip_equal: true
 weight: 0

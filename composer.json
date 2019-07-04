@@ -21,8 +21,8 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~3.2.7",
-        "drupal/core": "8.6.16",
+        "acquia/lightning": "~3.3.1",
+        "drupal/core": "^8.7",
         "drupal/bootstrap_clean_blog": "^1.0@RC",
         "drupal/bootstrap_paragraphs": "2.x",
         "drupal/devel": "^2.0",

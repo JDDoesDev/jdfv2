@@ -1,0 +1,20 @@
+uuid: a7adad1c-2b19-40d1-a50d-88624623341c
+langcode: en
+status: true
+dependencies:
+  config:
+    - entity_browser.browser.media
+  module:
+    - entity_embed
+    - media
+label: Media
+id: media
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles: {  }
+  display_plugins: {  }
+  entity_browser: media
+  entity_browser_settings:
+    display_review: false
+icon_uuid: null

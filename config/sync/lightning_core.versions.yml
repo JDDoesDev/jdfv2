@@ -24,7 +24,7 @@ ctools: 0.0.0
 ctools_block: 0.0.0
 datetime: 0.0.0
 dblog: 0.0.0
-devel: 0.0.0
+devel: 2.1.0
 diff: 0.0.0
 disqus: 0.0.0
 dropzonejs: 0.0.0
@@ -122,3 +122,4 @@ lightning: 3.2.0
 honeypot: 1.27.0
 media_library: 8.6.15
 tui_editor: 1.9.0
+entity_browser_entity_form: 2.1.0

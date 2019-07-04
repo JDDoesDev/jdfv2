@@ -1,16 +1,14 @@
-uuid: cab309e6-4918-4699-ac7c-1858e81bb435
-langcode: und
+uuid: 773b0762-ae48-433f-8cb6-080a6f2c3c9b
+langcode: en
 status: true
 dependencies:
   module:
     - file
     - image
-    - media
-_core:
-  default_config_hash: 0zTx0zdgLRdKujV0VyF65aZ2xysPnHOa41tLHe9Rj6g
-id: media.image
-field_name: image
-entity_type: media
+    - user
+id: user.user_picture
+field_name: user_picture
+entity_type: user
 type: image
 settings:
   uri_scheme: public
@@ -27,6 +25,8 @@ module: image
 locked: false
 cardinality: 1
 translatable: true
-indexes: {  }
+indexes:
+  target_id:
+    - target_id
 persist_with_no_fields: false
 custom_storage: false

@@ -1,0 +1,29 @@
+uuid: e1dc373f-dff1-4957-81e4-8a811b0dfeb9
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_browser_entity_form
+name: media_1
+label: Media
+display: modal
+display_configuration:
+  width: '650'
+  height: '500'
+  link_text: 'Select entities'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  14f703a4-4639-4969-ad49-89779a5b0ba6:
+    settings:
+      entity_type: entity_browser
+      bundle: entity_browser
+      form_mode: default
+      submit_text: 'Save entity'
+    uuid: 14f703a4-4639-4969-ad49-89779a5b0ba6
+    weight: 1
+    label: entity_form
+    id: entity_form

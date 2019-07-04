@@ -1,4 +1,4 @@
-uuid: 3384cd11-f893-4368-8206-6c5142f5ce0c
+uuid: b6e886ef-01be-4619-a57b-615338fd29a2
 langcode: en
 status: true
 dependencies:
@@ -17,20 +17,6 @@ settings:
           items:
             - Bold
             - Italic
-            - Underline
-            - Strike
-            - Superscript
-            - Subscript
-            - Format
-            - Markdown
-            - RemoveFormat
-            - JustifyLeft
-            - JustifyCenter
-            - JustifyRight
-            - JustifyBlock
-            - Outdent
-            - Indent
-            - HorizontalRule
         -
           name: Links
           items:
@@ -46,14 +32,10 @@ settings:
           items:
             - Blockquote
             - DrupalImage
-            - media_browser
         -
           name: Tools
           items:
             - Source
-            - CodeSnippet
-            - Code
-            - node
   plugins:
     stylescombo:
       styles: ''
@@ -94,7 +76,7 @@ settings:
         xml: xml
         yaml: yaml
 image_upload:
-  status: true
+  status: false
   scheme: public
   directory: inline-images
   max_size: ''

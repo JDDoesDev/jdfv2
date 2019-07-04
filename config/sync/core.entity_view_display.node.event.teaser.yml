@@ -32,4 +32,10 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-hidden: {  }
+hidden:
+  field_conference: true
+  field_event_logo: true
+  field_location: true
+  field_session_title: true
+  field_session_video: true
+  field_start_date: true

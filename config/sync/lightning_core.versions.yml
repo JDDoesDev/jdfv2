@@ -51,7 +51,7 @@ kint: 0.0.0
 layout_discovery: 0.0.0
 lightning_api: 0.0.0
 lightning_contact_form: 0.0.0
-lightning_core: 0.0.0
+lightning_core: 3.6.0
 lightning_landing_page: 0.0.0
 lightning_layout: 0.0.0
 lightning_media: 0.0.0
@@ -65,7 +65,7 @@ lightning_page: 0.0.0
 lightning_roles: 0.0.0
 lightning_scheduler: 0.0.0
 lightning_search: 0.0.0
-lightning_workflow: 0.0.0
+lightning_workflow: 3.3.0
 link: 0.0.0
 markdown: 0.0.0
 media: 0.0.0
@@ -118,7 +118,7 @@ menu_link_content: 0.0.0
 pathauto: 0.0.0
 views: 0.0.0
 paragraphs: 0.0.0
-lightning: 0.0.0
+lightning: 3.2.0
 honeypot: 1.27.0
 media_library: 8.6.15
 tui_editor: 1.9.0

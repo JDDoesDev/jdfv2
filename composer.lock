@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aae3a970ee634af648af79a51132cd65",
+    "content-hash": "6e92d253eb80797f5a4a65f1f217c503",
     "packages": [
         {
             "name": "acquia/lightning",
@@ -3098,6 +3098,9 @@
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
                     }
+                },
+                "patches_applied": {
+                    "8.7 issue": "https://www.drupal.org/files/issues/2019-05-17/3052959-12.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
@@ -4627,6 +4630,9 @@
                         "status": "not-covered",
                         "message": "Alpha releases are not covered by Drupal security advisories."
                     }
+                },
+                "patches_applied": {
+                    "2882709 - Misnamed interface causes \"Fatal error: Cannot declare interface Drupal\\libraries\\ExternalLibrary\\Utility\\LibraryAccessorIdInterface\"": "https://www.drupal.org/files/issues/2882709-2-interface-libraryidaccessorinterface-misnamed.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",

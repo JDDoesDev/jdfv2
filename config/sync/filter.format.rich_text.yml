@@ -1,41 +1,39 @@
-uuid: b64adc20-9554-4b9c-8d91-aa08dd0c7821
+uuid: f4d4325a-17ed-45e3-baf9-211f0b7ff66a
 langcode: en
 status: true
 dependencies:
   module:
-    - adsense
     - editor
     - entity_embed
-    - markdown
 _core:
-  default_config_hash: Mc8Hl-Ya14lrbMXaUx7Ybmv-18vtqE4lw2DpgNHPj-s
-name: 'Rich Text'
+  default_config_hash: LQ7Z_f1qIeAP7aiyHGBwlgjdsAHzwISN1_6-Dvv_fVY
+name: 'Rich text'
 format: rich_text
 weight: 1
 filters:
   filter_align:
     id: filter_align
     provider: filter
-    status: false
+    status: true
     weight: -48
     settings: {  }
   filter_caption:
     id: filter_caption
     provider: filter
-    status: false
+    status: true
     weight: -47
     settings: {  }
   filter_htmlcorrector:
     id: filter_htmlcorrector
     provider: filter
     status: true
-    weight: -44
+    weight: -46
     settings: {  }
   editor_file_reference:
     id: editor_file_reference
     provider: editor
-    status: false
-    weight: -46
+    status: true
+    weight: -45
     settings: {  }
   entity_embed:
     id: entity_embed
@@ -46,8 +44,8 @@ filters:
   filter_html:
     id: filter_html
     provider: filter
-    status: false
-    weight: -45
+    status: true
+    weight: -50
     settings:
       allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <s> <sup> <sub> <img src alt data-entity-type data-entity-uuid data-align data-caption> <table> <caption> <tbody> <thead> <tfoot> <th> <td> <tr> <hr> <p> <br> <h1> <pre> <drupal-entity data-* title alt>'
       filter_html_help: true
@@ -56,37 +54,24 @@ filters:
     id: filter_autop
     provider: filter
     status: false
-    weight: -42
+    weight: -43
     settings: {  }
   filter_html_escape:
     id: filter_html_escape
     provider: filter
     status: false
-    weight: -43
+    weight: -44
     settings: {  }
   filter_html_image_secure:
     id: filter_html_image_secure
     provider: filter
     status: false
-    weight: -40
+    weight: -41
     settings: {  }
   filter_url:
     id: filter_url
     provider: filter
-    status: true
-    weight: -41
+    status: false
+    weight: -42
     settings:
       filter_url_length: 72
-  filter_adsense:
-    id: filter_adsense
-    provider: adsense
-    status: false
-    weight: -39
-    settings: {  }
-  markdown:
-    id: markdown
-    provider: markdown
-    status: false
-    weight: -50
-    settings:
-      markdown_library: php-markdown

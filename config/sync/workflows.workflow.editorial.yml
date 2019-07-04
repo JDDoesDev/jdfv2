@@ -41,14 +41,8 @@ type_settings:
         - published
       to: archived
       weight: 2
-    archived_draft:
-      label: 'Restore to Draft'
-      from:
-        - archived
-      to: draft
-      weight: 3
     archived_published:
-      label: Restore
+      label: 'Restore from archive'
       from:
         - archived
       to: published
@@ -61,6 +55,7 @@ type_settings:
         - draft
         - published
         - review
+        - archived
     publish:
       label: Publish
       to: published
@@ -70,7 +65,7 @@ type_settings:
         - published
         - review
     review:
-      label: Review
+      label: 'Send to review'
       from:
         - draft
         - review
@@ -80,3 +75,4 @@ type_settings:
     node:
       - page
       - landing_page
+  default_moderation_state: draft

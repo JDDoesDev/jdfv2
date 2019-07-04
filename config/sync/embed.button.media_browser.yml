@@ -1,12 +1,18 @@
-uuid: 3da0a35f-476f-4b02-a96f-7468e1cbdb2b
+uuid: d6529857-6533-48f5-9337-daac3ea4f11c
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.embedded
+    - entity_browser.browser.ckeditor_media_browser
+  content:
+    - 'file:file:0375e909-d49d-4f0d-a6d5-171dea436df4'
   module:
     - entity_embed
+    - image
     - media
 _core:
-  default_config_hash: ShmiFDMOjYFcwCuRYCxiR3-z-A892AG9cgjMKet5lns
+  default_config_hash: nzDWz2tSS-4sOFyWM7gvY9ef2ads0uvr3U16TmxApQc
 label: 'Media browser'
 id: media_browser
 type_id: entity
@@ -14,8 +20,10 @@ type_settings:
   entity_type: media
   bundles: {  }
   display_plugins:
-    - 'view_mode:media.media_library'
-  entity_browser: images
+    - 'entity_reference:entity_reference_entity_view'
+    - media_image
+    - 'view_mode:media.embedded'
+  entity_browser: ckeditor_media_browser
   entity_browser_settings:
-    display_review: true
-icon_uuid: null
+    display_review: false
+icon_uuid: 0375e909-d49d-4f0d-a6d5-171dea436df4

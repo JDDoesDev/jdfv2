@@ -1,0 +1,29 @@
+uuid: 84ee4aa1-2562-45f6-974d-33c5ffee013e
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.instagram.embed_code
+    - field.field.media.instagram.field_media_in_library
+    - media.type.instagram
+id: media.instagram.media_library
+targetEntityType: media
+bundle: instagram
+mode: media_library
+content:
+  name:
+    type: string_textfield
+    settings:
+      size: 60
+      placeholder: ''
+    weight: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  embed_code: true
+  field_media_in_library: true
+  path: true
+  status: true
+  uid: true

@@ -11,6 +11,7 @@ dependencies:
     - field.field.node.event.field_session_video
     - field.field.node.event.field_start_date
     - node.type.event
+    - workflows.workflow.editorial
   module:
     - content_moderation
     - datetime

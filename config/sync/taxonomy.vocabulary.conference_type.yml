@@ -5,5 +5,4 @@ dependencies: {  }
 name: 'Conference Type'
 vid: conference_type
 description: ''
-hierarchy: 0
 weight: 0

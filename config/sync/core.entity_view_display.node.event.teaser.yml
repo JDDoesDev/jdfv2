@@ -5,6 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.event.body
+    - field.field.node.event.field_conference
+    - field.field.node.event.field_event_logo
+    - field.field.node.event.field_location
+    - field.field.node.event.field_session_title
+    - field.field.node.event.field_session_video
+    - field.field.node.event.field_start_date
     - node.type.event
   module:
     - text

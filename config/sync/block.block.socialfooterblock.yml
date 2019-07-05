@@ -1,0 +1,20 @@
+uuid: e0069654-c088-4fcf-906f-dcc6cd201352
+langcode: en
+status: true
+dependencies:
+  module:
+    - jdf_custom
+  theme:
+    - bcb_subtheme
+id: socialfooterblock
+theme: bcb_subtheme
+region: footer
+weight: 0
+provider: null
+plugin: social_footer_block
+settings:
+  id: social_footer_block
+  label: 'Social footer block'
+  provider: jdf_custom
+  label_display: '0'
+visibility: {  }

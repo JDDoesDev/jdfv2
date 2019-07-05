@@ -31,7 +31,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-  <ul{{ attributes.addClass(['navbar-nav', 'ml-auto', 'menu', 'menu--' ~ menu_name|clean_class, 'nav', 'navbar-nav', 'navbar-right', 'navbar-inverse', 'bg-dark',
+  <ul{{ attributes.addClass(['navbar-nav', 'ml-auto', 'menu', 'menu--' ~ menu_name|clean_class, 'nav',
 ]) }}>
       {% for item in items %}
         {%

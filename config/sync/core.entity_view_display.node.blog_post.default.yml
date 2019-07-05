@@ -8,14 +8,10 @@ dependencies:
     - field.field.node.blog_post.field_comments
     - field.field.node.blog_post.field_header_image
     - field.field.node.blog_post.field_tags
-    - field.field.node.blog_post.layout_builder__layout
-    - image.style.crop_freeform
     - node.type.blog_post
   module:
     - disqus
-    - image
     - layout_builder
-    - layout_discovery
     - panelizer
     - text
     - user
@@ -26,113 +22,8 @@ third_party_settings:
     allow: false
     default: default
   layout_builder:
-    allow_custom: true
-    enabled: true
-    sections:
-      -
-        layout_id: layout_onecol
-        layout_settings: {  }
-        components:
-          c70a08be-b823-4aa4-8b32-ed2eee4d6122:
-            uuid: c70a08be-b823-4aa4-8b32-ed2eee4d6122
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:blog_post:field_header_image'
-              formatter:
-                label: hidden
-                settings:
-                  image_style: crop_freeform
-                  image_link: ''
-                third_party_settings: {  }
-                type: image
-            additional: {  }
-            weight: 0
-          b3cfba43-2b08-4e40-91f2-30ba1e5f9a38:
-            uuid: b3cfba43-2b08-4e40-91f2-30ba1e5f9a38
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'extra_field_block:node:blog_post:sharethis'
-            additional: {  }
-            weight: 1
-          db408153-758f-47e0-bcc4-7a6903d52823:
-            uuid: db408153-758f-47e0-bcc4-7a6903d52823
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:blog_post:body'
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            additional: {  }
-            weight: 2
-          c2e9edcf-f5a0-4ba0-952f-87323d9b3be1:
-            uuid: c2e9edcf-f5a0-4ba0-952f-87323d9b3be1
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'extra_field_block:node:blog_post:links'
-            additional: {  }
-            weight: 3
-          3adc93dd-28e8-4e4d-8e7b-680f37495ea1:
-            uuid: 3adc93dd-28e8-4e4d-8e7b-680f37495ea1
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:blog_post:field_category'
-              formatter:
-                label: above
-                settings:
-                  link: true
-                third_party_settings: {  }
-                type: entity_reference_label
-            additional: {  }
-            weight: 4
-          82fd972a-d85e-4976-9f1b-599f21069eff:
-            uuid: 82fd972a-d85e-4976-9f1b-599f21069eff
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:blog_post:field_tags'
-              formatter:
-                label: above
-                settings:
-                  link: true
-                third_party_settings: {  }
-                type: entity_reference_label
-            additional: {  }
-            weight: 5
-          a422bf8e-c71f-4699-aec8-987d00dab68f:
-            uuid: a422bf8e-c71f-4699-aec8-987d00dab68f
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'field_block:node:blog_post:field_comments'
-              formatter:
-                label: above
-                settings: {  }
-                third_party_settings: {  }
-                type: disqus_comment
-            additional: {  }
-            weight: 6
-        third_party_settings: {  }
+    allow_custom: false
+    enabled: false
 id: node.blog_post.default
 targetEntityType: node
 bundle: blog_post
@@ -140,13 +31,13 @@ mode: default
 content:
   body:
     type: text_default
-    weight: 2
+    weight: 1
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
   field_category:
-    weight: 4
+    weight: 3
     label: above
     settings:
       link: true
@@ -154,23 +45,14 @@ content:
     type: entity_reference_label
     region: content
   field_comments:
-    weight: 6
+    weight: 5
     label: above
     settings: {  }
     third_party_settings: {  }
     type: disqus_comment
     region: content
-  field_header_image:
-    weight: 0
-    label: hidden
-    settings:
-      image_style: crop_freeform
-      image_link: ''
-    third_party_settings: {  }
-    type: image
-    region: content
   field_tags:
-    weight: 5
+    weight: 4
     label: above
     settings:
       link: true
@@ -178,14 +60,15 @@ content:
     type: entity_reference_label
     region: content
   links:
-    weight: 3
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   sharethis:
-    weight: 1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_header_image: true
   layout_builder__layout: true

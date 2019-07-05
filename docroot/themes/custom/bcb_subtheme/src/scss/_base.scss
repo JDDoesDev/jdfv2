@@ -57,10 +57,11 @@ hr.small {
   .navbar-brand {
     font-weight: 800;
   }
-  .nav li a {
+  li a,
+  a.navbar-brand {
     text-transform: uppercase;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 1em;
+    font-weight: 700;
     letter-spacing: 1px;
   }
 }
@@ -373,46 +374,6 @@ form .row:first-child .floating-label-form-group {
   }
 }
 
-.pager {
-  margin: 20px 0 0;
-  li > {
-    a, span {
-      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      padding: 15px 25px;
-      background-color: white;
-      border-radius: 0;
-    }
-    a {
-      &:hover, &:focus {
-        color: white;
-        background-color: #0085a1;
-        border: 1px solid #0085a1;
-      }
-    }
-  }
-  .disabled > {
-    a {
-      color: #808080;
-      background-color: #404040;
-      cursor: not-allowed;
-      &:hover, &:focus {
-        color: #808080;
-        background-color: #404040;
-        cursor: not-allowed;
-      }
-    }
-    span {
-      color: #808080;
-      background-color: #404040;
-      cursor: not-allowed;
-    }
-  }
-}
-
 ::-moz-selection, ::selection {
   color: white;
   text-shadow: none;
@@ -427,5 +388,5 @@ img {
 }
 
 body {
-  webkit-tap-highlight-color: #0085a1;
+  -webkit-tap-highlight-color: #0085a1;
 }

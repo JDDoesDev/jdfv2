@@ -6,7 +6,13 @@ dependencies:
     - comment.type.post_comment
     - field.field.comment.post_comment.comment_body
   module:
+    - field_layout
+    - layout_discovery
     - text
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
 id: comment.post_comment.default
 targetEntityType: comment
 bundle: post_comment

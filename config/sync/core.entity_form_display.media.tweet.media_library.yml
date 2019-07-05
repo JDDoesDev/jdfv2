@@ -7,6 +7,13 @@ dependencies:
     - field.field.media.tweet.embed_code
     - field.field.media.tweet.field_media_in_library
     - media.type.tweet
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
 id: media.tweet.media_library
 targetEntityType: media
 bundle: tweet
@@ -18,6 +25,11 @@ content:
       size: 60
       placeholder: ''
     weight: 0
+    third_party_settings: {  }
+    region: content
+  preview:
+    weight: 0
+    settings: {  }
     third_party_settings: {  }
     region: content
 hidden:

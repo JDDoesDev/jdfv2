@@ -7,6 +7,13 @@ dependencies:
     - field.field.media.video.field_media_in_library
     - field.field.media.video.field_media_video_embed_field
     - media.type.video
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
 id: media.video.media_library
 targetEntityType: media
 bundle: video
@@ -18,6 +25,11 @@ content:
       size: 60
       placeholder: ''
     weight: 0
+    third_party_settings: {  }
+    region: content
+  preview:
+    weight: 0
+    settings: {  }
     third_party_settings: {  }
     region: content
 hidden:

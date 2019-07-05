@@ -26,7 +26,6 @@ module:
   ctools: 0
   ctools_block: 0
   datetime: 0
-  devel: 0
   diff: 0
   disqus: 0
   dropzonejs: 0
@@ -39,6 +38,7 @@ module:
   entity_reference: 0
   entity_reference_revisions: 0
   field: 0
+  field_layout: 0
   field_ui: 0
   file: 0
   filter: 0
@@ -51,6 +51,7 @@ module:
   inline_entity_form: 0
   jdf_custom: 0
   jsonapi: 0
+  layout_builder: 0
   layout_discovery: 0
   lightning_api: 0
   lightning_contact_form: 0

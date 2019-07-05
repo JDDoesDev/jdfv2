@@ -20,6 +20,19 @@ body {
   }
 }
 
+.navbar-inverse {
+  background-color: transparent;
+  .dropdown-menu {
+    background-color: #e7e7e7;
+
+    li a,
+    li a:hover,
+    li a:focus {
+      color: #555555;
+    }
+  }
+}
+
 .view .feed-icons {
   /*clear: both;*/
   /*margin-top: 50px;*/

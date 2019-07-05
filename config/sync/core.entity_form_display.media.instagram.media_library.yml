@@ -7,6 +7,13 @@ dependencies:
     - field.field.media.instagram.embed_code
     - field.field.media.instagram.field_media_in_library
     - media.type.instagram
+  module:
+    - field_layout
+    - layout_discovery
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
 id: media.instagram.media_library
 targetEntityType: media
 bundle: instagram
@@ -18,6 +25,11 @@ content:
       size: 60
       placeholder: ''
     weight: 0
+    third_party_settings: {  }
+    region: content
+  preview:
+    weight: 0
+    settings: {  }
     third_party_settings: {  }
     region: content
 hidden:

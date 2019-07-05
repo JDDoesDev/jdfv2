@@ -10,10 +10,16 @@ dependencies:
     - workflows.workflow.editorial
   module:
     - content_moderation
+    - field_layout
+    - layout_discovery
     - metatag
     - panelizer
     - path
     - text
+third_party_settings:
+  field_layout:
+    id: layout_onecol
+    settings: {  }
 _core:
   default_config_hash: B48sIkDf3G7VjHI5lzy7OHgBG1x0Lj_FI4-197i4oPQ
 id: node.landing_page.default

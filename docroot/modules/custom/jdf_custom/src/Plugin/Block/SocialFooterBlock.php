@@ -32,6 +32,8 @@ class SocialFooterBlock extends SocialBlock {
       $rendered .= '<li class="list-inline-item">';
       $rendered .= '<a target="_blank" href="' . $link[0] . '">';
       $rendered .= '<i class="' . $link[1] . ' fa-' . $network . '"></i>';
+      $rendered .= '</a>';
+      $rendered .= '</li>';
     }
     $rendered .= '</ul>';
 

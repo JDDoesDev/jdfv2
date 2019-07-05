@@ -70,4 +70,5 @@ class SocialBlock extends BlockBase {
 
     return $rendered;
   }
+
 }

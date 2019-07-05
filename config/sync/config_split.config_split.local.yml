@@ -7,14 +7,15 @@ label: local
 description: ''
 folder: ../config/local
 module:
-  dblog: 0
   devel: 0
+  stage_file_proxy: 0
+  dblog: 0
   kint: 0
   seckit: 0
-  stage_file_proxy: 0
 theme: {  }
 blacklist: {  }
-graylist: {  }
+graylist:
+  - system.performance
 graylist_dependents: false
 graylist_skip_equal: true
 weight: 0

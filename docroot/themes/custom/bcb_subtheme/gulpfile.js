@@ -178,7 +178,7 @@ gulp.task('eslint', function(){
 gulp.task('watch', function(){
     livereload.listen();
 
-    gulp.watch('./src/scss/**/*.scss', ['sass', 'scss-lint']);
+    gulp.watch('./src/scss/**/*.scss', ['sass']);
     gulp.watch('./src/js/**/*.js', ['compress']);
     gulp.watch(['./css/style.css', './**/*.html.twig', './js/*.js'], function (files){
         livereload.changed(files)

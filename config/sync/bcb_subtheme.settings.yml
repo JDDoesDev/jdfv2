@@ -1,5 +1,5 @@
 bcb_subtheme_header_image: none
-bcb_subtheme_header_default: /themes/custom/bcb_subtheme/images/home-bg.jpg
+bcb_subtheme_header_default: /themes/custom/bcb_subtheme/images/binary.jpg
 bcb_subtheme_social_facebook: 'https://www.facebook.com/jflynn8'
 bcb_subtheme_social_twitter: 'https://twitter.com/jddoesdev'
 bcb_subtheme_social_github: 'https://github.com/jddoesdev'
@@ -38,3 +38,9 @@ logo:
   path: profiles/contrib/lightning/lightning.png
   url: ''
   use_default: false
+b4_cdn_version_css: 4.3.1
+b4_cdn_version_js: 4.3.1
+b4_navbar_schema: custom
+b4_navbar_bg_schema: custom
+b4_top_container: container
+b4_scss: ''

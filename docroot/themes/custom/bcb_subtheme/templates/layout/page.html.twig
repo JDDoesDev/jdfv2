@@ -132,60 +132,41 @@
 </header>
 <div class="container">
 
-<main role="main">
-  <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
+  <main role="main">
+    <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
-  {% set sidebar_first_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-2' : 'col-sm-3' ) : ( page.sidebar_second ? 'col-sm-4' ) %}
-  {% set sidebar_second_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-2' : 'col-sm-3' ) : ( page.sidebar_second ? 'col-sm-4' ) %}
-  {% set content_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-8' : 'col-sm-9' ) : ( page.sidebar_second ? 'col-sm-8' : 'col-sm-12' ) %}
+    {% set sidebar_first_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-2' : 'col-sm-3' ) : ( page.sidebar_second ? 'col-sm-4' ) %}
+    {% set sidebar_second_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-2' : 'col-sm-3' ) : ( page.sidebar_second ? 'col-sm-4' ) %}
+    {% set content_classes = page.sidebar_first ? ( page.sidebar_second ? 'col-sm-8' : 'col-sm-9' ) : ( page.sidebar_second ? 'col-sm-8' : 'col-sm-12' ) %}
 
-  <div class="{{ b4_top_container }}">
-    {% if page.breadcrumb %}
-      {{ page.breadcrumb }}
-    {% endif %}
-    <div class="row">
-      {% if page.sidebar_first %}
-        <div class="{{ sidebar_first_classes }}">
-          {{ page.sidebar_first }}
-        </div>
+    <div class="{{ b4_top_container }}">
+      {% if page.breadcrumb %}
+        {{ page.breadcrumb }}
       {% endif %}
-      <div class="{{ content_classes }}">
-        {{ page.content }}
+      <div class="row">
+        {% if page.sidebar_first %}
+          <div class="{{ sidebar_first_classes }}">
+            {{ page.sidebar_first }}
+          </div>
+        {% endif %}
+        <div class="{{ content_classes }}">
+          {{ page.content }}
+        </div>
+        {% if page.sidebar_second %}
+          <div class="{{ sidebar_second_classes }}">
+            {{ page.sidebar_second }}
+          </div>
+        {% endif %}
       </div>
-      {% if page.sidebar_second %}
-        <div class="{{ sidebar_second_classes }}">
-          {{ page.sidebar_second }}
-        </div>
-      {% endif %}
     </div>
-  </div>
 
-</main>
+  </main>
+</div>
 
 <footer>
-  </div>
-    <div class="row justify-content-center">
-      <div class="col-md-10">
-        {# Social buttons block #}
-        {% block social_buttons %}
-        {% if social_links %}
-        <ul class="list-inline text-center">
-          {% for network, url in social_links %}
-          <li class="list-inline-item">
-            <a target="_blank" href="{{ url }}">
-              <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-{{ network }} fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        {% endblock %}
-
-        {{ page.footer }}
-      </div>
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      {{ page.footer }}
     </div>
   </div>
 </footer>

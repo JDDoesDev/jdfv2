@@ -32,10 +32,11 @@ function bcb_subtheme_preprocess_page(&$variables) {
       $header_image = $file->url();
     }
     else {
-      $header_image_entity = $node->field_header_image_entity[0]->entity->image->target_id;
-      $alt_tag = $node->field_header_image_entity[0]->entity->image->target_id;
+      $header_image_field = $node->field_header_image_entity[0] ?? NULL;
       $header_image = '';
-      if (!empty($header_image_entity)) {
+      if ($header_image_field !== NULL) {
+        $header_image_entity = $header_image_field->entity->image->target_id;
+        $alt_tag = $node->field_header_image_entity[0]->entity->image->target_id;
         $file = File::load($header_image_entity);
         $header_image = ImageStyle::load('hero_image')->buildUrl($file->getFileUri());
       }
@@ -51,7 +52,7 @@ function bcb_subtheme_preprocess_page(&$variables) {
   $variables['site_name'] = $site_name;
   $variables['site_slogan'] = $site_slogan;
   $variables['header_image'] = $header_image;
-  $variables['header_alt_tag'] = $alt_tag;
+  $variables['header_alt_tag'] = $alt_tag ?? '';
   $variables['social_links'] = array_filter([
     'facebook' => theme_get_setting('bcb_subtheme_social_facebook'),
     'twitter' => theme_get_setting('bcb_subtheme_social_twitter'),

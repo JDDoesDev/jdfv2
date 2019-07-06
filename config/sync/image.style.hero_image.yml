@@ -1,0 +1,15 @@
+uuid: 6f3fa3e0-f317-4928-ab26-c190cce0c26a
+langcode: en
+status: true
+dependencies: {  }
+name: hero_image
+label: 'Hero Image'
+effects:
+  3b12ee57-9d66-40ff-827c-d5e0cb66dcb4:
+    uuid: 3b12ee57-9d66-40ff-827c-d5e0cb66dcb4
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1200
+      height: 500
+      anchor: center-center

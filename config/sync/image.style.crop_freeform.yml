@@ -2,6 +2,8 @@ uuid: dba770ce-80ce-49f4-9d7d-ac3645f17460
 langcode: en
 status: true
 dependencies:
+  config:
+    - crop.type.freeform
   module:
     - crop
 name: crop_freeform

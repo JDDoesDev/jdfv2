@@ -34,8 +34,11 @@ function bcb_subtheme_preprocess_page(&$variables) {
     else {
       $header_image_entity = $node->field_header_image_entity[0]->entity->image->target_id;
       $alt_tag = $node->field_header_image_entity[0]->entity->image->target_id;
-      $file = File::load($header_image_entity);
-      $header_image = ImageStyle::load('crop_freeform')->buildUrl($file->getFileUri());
+      $header_image = '';
+      if (!empty($header_image_entity)) {
+        $file = File::load($header_image_entity);
+        $header_image = ImageStyle::load('hero_image')->buildUrl($file->getFileUri());
+      }
     }
 
     $node_type = $node->type->entity;

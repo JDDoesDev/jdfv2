@@ -4,9 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.node.page.body
+    - field.field.node.page.field_header_image
     - field.field.node.page.field_meta_tags
     - node.type.page
   module:
+    - image
     - metatag
     - text
     - user
@@ -29,6 +31,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_header_image:
+    weight: 11
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
   field_meta_tags:
     type: metatag_empty_formatter
     region: content

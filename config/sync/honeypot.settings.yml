@@ -15,6 +15,7 @@ form_settings:
   contact_message_personal_form: true
   contact_message_sitewide_form: true
   node_blog_post_form: false
+  node_event_form: false
   node_landing_page_form: false
   node_page_form: false
   comment_post_comment_form: true

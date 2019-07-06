@@ -9,8 +9,8 @@ dependencies:
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
     - field.field.node.event.field_session_title
-    - field.field.node.event.field_session_video
     - field.field.node.event.field_start_date
+    - field.field.node.event.field_youtube_video
     - node.type.event
   module:
     - text
@@ -43,5 +43,5 @@ hidden:
   field_event_logo: true
   field_location: true
   field_session_title: true
-  field_session_video: true
   field_start_date: true
+  field_youtube_video: true

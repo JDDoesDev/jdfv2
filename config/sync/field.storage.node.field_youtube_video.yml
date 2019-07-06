@@ -1,12 +1,12 @@
-uuid: 4053ebb5-2f50-482f-8612-9cd8261d4d80
+uuid: 2c6d7623-bfe9-408a-8eb1-83b52a0c56f5
 langcode: en
 status: true
 dependencies:
   module:
     - media
     - node
-id: node.field_session_video
-field_name: field_session_video
+id: node.field_youtube_video
+field_name: field_youtube_video
 entity_type: node
 type: entity_reference
 settings:

@@ -65,73 +65,80 @@
 
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
+
 {% if node.label %}
-  {% set header_image = (node.field_header_image.entity.fileuri | image_style('crop_freeform')) %}
+{% set header_image = (node.field_header_image.entity.fileuri | image_style('crop_freeform')) %}
 {% endif %}
 <header class="intro-header" style="background-image: url('{{ header_image }}')">
-  <nav class="navbar navbar-expand-lg navbar-{{ b4_navbar_schema }} bg-{{ b4_navbar_bg_schema }}">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header page-scroll">
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-        data-target="#navbarNav" aria-controls="navbarNav"
-        aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        {% if site_name %}
-          <a class="navbar-brand" href="{{ front_page }}" title="{{ 'Home'|t }}">{{ site_name }}</a>
-        {% endif %}
-      </div>
+  {% block nav %}
+    <nav class="navbar navbar-expand-lg navbar-{{ b4_navbar_schema }} bg-{{ b4_navbar_bg_schema }}">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+          <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          {% if site_name %}
+            <a class="navbar-brand" href="{{ front_page }}" title="{{ 'Home'|t }}">{{ site_name }}</a>
+          {% endif %}
+        </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        {{ page.header.bcb_subtheme_main_menu }}
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          {{ page.header.bcb_subtheme_main_menu }}
+        </div>
+        <!-- /.navbar-collapse -->
       </div>
-      <!-- /.navbar-collapse -->
-    </div>
-  </nav>
+    </nav>
+  {% endblock nav %}
+  {% block header %}
   <div class="container">
     <div class="row justify-content-center">
       {% if node %}
-        <div class="col-lg-8 col-md-10">
-          <div class="post-heading">
-            <h1>{{ node.label }}</h1>
-            {% if display_submitted %}
-              <span class="meta">
-                {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
-              </span>
-            {% endif %}
-          </div>
+      <div class="col-sm-9 offset-md-3">
+        <div class="post-heading">
+          <h1>{{ node.label }}</h1>
+          {% if display_submitted %}
+          <span class="meta">
+            {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
+          </span>
+          {% endif %}
         </div>
+      </div>
       {% else %}
-        <div class="col-lg-8 col-md-10">
-          <div class="site-heading">
-            <h1>
-              {% if node.label %}
-                {{ node.label }}
-              {% elseif term.label %}
-                {{ term.label}}
-              {% else %}
-                {{ site_name }}
-              {% endif %}
-            </h1>
-              <hr class="small">
-              <span class="subheading">
-                {% if node.label %}
-                {% elseif term.label %}
-                  Posts categorized under {{ term.label }}
-                {% else %}
-                  {{ site_slogan }}
-                {% endif %}
-              </span>
-          </div>
+      <div class="col-sm-9 offset-md-3">
+        <div class="site-heading">
+          <h1>
+            {% if node.label %}
+            {{ node.label }}
+            {% elseif term.label %}
+            {{ term.label}}
+            {% else %}
+            {{ site_name }}
+            {% endif %}
+          </h1>
+          <hr class="small">
+          <span class="subheading">
+            {% if node.label %}
+            {% elseif term.label %}
+            Posts categorized under {{ term.label }}
+            {% else %}
+            {{ site_slogan }}
+            {% endif %}
+          </span>
         </div>
+      </div>
       {% endif %}
     </div>
   </div>
+  {% endblock header %}
 </header>
+
 <div class="container">
 
+  {% block main %}
   <main role="main">
     <a id="main-content" tabindex="-1"></a>{# link is in html.html.twig #}
 
@@ -141,28 +148,30 @@
 
     <div class="{{ b4_top_container }}">
       {% if page.breadcrumb %}
-        {{ page.breadcrumb }}
+      {{ page.breadcrumb }}
       {% endif %}
       <div class="row">
         {% if page.sidebar_first %}
-          <div class="{{ sidebar_first_classes }}">
-            {{ page.sidebar_first }}
-          </div>
+        <div class="{{ sidebar_first_classes }}">
+          {{ page.sidebar_first }}
+        </div>
         {% endif %}
         <div class="{{ content_classes }}">
           {{ page.content }}
         </div>
         {% if page.sidebar_second %}
-          <div class="{{ sidebar_second_classes }}">
-            {{ page.sidebar_second }}
-          </div>
+        <div class="{{ sidebar_second_classes }}">
+          {{ page.sidebar_second }}
+        </div>
         {% endif %}
       </div>
     </div>
 
   </main>
+  {% endblock main %}
 </div>
 
+{% block footer %}
 <footer>
   <div class="row justify-content-center">
     <div class="col-md-12">
@@ -170,3 +179,4 @@
     </div>
   </div>
 </footer>
+{% endblock footer %}

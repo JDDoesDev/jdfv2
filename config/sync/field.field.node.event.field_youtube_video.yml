@@ -1,13 +1,13 @@
-uuid: ee0fc407-992a-40c1-8947-d413c51d7083
+uuid: cd30e47c-343d-4581-900e-18dbb5d62ca5
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_session_video
+    - field.storage.node.field_youtube_video
     - media.type.video
     - node.type.event
-id: node.event.field_session_video
-field_name: field_session_video
+id: node.event.field_youtube_video
+field_name: field_youtube_video
 entity_type: node
 bundle: event
 label: 'Session Video'
@@ -23,6 +23,6 @@ settings:
       video: video
     sort:
       field: _none
-    auto_create: true
+    auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

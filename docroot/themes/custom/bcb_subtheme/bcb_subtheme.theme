@@ -1,4 +1,9 @@
 <?php
+
+use Drupal\file\Entity\File;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
+
 /**
  * @file
  * Process and preprocess for theme.
@@ -19,13 +24,18 @@ function bcb_subtheme_preprocess_page(&$variables) {
   if (isset($variables['node'])) {
     /** @var \Drupal\node\NodeInterface $node */
     $node = $variables['node'];
-
     $field_header = theme_get_setting('bcb_subtheme_header_image');
 
-    if (($node->{$field_header} instanceof \Drupal\file\Plugin\Field\FieldType\FileFieldItemList)
+    if (($node->{$field_header} instanceof FileFieldItemList)
     && (isset($node->{$field_header}[0])) && ($file = $node->{$field_header}[0]->entity)) {
       /** @var \Drupal\file\FileInterface $file */
       $header_image = $file->url();
+    }
+    else {
+      $header_image_entity = $node->field_header_image_entity[0]->entity->image->target_id;
+      $alt_tag = $node->field_header_image_entity[0]->entity->image->target_id;
+      $file = File::load($header_image_entity);
+      $header_image = ImageStyle::load('crop_freeform')->buildUrl($file->getFileUri());
     }
 
     $node_type = $node->type->entity;
@@ -38,6 +48,7 @@ function bcb_subtheme_preprocess_page(&$variables) {
   $variables['site_name'] = $site_name;
   $variables['site_slogan'] = $site_slogan;
   $variables['header_image'] = $header_image;
+  $variables['header_alt_tag'] = $alt_tag;
   $variables['social_links'] = array_filter([
     'facebook' => theme_get_setting('bcb_subtheme_social_facebook'),
     'twitter' => theme_get_setting('bcb_subtheme_social_twitter'),

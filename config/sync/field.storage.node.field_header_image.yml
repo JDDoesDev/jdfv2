@@ -13,11 +13,11 @@ type: image
 settings:
   uri_scheme: public
   default_image:
-    uuid: ''
-    alt: ''
+    uuid: 858236b8-40ab-4793-87fb-24ec85e84966
+    alt: 'Generic "Look at my screen it''s full of code" screen'
     title: ''
-    width: null
-    height: null
+    width: 1200
+    height: 800
   target_type: file
   display_field: false
   display_default: false

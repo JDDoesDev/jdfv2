@@ -1,0 +1,32 @@
+uuid: a56b5271-db8a-49e3-b881-b9f433c0906a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_header_image_entity
+    - media.type.image
+    - node.type.blog_post
+  content:
+    - 'media:image:8d621b5b-338e-4bf7-8c5e-81a4a88ca9c1'
+id: node.blog_post.field_header_image_entity
+field_name: field_header_image_entity
+entity_type: node
+bundle: blog_post
+label: 'Header Image'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 8d621b5b-338e-4bf7-8c5e-81a4a88ca9c1
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

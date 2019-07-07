@@ -1,0 +1,5 @@
+.layout {
+  &--onecol + .layout--twocol-section {
+    margin-top: 1rem;
+  }
+}

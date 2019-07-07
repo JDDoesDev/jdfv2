@@ -26,6 +26,7 @@ module:
   ctools: 0
   ctools_block: 0
   datetime: 0
+  datetime_range: 0
   diff: 0
   disqus: 0
   dropzonejs: 0
@@ -89,6 +90,7 @@ module:
   openapi_ui: 0
   openapi_ui_redoc: 0
   openapi_ui_swagger: 0
+  optional_end_date: 0
   options: 0
   page_cache: 0
   page_manager: 0

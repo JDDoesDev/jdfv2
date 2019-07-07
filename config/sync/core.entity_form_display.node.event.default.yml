@@ -6,15 +6,18 @@ dependencies:
     - entity_browser.browser.media
     - field.field.node.event.body
     - field.field.node.event.field_conference
+    - field.field.node.event.field_event_dates
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
     - field.field.node.event.field_session_title
     - field.field.node.event.field_start_date
     - field.field.node.event.field_youtube_video
+    - field.field.node.event.layout_builder__layout
     - node.type.event
   module:
     - content_moderation
     - datetime
+    - datetime_range
     - entity_browser
     - field_layout
     - layout_discovery
@@ -53,6 +56,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_event_dates:
+    weight: 129
+    settings: {  }
+    third_party_settings: {  }
+    type: daterange_default
     region: content
   field_event_logo:
     type: media_library_widget
@@ -153,4 +162,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  layout_builder__layout: true

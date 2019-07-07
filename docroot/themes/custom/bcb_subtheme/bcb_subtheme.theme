@@ -98,4 +98,5 @@ function bcb_subtheme_theme_suggestions_page_alter(array &$suggestions, array $v
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
   }
+
 }

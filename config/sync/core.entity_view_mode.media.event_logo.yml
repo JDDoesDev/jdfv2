@@ -1,0 +1,14 @@
+uuid: 63a8aaa0-3056-47a4-be98-6e68d7fe53da
+langcode: en
+status: true
+dependencies:
+  module:
+    - lightning_core
+    - media
+third_party_settings:
+  lightning_core:
+    description: ''
+id: media.event_logo
+label: 'Event Logo'
+targetEntityType: media
+cache: true

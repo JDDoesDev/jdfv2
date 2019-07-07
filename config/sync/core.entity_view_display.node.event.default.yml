@@ -5,14 +5,20 @@ dependencies:
   config:
     - field.field.node.event.body
     - field.field.node.event.field_conference
+    - field.field.node.event.field_event_dates
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
     - field.field.node.event.field_session_title
     - field.field.node.event.field_start_date
     - field.field.node.event.field_youtube_video
+    - field.field.node.event.layout_builder__layout
     - node.type.event
   module:
+    - ctools_block
     - datetime
+    - datetime_range
+    - layout_builder
+    - layout_discovery
     - panelizer
     - text
     - user
@@ -22,6 +28,204 @@ third_party_settings:
     custom: false
     allow: false
     default: default
+  layout_builder:
+    allow_custom: true
+    enabled: true
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings: {  }
+        components:
+          57f9a9f0-fe91-4834-a645-3089ba6b6193:
+            uuid: 57f9a9f0-fe91-4834-a645-3089ba6b6193
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:event:field_youtube_video'
+              formatter:
+                type: entity_reference_entity_view
+                label: above
+                settings:
+                  view_mode: embedded
+                  link: false
+                third_party_settings: {  }
+            additional: {  }
+            weight: 1
+          25f6b772-af43-4dd9-b40c-0710afa05fbc:
+            uuid: 25f6b772-af43-4dd9-b40c-0710afa05fbc
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:event:sharethis'
+            additional: {  }
+            weight: 2
+          86f8e7f1-b3a0-46f4-bcea-87a61362d212:
+            uuid: 86f8e7f1-b3a0-46f4-bcea-87a61362d212
+            region: content
+            configuration:
+              id: 'field_block:node:event:field_session_title'
+              label: 'Session Title'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: above
+                type: string
+                settings:
+                  link_to_entity: false
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 0
+        third_party_settings: {  }
+      -
+        layout_id: layout_twocol_section
+        layout_settings:
+          column_widths: 50-50
+        components:
+          24360409-4e58-4fd8-a436-af3fd7c1ff32:
+            uuid: 24360409-4e58-4fd8-a436-af3fd7c1ff32
+            region: first
+            configuration:
+              id: 'field_block:node:event:field_event_logo'
+              label: 'Event Logo'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: hidden
+                type: entity_reference_entity_view
+                settings:
+                  view_mode: event_logo
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 0
+          47fe7b5d-ecff-4f69-8a76-c9c9f83971f9:
+            uuid: 47fe7b5d-ecff-4f69-8a76-c9c9f83971f9
+            region: second
+            configuration:
+              id: 'field_block:node:event:field_start_date'
+              label: 'Session Date'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: above
+                type: datetime_default
+                settings:
+                  timezone_override: ''
+                  format_type: long_12h
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 4
+          1b9cb733-6021-404b-b8ef-5d403195e028:
+            uuid: 1b9cb733-6021-404b-b8ef-5d403195e028
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:event:field_location'
+              formatter:
+                label: above
+                settings:
+                  link_to_entity: false
+                third_party_settings: {  }
+                type: string
+            additional: {  }
+            weight: 6
+          9357f0b4-702e-43b9-be72-ec468071bbda:
+            uuid: 9357f0b4-702e-43b9-be72-ec468071bbda
+            region: second
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:event:field_conference'
+              formatter:
+                label: above
+                settings:
+                  link: false
+                third_party_settings: {  }
+                type: entity_reference_label
+            additional: {  }
+            weight: 5
+          1961965e-9188-4e8f-96b4-dff491fac803:
+            uuid: 1961965e-9188-4e8f-96b4-dff491fac803
+            region: second
+            configuration:
+              id: 'entity_field:node:title'
+              label: 'Conference Name'
+              provider: ctools_block
+              label_display: visible
+              formatter:
+                label: above
+                type: string
+                settings:
+                  link_to_entity: false
+                third_party_settings: {  }
+                weight: 0
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 1
+          ec420cf7-333c-45d7-9341-2caf982dacac:
+            uuid: ec420cf7-333c-45d7-9341-2caf982dacac
+            region: second
+            configuration:
+              id: 'field_block:node:event:field_event_dates'
+              label: 'Event Dates'
+              provider: layout_builder
+              label_display: '0'
+              formatter:
+                label: above
+                type: daterange_default
+                settings:
+                  timezone_override: ''
+                  format_type: date_only
+                  separator: '-'
+                third_party_settings: {  }
+              context_mapping:
+                entity: layout_builder.entity
+            additional: {  }
+            weight: 2
+        third_party_settings: {  }
+      -
+        layout_id: layout_onecol
+        layout_settings: {  }
+        components:
+          cd5e932a-43cd-4b64-b1ba-f82c062b5a27:
+            uuid: cd5e932a-43cd-4b64-b1ba-f82c062b5a27
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'field_block:node:event:body'
+              formatter:
+                label: hidden
+                type: text_default
+                settings: {  }
+                third_party_settings: {  }
+            additional: {  }
+            weight: 4
+          e4d9d61a-c04d-4969-acb4-53607d1baa9c:
+            uuid: e4d9d61a-c04d-4969-acb4-53607d1baa9c
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:event:links'
+            additional: {  }
+            weight: 5
+        third_party_settings: {  }
 id: node.event.default
 targetEntityType: node
 bundle: event
@@ -41,6 +245,16 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_event_dates:
+    weight: 10
+    label: above
+    settings:
+      separator: '-'
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: daterange_default
     region: content
   field_event_logo:
     type: entity_reference_entity_view
@@ -95,4 +309,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  layout_builder__layout: true

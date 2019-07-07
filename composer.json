@@ -53,7 +53,8 @@
         "drupal/entity_browser": "^2.1",
         "drupal/consumers": "^1.9",
         "drupal/bootstrap4": "^1.0",
-        "drupal/fontawesome": "^2.13"
+        "drupal/fontawesome": "^2.13",
+        "drupal/optional_end_date": "^1.0"
     },
     "repositories": [
         {

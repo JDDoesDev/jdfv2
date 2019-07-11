@@ -111,6 +111,9 @@
             },
             "drupal/core": {
               "8.7 issue": "https://www.drupal.org/files/issues/2019-05-23/jsonapi_2996114.patch"
+            },
+            "drupal/tui_editor": {
+              "select formats": "https://www.drupal.org/files/issues/2019-04-12/tui_editor-refactor_for_extensibility_and_config-3045979-4.patch"
             }
         },
         "drupal-scaffold": {

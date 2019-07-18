@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.node.event.body
     - field.field.node.event.field_conference
+    - field.field.node.event.field_conference_link
     - field.field.node.event.field_event_dates
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
@@ -19,6 +20,7 @@ dependencies:
     - datetime_range
     - layout_builder
     - layout_discovery
+    - link
     - panelizer
     - text
     - user
@@ -161,7 +163,7 @@ third_party_settings:
             region: second
             configuration:
               id: 'entity_field:node:title'
-              label: 'Conference Name'
+              label: Conference
               provider: ctools_block
               label_display: visible
               formatter:
@@ -245,6 +247,18 @@ content:
       link: false
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_conference_link:
+    weight: 11
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
     region: content
   field_event_dates:
     weight: 10

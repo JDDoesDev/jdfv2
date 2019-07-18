@@ -25,6 +25,7 @@
  * @see template_preprocess_block()
  */
 #}
+
 {%
   set classes = [
     'block',
@@ -41,7 +42,13 @@
     <div{{ attributes.addClass(title_attributes) }}>{{ label }}</div>
   {% endif %}
   {{ title_suffix }}
+  {% if conf_uri %}
+    <a href='{{ conf_uri }}'>
+  {% endif %}
   {% block content %}
     {{ content }}
   {% endblock %}
+  {% if conf_uri %}
+    </a>
+  {% endif %}
 </div>

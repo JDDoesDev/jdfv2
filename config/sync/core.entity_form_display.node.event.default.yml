@@ -6,6 +6,7 @@ dependencies:
     - entity_browser.browser.media
     - field.field.node.event.body
     - field.field.node.event.field_conference
+    - field.field.node.event.field_conference_link
     - field.field.node.event.field_event_dates
     - field.field.node.event.field_event_logo
     - field.field.node.event.field_location
@@ -21,6 +22,7 @@ dependencies:
     - entity_browser
     - field_layout
     - layout_discovery
+    - link
     - media_library
     - path
     - text
@@ -56,6 +58,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_conference_link:
+    weight: 130
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
     region: content
   field_event_dates:
     weight: 129

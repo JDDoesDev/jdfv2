@@ -15,9 +15,9 @@ provider: null
 plugin: social_block
 settings:
   id: social_block
-  label: 'Social block'
+  label: 'Get Social with Me'
   provider: jdf_custom
-  label_display: '0'
+  label_display: visible
 visibility:
   request_path:
     id: request_path

@@ -1,0 +1,23 @@
+uuid: 6934d053-509a-4a7c-915e-bb1f4d260a0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_conference_link
+    - node.type.event
+  module:
+    - link
+id: node.event.field_conference_link
+field_name: field_conference_link
+entity_type: node
+bundle: event
+label: 'Conference Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+field_type: link

@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\file\Entity\File;
+use Drupal\node\NodeInterface;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
 
@@ -98,5 +99,18 @@ function bcb_subtheme_theme_suggestions_page_alter(array &$suggestions, array $v
     $content_type = $node->bundle();
     $suggestions[] = 'page__' . $content_type;
   }
+}
 
+/**
+ * Implements hook_preprocess_block().
+ */
+function bcb_subtheme_preprocess_block(&$variables) {
+  if ($variables['plugin_id'] === 'entity_field:node:title') {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $uri = '';
+    if ($node instanceof NodeInterface) {
+      $uri = $node->field_conference_link[0]->uri;
+      $variables['conf_uri'] = $uri;
+    }
+  }
 }

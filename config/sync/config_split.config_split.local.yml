@@ -13,6 +13,7 @@ module:
   kint: 0
   seckit: 0
   twig_xdebug: 0
+  webprofiler: 0
 theme: {  }
 blacklist: {  }
 graylist:

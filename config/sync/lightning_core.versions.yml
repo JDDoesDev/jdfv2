@@ -132,3 +132,4 @@ twig_xdebug: 1.1.0
 datetime_range: 8.7.4
 optional_end_date: 1.0.0-beta1
 webprofiler: 2.1.0
+cookieconsent: 1.4.0

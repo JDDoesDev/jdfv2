@@ -54,7 +54,8 @@
         "drupal/consumers": "^1.9",
         "drupal/bootstrap4": "^1.0",
         "drupal/fontawesome": "^2.13",
-        "drupal/optional_end_date": "^1.0"
+        "drupal/optional_end_date": "^1.0",
+        "drupal/cookieconsent": "^1.4"
     },
     "repositories": [
         {
@@ -114,6 +115,9 @@
             },
             "drupal/tui_editor": {
               "select formats": "https://www.drupal.org/files/issues/2019-07-08/3045979-issue-with-selection.patch"
+            },
+            "drupal/cookieconsent": {
+              "webprofiler issues": "https://www.drupal.org/files/issues/2018-07-12/cookieconsent-Use_EntityTypeManagerInterface_instead_of_EntityTypeManager-2985272-2.patch"
             }
         },
         "drupal-scaffold": {

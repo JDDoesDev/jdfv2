@@ -22,7 +22,7 @@
     "require": {
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
-        "acquia/lightning": "~3.3.1",
+        "acquia/lightning": "~4.0.4",
         "drupal/core": "^8.7",
         "drupal/bootstrap_clean_blog": "^1.0@RC",
         "drupal/bootstrap_paragraphs": "2.x",

@@ -7,6 +7,8 @@ green_bg='\033[42m'
 yellow='\033[1;33m'
 NC='\033[0m'
 
+ARGS=$*
+
 echo -e "${green_bg} Status ${NC}${green} Installing node modules in Gatsby directory...${NC}"
 
-container_user="-u docker" fin exec --in=gatsby bash -lc "npm install"
+container_user="-u docker" fin exec --in=gatsby bash -lc "npm install ${ARGS}"

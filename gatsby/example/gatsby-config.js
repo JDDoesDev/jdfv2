@@ -1,3 +1,6 @@
+module.exports = {
+  plugins: [{ resolve: `gatsby-theme-minimal`, options: {} }],
+}
 const dotenv = require('dotenv')
 const path = require('path')
 const fs = require('fs')
@@ -22,11 +25,14 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-glamor`,
     {
-      resolve: 'gatsby-theme-drupal',
+      resolve: 'gatsby-source-drupal',
       options: {
         baseUrl: `${process.env.DRUPAL_HOST}`,
         apiBase: 'api',
       },
+    },
+    {resolve: `gatsby-theme-minimal`,
+      options: {}
     },
     {
       resolve: 'gatsby-transformer-remark',

@@ -16,3 +16,6 @@
 /vendor/
 
 /.vscode/
+**/node_modules
+**/.cache
+gatsby-old

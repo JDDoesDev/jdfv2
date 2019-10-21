@@ -4,9 +4,9 @@ VAR1=$(cat <<EOF
 fin exec drush cache-clear drush --no-interaction --ansi &&
 drush sql-drop --no-interaction --ansi &&
 drush sql-sync @remote.prod @local.jdf --target-dump=/tmp/tmp.target.sql.gz --structure-tables-key=lightweight --create-db --no-interaction --ansi &&
- drush sql-sanitize --no-interaction --ansi &&
- drush cr --no-interaction --ansi &&
- drush sqlq "TRUNCATE cache_entity" --no-interaction --ansi
+drush sql-sanitize --no-interaction --ansi &&
+drush cr --no-interaction --ansi &&
+drush sqlq "TRUNCATE cache_entity" --no-interaction --ansi
 
 EOF
 )

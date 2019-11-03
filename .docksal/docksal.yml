@@ -3,6 +3,8 @@ services:
   cli:
     environment:
       - DRUSH_OPTIONS_URI=${VIRTUAL_HOST}
+    volumes:
+      - /var/www/gatsby
   gatsby:
     hostname: gatsby
     image: ${COMPOSE_PROJECT_NAME_SAFE}_gatsby

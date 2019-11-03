@@ -8,7 +8,6 @@ RUN set -e; \
     # Initialize the user environment (this loads nvm)
     source $HOME/.profile; \
     # Install the necessary nodejs version
-    curl --compressed -o- -L https://yarnpkg.com/install.sh | bash\
     nvm install 10.15.0; \
     nvm alias default 10.15.0; \
     nvm use default; \

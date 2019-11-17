@@ -71,6 +71,29 @@ hr.small {
   }
 }
 
+.navbar-custom {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  .navbar-brand {
+    color: white;
+    padding: 20px;
+    &:hover, &:focus {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  .nav li a {
+    color: white;
+    padding: 20px;
+    &:hover, &:focus {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+  .navbar-toggler-icon {
+    background-image: $navbar-dark-toggler-icon-bg;
+  }
+}
+
+
 @media only screen and (min-width: 768px) {
   .navbar-custom {
     background: transparent;
@@ -394,4 +417,37 @@ img {
 
 body {
   -webkit-tap-highlight-color: #0085a1;
+}
+
+  .region-footer {
+    margin: auto !important;
+  }
+  .block-social-footer-block {
+    margin: auto !important;
+  }
+
+@include media-breakpoint-down(sm) {
+  .region-sidebar-first {
+    display: none;
+  }
+
+  .intro-header .site-heading h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.pullquote {
+  @extend .blockquote;
+  padding: 1rem 0 1rem 3rem;
+  background-color: #ccc;
+  color: black;
+  position: relative;
+  ::before {
+    position: absolute;
+    content: '\201c';
+    font-size: 3rem;
+    font-weight: bolder;
+    margin-left: -2rem;
+    margin-top: -1rem;
+  }
 }

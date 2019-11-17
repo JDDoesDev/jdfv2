@@ -21,4 +21,4 @@ respond:
     url: https://raw.githubusercontent.com/scottjehl/Respond/master/LICENSE-MIT
     gpl-compatible: true
   js:
-    js/respond.min.js: { every_page: true, browsers: { IE: 'lte IE 8', '!IE': false }, minified: true }
+    dist/js/respond.min.js: { every_page: true, browsers: { IE: 'lte IE 8', '!IE': false }, minified: true }

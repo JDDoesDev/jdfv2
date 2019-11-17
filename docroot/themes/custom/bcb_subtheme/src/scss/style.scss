@@ -1,3 +1,6 @@
+// Path to default bootstrap4 theme sass.
+@import '../../../../../themes/contrib/bootstrap4/dist/bootstrap/4.3.1/scss/bootstrap';
+@import '../../../../../themes/contrib/bootstrap4/scss/theme';
 @import 'variables';
 @import 'base';
 @import 'pagination';

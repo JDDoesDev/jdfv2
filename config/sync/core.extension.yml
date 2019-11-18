@@ -55,6 +55,8 @@ module:
   jdf_custom: 0
   jsonapi: 0
   layout_builder: 0
+  layout_builder_st: 0
+  layout_builder_styles: 0
   layout_discovery: 0
   lightning_api: 0
   lightning_contact_form: 0

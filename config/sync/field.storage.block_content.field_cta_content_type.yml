@@ -1,0 +1,20 @@
+uuid: d0da6804-ee6a-4965-90ad-b29c3a8762f1
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_content
+    - node
+id: block_content.field_cta_content_type
+field_name: field_cta_content_type
+entity_type: block_content
+type: entity_reference
+settings:
+  target_type: node_type
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

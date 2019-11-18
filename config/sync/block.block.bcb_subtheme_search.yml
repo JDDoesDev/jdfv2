@@ -14,7 +14,7 @@ _core:
 id: bcb_subtheme_search
 theme: bcb_subtheme
 region: content
-weight: 0
+weight: -6
 provider: null
 plugin: 'views_exposed_filter_block:search-page'
 settings:

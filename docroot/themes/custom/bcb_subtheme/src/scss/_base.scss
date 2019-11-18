@@ -451,3 +451,27 @@ body {
     margin-top: -1rem;
   }
 }
+
+#block-cta {
+  background-color: #2d2d2d;
+  text-align: center;
+  padding: 2rem;
+  color: white;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  margin-bottom: 2rem;
+}
+
+.field__label {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.field__items .field__item {
+  display: inline-block;
+  text-transform: uppercase;
+    &::after{
+      content: ', ';
+    }
+    &:last-of-type::after {
+      content: '';
+    }
+}

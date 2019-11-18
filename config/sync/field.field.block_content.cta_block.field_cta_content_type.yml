@@ -1,0 +1,23 @@
+uuid: 33acf43b-61e5-48d9-9673-3a4f36d4cc54
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.cta_block
+    - field.storage.block_content.field_cta_content_type
+id: block_content.cta_block.field_cta_content_type
+field_name: field_cta_content_type
+entity_type: block_content
+bundle: cta_block
+label: 'CTA Content Type'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node_type'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: entity_reference

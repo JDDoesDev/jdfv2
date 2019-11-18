@@ -1,0 +1,41 @@
+uuid: 359e8cd5-bddc-4ad3-8cda-bd2e52e34273
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:cta_block:56d9f59a-5023-4b36-bae1-82210db8967e'
+  module:
+    - block_content
+    - ctools
+    - node
+  theme:
+    - bcb_subtheme
+id: cta
+theme: bcb_subtheme
+region: footer
+weight: -8
+provider: null
+plugin: 'block_content:56d9f59a-5023-4b36-bae1-82210db8967e'
+settings:
+  id: 'block_content:56d9f59a-5023-4b36-bae1-82210db8967e'
+  label: CTA
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      blog_post: blog_post
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  node_type:
+    id: node_type
+    bundles:
+      blog_post: blog_post
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

@@ -4,11 +4,12 @@ late_load: 0
 location: content
 node_types:
   blog_post: blog_post
+  event: null
   landing_page: null
   page: null
 option_extras:
-  'Google Plus One:plusone': 'Google Plus One:plusone'
-  'Facebook Like:fblike': 'Facebook Like:fblike'
+  'Google Plus One:plusone': '0'
+  'Facebook Like:fblike': '0'
 option_neworzero: 0
 option_onhover: 1
 option_shorten: 1
@@ -42,6 +43,14 @@ sharethisnodes:
     teaser: '0'
     token: '0'
   landing_page:
+    diff: '0'
+    full: '0'
+    rss: '0'
+    search_index: '0'
+    search_result: '0'
+    teaser: '0'
+    token: '0'
+  event:
     diff: '0'
     full: '0'
     rss: '0'

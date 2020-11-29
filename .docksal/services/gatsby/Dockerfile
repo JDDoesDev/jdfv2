@@ -1,4 +1,4 @@
-FROM docksal/cli:2.6-php7.2
+FROM docksal/cli:2.10-php7.3
 
 USER docker
 

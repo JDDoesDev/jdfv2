@@ -3,6 +3,7 @@ services:
   cli:
     environment:
       - DRUSH_OPTIONS_URI=${VIRTUAL_HOST}
+      - COMPOSER_MEMORY_LIMIT
     volumes:
       - /var/www/gatsby
   gatsby:

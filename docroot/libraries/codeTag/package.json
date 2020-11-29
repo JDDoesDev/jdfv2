@@ -1,0 +1,14 @@
+{
+  "name": "@drupal-ckeditor-libraries-group/codetag",
+  "description": "CKEditor 4 codetag plugin",
+  "keywords": ["ckeditor", "plugin", "codetag"],
+  "homepage": "https://ckeditor.com/cke4/addon/codeTag",
+  "bugs": {
+    "url": "https://github.com/danielsvane/ckeditor-code-tag/issues"
+  },
+  "license" : "(GPL-2.0-or-later OR LGPL-2.1-or-later OR MPL-1.1)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielsvane/ckeditor-code-tag.git"
+  }
+}

@@ -13,7 +13,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: 59ziPzJNPAqMrCE-SBvcUQxVXORfAJ_tkMlS4sIUAFQ
 id: media.instagram.default
@@ -53,6 +54,8 @@ content:
   preview:
     weight: 0
     region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

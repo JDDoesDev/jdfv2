@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.bp_view.bp_background
+    - field.field.paragraph.bp_view.bp_header
     - field.field.paragraph.bp_view.bp_view
     - field.field.paragraph.bp_view.bp_width
     - paragraphs.paragraphs_type.bp_view
@@ -14,7 +15,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: W2kdovIcfQyP_l5f4G2NKrJZaACTJhEaBu1gD0RAGMs
 id: paragraph.bp_view.default
@@ -28,12 +30,21 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
-  bp_view:
+  bp_header:
+    type: string_textfield
     weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  bp_view:
+    weight: 3
     settings:
       match_operator: CONTAINS
       size: '60'
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
     type: viewsreference_autocomplete
     region: content

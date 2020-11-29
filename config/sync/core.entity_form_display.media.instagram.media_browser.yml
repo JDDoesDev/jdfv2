@@ -14,7 +14,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: u-N2MuYnrDGzZl-ApOrQUcObS4Otz1uk01fI6LYtJQg
 id: media.instagram.media_browser
@@ -44,7 +45,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   preview:
-    weight: null
+    weight: 101
     settings: {  }
     third_party_settings: {  }
     region: content

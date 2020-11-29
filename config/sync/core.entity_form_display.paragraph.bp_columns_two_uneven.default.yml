@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.bp_columns_two_uneven.bp_background
     - field.field.paragraph.bp_columns_two_uneven.bp_column_content_2
     - field.field.paragraph.bp_columns_two_uneven.bp_column_style_2
+    - field.field.paragraph.bp_columns_two_uneven.bp_header
     - field.field.paragraph.bp_columns_two_uneven.bp_width
     - paragraphs.paragraphs_type.bp_columns_two_uneven
   module:
@@ -15,7 +16,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: 1mRkKHSc-UHn2x9b0jpMEi-avsBvuyTgxp6aCYxWcSg
 id: paragraph.bp_columns_two_uneven.default
@@ -38,6 +40,7 @@ content:
       edit_mode: closed
       add_mode: dropdown
       form_display_mode: default
+      default_paragraph_type: ''
     third_party_settings: {  }
     region: content
   bp_column_style_2:
@@ -46,6 +49,14 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  bp_header:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   bp_width:
     weight: 1
     settings: {  }

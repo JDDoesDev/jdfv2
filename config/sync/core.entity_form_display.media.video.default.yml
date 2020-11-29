@@ -14,7 +14,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: OUea_b_jf81XjPvIY9J8KrRUckqz2APuLv4bkxYfdT4
 id: media.video.default
@@ -52,6 +53,8 @@ content:
   preview:
     weight: 0
     region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

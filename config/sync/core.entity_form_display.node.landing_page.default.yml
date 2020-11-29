@@ -19,7 +19,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: B48sIkDf3G7VjHI5lzy7OHgBG1x0Lj_FI4-197i4oPQ
 id: node.landing_page.default
@@ -34,6 +35,7 @@ content:
       rows: 5
       placeholder: ''
       summary_rows: 2
+      show_summary: false
     third_party_settings: {  }
     region: content
   created:
@@ -46,6 +48,12 @@ content:
     type: metatag_firehose
     region: content
     weight: 101
+    settings: {  }
+    third_party_settings: {  }
+  layout_selection:
+    type: options_select
+    region: content
+    weight: 102
     settings: {  }
     third_party_settings: {  }
   moderation_state:
@@ -88,6 +96,12 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
+    third_party_settings: {  }
+    region: content
+  url_redirects:
+    weight: 50
+    settings: {  }
     third_party_settings: {  }
     region: content
 hidden:

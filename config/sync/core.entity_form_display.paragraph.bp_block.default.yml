@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.bp_block.bp_background
     - field.field.paragraph.bp_block.bp_block
+    - field.field.paragraph.bp_block.bp_header
     - field.field.paragraph.bp_block.bp_width
     - paragraphs.paragraphs_type.bp_block
   module:
@@ -13,7 +14,8 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings: {  }
+    settings:
+      label: ''
 _core:
   default_config_hash: C9JQkqmEcygxPLZrxrGGGwb_sBeGjZs1gz1hD5KW5dA
 id: paragraph.bp_block.default
@@ -28,14 +30,23 @@ content:
     type: options_select
     region: content
   bp_block:
-    weight: 2
+    weight: 3
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     third_party_settings: {  }
     type: entity_reference_autocomplete
     region: content
+  bp_header:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   bp_width:
     weight: 1
     settings: {  }

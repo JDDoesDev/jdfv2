@@ -32,8 +32,8 @@ third_party_settings:
         layout_settings:
           label: ''
         components:
-          9546bd8b-9afe-4da2-a6b5-e017e6f3b748:
-            uuid: 9546bd8b-9afe-4da2-a6b5-e017e6f3b748
+          2766fabd-cbbf-4205-adea-1c04b104b0f7:
+            uuid: 2766fabd-cbbf-4205-adea-1c04b104b0f7
             region: content
             configuration:
               label_display: '0'
@@ -42,8 +42,8 @@ third_party_settings:
               id: 'extra_field_block:node:page:content_moderation_control'
             additional: {  }
             weight: 0
-          ee56a6a9-2a18-4c86-b20e-7ef6dbcdf877:
-            uuid: ee56a6a9-2a18-4c86-b20e-7ef6dbcdf877
+          48c4d0bf-10b2-43ef-a50e-8dea448787f8:
+            uuid: 48c4d0bf-10b2-43ef-a50e-8dea448787f8
             region: content
             configuration:
               label_display: '0'
@@ -57,8 +57,8 @@ third_party_settings:
                 third_party_settings: {  }
             additional: {  }
             weight: 1
-          3f8f213a-3fc8-41e2-8211-b7e08b96a03b:
-            uuid: 3f8f213a-3fc8-41e2-8211-b7e08b96a03b
+          5cb10c04-1a75-4643-a257-d96b1798c7f6:
+            uuid: 5cb10c04-1a75-4643-a257-d96b1798c7f6
             region: content
             configuration:
               label_display: '0'
@@ -67,8 +67,8 @@ third_party_settings:
               id: 'extra_field_block:node:page:links'
             additional: {  }
             weight: 2
-          191792a9-834a-4dde-9e82-d8540529bc35:
-            uuid: 191792a9-834a-4dde-9e82-d8540529bc35
+          7fc4ca2f-cf7a-406f-92ce-a9fe4f45d109:
+            uuid: 7fc4ca2f-cf7a-406f-92ce-a9fe4f45d109
             region: content
             configuration:
               label_display: '0'
@@ -82,8 +82,8 @@ third_party_settings:
                 third_party_settings: {  }
             additional: {  }
             weight: 3
-          67c68177-83f3-48b5-ade2-fe9dde50c2e9:
-            uuid: 67c68177-83f3-48b5-ade2-fe9dde50c2e9
+          940da34e-12ed-4add-aad4-9edc4772655f:
+            uuid: 940da34e-12ed-4add-aad4-9edc4772655f
             region: content
             configuration:
               label_display: '0'
@@ -92,8 +92,8 @@ third_party_settings:
               id: 'extra_field_block:node:page:sharethis'
             additional: {  }
             weight: 4
-          7e0b896f-b42a-41f9-9e5f-ef05c0ff1db7:
-            uuid: 7e0b896f-b42a-41f9-9e5f-ef05c0ff1db7
+          596a7054-c812-4e92-a4a8-95244cff9474:
+            uuid: 596a7054-c812-4e92-a4a8-95244cff9474
             region: content
             configuration:
               label_display: '0'
@@ -109,8 +109,8 @@ third_party_settings:
                 type: image
             additional: {  }
             weight: 5
-          f109c4a9-5552-4d0c-b55f-50167c2fb500:
-            uuid: f109c4a9-5552-4d0c-b55f-50167c2fb500
+          17564034-06d1-461e-b56f-3395674b83b2:
+            uuid: 17564034-06d1-461e-b56f-3395674b83b2
             region: content
             configuration:
               label_display: '0'

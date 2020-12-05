@@ -9,8 +9,8 @@ dependencies:
   module:
     - field_layout
     - layout_discovery
+    - media
     - path
-    - video_embed_field
 third_party_settings:
   field_layout:
     id: layout_onecol
@@ -31,9 +31,11 @@ content:
     third_party_settings: {  }
     region: content
   field_media_video_embed_field:
-    type: video_embed_field_textfield
+    type: oembed_textfield
     weight: 1
-    settings: {  }
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
     region: content
   name:
@@ -53,8 +55,6 @@ content:
   preview:
     weight: 0
     region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

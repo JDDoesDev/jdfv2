@@ -1,5 +1,6 @@
 admin_toolbar: 0.0.0
 admin_toolbar_links_access_filter: 0.0.0
+admin_toolbar_search: 2.4.0
 admin_toolbar_tools: 0.0.0
 adminimal_admin_toolbar: 0.0.0
 adsense: 0.0.0
@@ -98,7 +99,9 @@ metatag_verification: 0.0.0
 module_filter: 0.0.0
 node: 0.0.0
 openapi: 0.0.0
+openapi_jsonapi: 2.0.0
 openapi_redoc: 0.0.0
+openapi_rest: 2.0.0-rc2
 optional_end_date: 1.0.0-beta1
 options: 0.0.0
 page_cache: 0.0.0
@@ -124,7 +127,7 @@ simple_oauth: 0.0.0
 simple_oauth_extras: 0.0.0
 simple_sitemap: 0.0.0
 simple_sitemap_engines: 3.4.0
-stage_file_proxy: 1.1.0
+stage_file_proxy: 1.0.0-beta1
 system: 0.0.0
 taxonomy: 0.0.0
 text: 0.0.0
@@ -135,6 +138,7 @@ twig_tweak: 0.0.0
 twig_xdebug: 1.1.0
 update: 0.0.0
 user: 0.0.0
+vem_migrate_oembed: 2.4.0
 video_embed_field: 0.0.0
 video_embed_media: 0.0.0
 views: 0.0.0

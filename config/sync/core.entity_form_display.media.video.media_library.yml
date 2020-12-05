@@ -13,8 +13,7 @@ dependencies:
 third_party_settings:
   field_layout:
     id: layout_onecol
-    settings:
-      label: ''
+    settings: {  }
 id: media.video.media_library
 targetEntityType: media
 bundle: video

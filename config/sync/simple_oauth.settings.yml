@@ -3,3 +3,5 @@ refresh_token_expiration: 1209600
 _core:
   default_config_hash: YJrGmZVEcxxUt1ffTwS_DybfKrbnRkwF1GXzPj-j7aE
 token_cron_batch_size: 0
+authorization_code_expiration: 300
+use_implicit: false

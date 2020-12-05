@@ -7,8 +7,8 @@ dependencies:
     - field.field.media.video.field_media_video_embed_field
     - media.type.video
   module:
+    - media
     - user
-    - video_embed_field
 _core:
   default_config_hash: ULSDSeb1LGUAS40ia_8qngabv0GTcJAaHGl67xDUNsA
 id: media.video.default
@@ -27,14 +27,14 @@ content:
     third_party_settings: {  }
     region: content
   field_media_video_embed_field:
-    type: video_embed_field_video
+    type: oembed
     weight: 3
     label: hidden
     settings:
-      responsive: true
       width: 854
       height: 480
-      autoplay: false
+      max_width: 854
+      max_height: 480
     third_party_settings: {  }
     region: content
   name:
@@ -54,4 +54,5 @@ content:
     region: content
 hidden:
   field_media_in_library: true
+  search_api_excerpt: true
   thumbnail: true

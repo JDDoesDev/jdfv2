@@ -4,15 +4,17 @@ status: true
 dependencies:
   module:
     - media
-    - video_embed_field
 _core:
   default_config_hash: 21pzZpKD6NnVHoVsDfTdmRnj0PydQl-XSE1E9oqG2Lk
 id: media.field_media_video_embed_field
 field_name: field_media_video_embed_field
 entity_type: media
-type: video_embed_field
-settings: {  }
-module: video_embed_field
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

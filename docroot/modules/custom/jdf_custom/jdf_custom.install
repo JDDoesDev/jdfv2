@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * Migrate to core oembed media from video embed field.
+ */
+function jdf_custom_update_8100() {
+  \Drupal::service('module_installer')->install(['vem_migrate_oembed']);
+  \Drupal::service('vem_migrate_oembed.migrate')->migrate();
+  \Drupal::service('module_installer')->uninstall(['vem_migrate_oembed']);
+}

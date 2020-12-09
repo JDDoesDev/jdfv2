@@ -1,0 +1,534 @@
+diff --git a/disqus.info.yml b/disqus.info.yml
+index 4c39fd8..fc90bd4 100644
+--- a/disqus.info.yml
++++ b/disqus.info.yml
+@@ -1,5 +1,6 @@
+ name: 'Disqus'
+ type: module
++core_version_requirement: ^8 || ^9
+ description: 'Uses the Disqus web service to enhance comments.'
+ core: 8.x
+ configure: disqus.settings
+diff --git a/disqus.install b/disqus.install
+index c5c89d5..aa7ab15 100644
+--- a/disqus.install
++++ b/disqus.install
+@@ -5,29 +5,6 @@
+  * Provides any upgrade path requirements.
+  */
+ 
+-/**
+- * Updates from Drupal 6 to 7.
+- */
+-function disqus_update_7000() {
+-  // Nothing.
+-}
+-
+-/**
+- * Updates Disqus with support for toggling comments per node.
+- */
+-function disqus_update_7001() {
+-  if (!db_table_exists('disqus')) {
+-    drupal_install_schema('disqus');
+-  }
+-}
+-
+-/**
+- * Remove deprecated variable.
+- */
+-function disqus_update_7002() {
+-  variable_del('disqus_userapikey');
+-}
+-
+ /**
+  * Add identifier to field storage definition.
+  */
+diff --git a/disqus.module b/disqus.module
+index 8c0d476..8ee5a8d 100644
+--- a/disqus.module
++++ b/disqus.module
+@@ -81,7 +81,7 @@ function disqus_node_links_alter(array &$node_links, NodeInterface $node, array
+           // Display the Disqus link.
+           $links['disqus_comments_num'] = array(
+             'title' => t('Comments'),
+-            'url' => $node->urlInfo(),
++            'url' => $node->toUrl(),
+             'fragment' => 'disqus_thread',
+             'attributes' => array(
+               // Identify the node for Disqus with the unique identifier:
+@@ -121,6 +121,7 @@ function disqus_entity_delete(EntityInterface $entity) {
+   if (!$entity->hasField(key($field))) {
+     return;
+   }
++  $messenger = \Drupal::messenger();
+ 
+   $config = \Drupal::config('disqus.settings');
+   // Close/remove the thread on disqus if required.
+@@ -139,7 +140,7 @@ function disqus_entity_delete(EntityInterface $entity) {
+         ));
+       }
+       catch (Exception $exception) {
+-        drupal_set_message(t('There was an error loading the thread details from Disqus.'), 'error');
++        $messenger->addError(t('There was an error loading the thread details from Disqus.'));
+         \Drupal::logger('disqus')
+           ->error('Error loading thread details for entity : @identifier. Check your API keys.', array('@identifier' => "{$entity->getEntityTypeId()}/{$entity->id()}"));
+       }
+@@ -153,7 +154,7 @@ function disqus_entity_delete(EntityInterface $entity) {
+             ));
+           }
+           catch (Exception $exception) {
+-            drupal_set_message(t('There was an error closing the thread on Disqus.'), 'error');
++            $messenger->addError(t('There was an error closing the thread on Disqus.'));
+             \Drupal::logger('disqus')
+               ->error('Error closing thread for entity : @identifier. Check your user access token.', array('@identifier' => "{$entity->getEntityTypeId()}/{$entity->id()}"));
+           }
+@@ -167,7 +168,7 @@ function disqus_entity_delete(EntityInterface $entity) {
+             ));
+           }
+           catch (Exception $exception) {
+-            drupal_set_message(t('There was an error removing the thread on Disqus.'), 'error');
++            $messenger->addError(t('There was an error removing the thread on Disqus.'));
+             \Drupal::logger('disqus')
+               ->error('Error closing thread for entity : @identifier. Check your user access token.', array('@identifier' => "{$entity->getEntityTypeId()}/{$entity->id()}"));
+           }
+@@ -192,9 +193,11 @@ function disqus_entity_update(EntityInterface $entity) {
+     return;
+   }
+ 
++  $messenger = \Drupal::messenger();
++
+   $config = \Drupal::config('disqus.settings');
+   // Update the thread information on disqus if required.
+-  if ($config->get('advanced.api.disqus_api_update') && ($entity->label() != $entity->original->label() || $entity->url() != $entity->original->url())) {
++  if ($config->get('advanced.api.disqus_api_update') && ($entity->label() != $entity->original->label() || $entity->toUrl() != $entity->original->url())) {
+     $disqus = disqus_api();
+     if ($disqus) {
+       try {
+@@ -208,7 +211,7 @@ function disqus_entity_update(EntityInterface $entity) {
+         ));
+       }
+       catch (Exception $exception) {
+-        drupal_set_message(t('There was an error loading the thread details from Disqus.'), 'error');
++        $messenger->addError(t('There was an error loading the thread details from Disqus.'));
+         \Drupal::logger('disqus')
+           ->error('Error loading thread details for entity : @identifier. Check your API keys.', array('@identifier' => "{$entity->getEntityTypeId()}/{$entity->id()}"));
+       }
+@@ -219,11 +222,11 @@ function disqus_entity_update(EntityInterface $entity) {
+             'thread' => $thread->id,
+             'forum' => $config->get('disqus_domain'),
+             'title' => $entity->label(),
+-            'url' => $entity->url('canonical', array('absolute' => TRUE)),
++            'url' => $entity->toUrl('canonical', array('absolute' => TRUE)),
+           ));
+         }
+         catch (Exception $exception) {
+-          drupal_set_message(t('There was an error updating the thread details on Disqus.'), 'error');
++          $messenger->addError(t('There was an error updating the thread details on Disqus.'));
+           \Drupal::logger('disqus')
+             ->error('Error updating thread details for entity : @identifier. Check your user access token.', array('@identifier' => "{$entity->getEntityTypeId()}/{$entity->id()}"));
+         }
+@@ -275,7 +278,7 @@ function disqus_api() {
+       ->get('advanced.disqus_secretkey'));
+   }
+   catch (Exception $exception) {
+-    drupal_set_message(t('There was an error loading the Disqus PHP API. Please check your API keys and try again.'), 'error');
++    \Drupal::messenger()->addError(t('There was an error loading the Disqus PHP API. Please check your API keys and try again.'));
+     \Drupal::logger('disqus')
+       ->error('Error loading the Disqus PHP API. Check your API keys.', array());
+     return FALSE;
+diff --git a/migration_templates/d7_disqus_comment_status.yml b/migration_templates/d7_disqus_comment_status.yml
+deleted file mode 100644
+index 79f9763..0000000
+--- a/migration_templates/d7_disqus_comment_status.yml
++++ /dev/null
+@@ -1,20 +0,0 @@
+-id: d7_disqus_comment_status
+-label: D7 Disqus comment status
+-migration_tags:
+-  - Drupal 7
+-source:
+-  plugin: disqus_comments_status
+-process:
+-  nid: nid
+-  'disqus/status':
+-    plugin: get
+-    source: status
+-  'disqus/identifier':
+-    plugin: get
+-    source: identifier
+-destination:
+-  plugin: entity:node
+-migration_dependencies:
+-  required:
+-    - d7_node:*
+-    - d7_disqus_field
+diff --git a/migration_templates/d7_disqus_entity_display.yml b/migration_templates/d7_disqus_entity_display.yml
+deleted file mode 100644
+index abf2f6d..0000000
+--- a/migration_templates/d7_disqus_entity_display.yml
++++ /dev/null
+@@ -1,29 +0,0 @@
+-langcode: en
+-status: true
+-id: d7_disqus_entity_display
+-migration_tags:
+-  - 'Drupal 7'
+-label: 'Disqus display configuration'
+-source:
+-  plugin: disqus_enabled_content_types
+-  constants:
+-    entity_type: node
+-    view_mode: default
+-    name: disqus
+-    type: disqus_comment
+-    options:
+-      label: hidden
+-      type: disqus_comment
+-      weight: 20
+-process:
+-  entity_type: 'constants/entity_type'
+-  bundle: type
+-  options: 'constants/options'
+-  view_mode: 'constants/view_mode'
+-  field_name: 'constants/name'
+-  type: constants/type
+-destination:
+-  plugin: component_entity_display
+-migration_dependencies:
+-  required:
+-    - d7_disqus_field
+diff --git a/migration_templates/d7_disqus_entity_form_display.yml b/migration_templates/d7_disqus_entity_form_display.yml
+deleted file mode 100644
+index 338dd1a..0000000
+--- a/migration_templates/d7_disqus_entity_form_display.yml
++++ /dev/null
+@@ -1,20 +0,0 @@
+-id: d7_disqus_entity_form_display
+-label: 'Disqus form display configuration'
+-migration_tags:
+-  - Drupal 7
+-source:
+-  plugin: disqus_enabled_content_types
+-  constants:
+-    entity_type: node
+-    field_name: disqus
+-    form_mode: default
+-process:
+-  entity_type: 'constants/entity_type'
+-  field_name: 'constants/field_name'
+-  form_mode: 'constants/form_mode'
+-  bundle: type
+-destination:
+-  plugin: component_entity_form_display
+-migration_dependencies:
+-  required:
+-    - d7_disqus_field
+diff --git a/migration_templates/d7_disqus_field.yml b/migration_templates/d7_disqus_field.yml
+deleted file mode 100644
+index 64b9ea4..0000000
+--- a/migration_templates/d7_disqus_field.yml
++++ /dev/null
+@@ -1,24 +0,0 @@
+-id: d7_disqus_field
+-label: Drupal 7 Disqus fields
+-migration_tags:
+-  - Drupal 7
+-source:
+-  plugin: disqus_enabled_content_types
+-  constants:
+-    entity_type: node
+-    name: disqus
+-    label: 'Disqus'
+-    default_identifier: ''
+-process:
+-  entity_type: 'constants/entity_type'
+-  bundle: type
+-  label: 'constants/label'
+-  field_name: 'constants/name'
+-  'default_value/0/status': default
+-  'default_value/0/identifier': 'constants/default_identifier'
+-destination:
+-  plugin: entity:field_config
+-migration_dependencies:
+-  required:
+-    - d7_disqus_field_storage
+-    - d7_node_type
+diff --git a/migration_templates/d7_disqus_field_storage.yml b/migration_templates/d7_disqus_field_storage.yml
+deleted file mode 100644
+index 73fd8d4..0000000
+--- a/migration_templates/d7_disqus_field_storage.yml
++++ /dev/null
+@@ -1,18 +0,0 @@
+-id: d7_disqus_field_storage
+-label: Drupal 7 Disqus field storage
+-migration_tags:
+-  - Drupal 7
+-source:
+-  plugin: md_empty
+-  constants:
+-    entity_type: node
+-    type: disqus_comment
+-    name: disqus
+-    cardinality: 1
+-process:
+-  entity_type: 'constants/entity_type'
+-  field_name: 'constants/name'
+-  type: 'constants/type'
+-  cardinality: 'constants/cardinality'
+-destination:
+-  plugin: md_entity:field_storage_config
+diff --git a/migration_templates/d7_disqus_settings.yml b/migration_templates/d7_disqus_settings.yml
+deleted file mode 100644
+index abed6a9..0000000
+--- a/migration_templates/d7_disqus_settings.yml
++++ /dev/null
+@@ -1,35 +0,0 @@
+-id: d7_disqus_settings
+-label: Disqus settings
+-migration_tags:
+-  - Drupal 7
+-source:
+-  plugin: variable
+-  variables:
+-    - disqus_domain
+-    - disqus_localization
+-    - disqus_inherit_login
+-    - disqus_track_newcomment_ga
+-    - disqus_useraccesstoken
+-    - disqus_publickey
+-    - disqus_secretkey
+-    - disqus_api_update
+-    - disqus_api_delete
+-    - disqus_sso
+-    - disqus_use_site_logo
+-    - disqus_logo
+-process:
+-  'disqus_domain': disqus_domain
+-  'behavior/disqus_localization': disqus_localization
+-  'behavior/disqus_inherit_login': disqus_inherit_login
+-  'behavior/disqus_track_newcomment_ga': disqus_track_newcomment_ga
+-  'advanced/disqus_useraccesstoken': disqus_useraccesstoken
+-  'advanced/disqus_publickey': disqus_publickey
+-  'advanced/disqus_secretkey': disqus_secretkey
+-  'advanced/api/disqus_api_update': disqus_api_update
+-  'advanced/api/disqus_api_update': disqus_api_delete
+-  'advanced/sso/disqus_sso': disqus_sso
+-  'advanced/sso/disqus_use_site_logo': disqus_use_site_logo
+-  'advanced/sso/disqus_logo':
+-destination:
+-  plugin: config
+-  config_name: disqus.settings
+diff --git a/migration_templates/disqus_comment_import.yml b/migration_templates/disqus_comment_import.yml
+deleted file mode 100644
+index 2fd1414..0000000
+--- a/migration_templates/disqus_comment_import.yml
++++ /dev/null
+@@ -1,41 +0,0 @@
+-id: disqus_comment_import
+-label : Import Disqus comments
+-source:
+-  plugin: disqus_source
+-  constants:
+-    field_name: disqus
+-    comment_type: comment_no_subject
+-    comment_body/format: filtered_html
+-    thread: 0
+-process:
+-  cid: id
+-  pid: pid
+-  entity_id:
+-    plugin: disqus_comment_entity_id
+-    source: identifier
+-  entity_type:
+-    plugin: disqus_comment_entity_type
+-    source: identifier
+-  field_name: constants/field_name
+-  comment_type: constants/comment_no_subject
+-  uid: uid
+-  name: name
+-  mail: email
+-  homepage: url
+-  hostname: ipAddress
+-  created:
+-    -
+-       plugin: callback
+-       callable: strtotime
+-       source: createdAt
+-  changed:
+-    -
+-       plugin: callback
+-       callable: strtotime
+-       source: createdAt
+-  status: isApproved
+-  thread: constants/thread
+-  comment_body/value: comment
+-  comment_body/format: constants/comment_body/format
+-destination:
+-  plugin: entity:comment
+diff --git a/src/DisqusCommentManager.php b/src/DisqusCommentManager.php
+index e80e822..a90fc83 100644
+--- a/src/DisqusCommentManager.php
++++ b/src/DisqusCommentManager.php
+@@ -7,6 +7,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Session\AccountInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Url;
++use Drupal\file\Entity\File;
++use Drupal\user\Entity\User;
+ 
+ /**
+  * It contains common functions to manage disqus_comment fields.
+@@ -108,7 +110,7 @@ class DisqusCommentManager implements DisqusCommentManagerInterface {
+     $managed_logo = \Drupal::config('disqus.settings')->get('advanced.sso.disqus_logo');
+     $use_site_logo = \Drupal::config('disqus.settings')->get('advanced.sso.disqus_use_site_logo');
+     if (!$use_site_logo && !empty($managed_logo)) {
+-      $disqus['sso']['button'] = file_load($managed_logo)->url();
++      $disqus['sso']['button'] = File::load($managed_logo)->url();
+     }
+     elseif ($logo = theme_get_setting('logo')) {
+       $disqus['sso']['button'] = $logo['url'];
+@@ -163,12 +165,12 @@ class DisqusCommentManager implements DisqusCommentManagerInterface {
+       // Load the user's avatar.
+       $user_picture_default = \Drupal::config('field.instance.user.user.user_picture')->get('settings.default_image');
+ 
+-      $user = user_load($account->id());
+-      if (isset($user->user_picture->target_id) && !empty($user->user_picture->target_id) && $file = file_load($user->user_picture->target_id)) {
++      $user = User::load($account->id());
++      if (isset($user->user_picture->target_id) && !empty($user->user_picture->isEmpty()) && $file = File::load($user->user_picture->entity->getFileUri())) {
+         $file_uri = $file->getFileUri();
+         $data['avatar'] = !empty($file_uri) ? $file_uri : NULL;
+       }
+-      elseif (!empty($user_picture_default['fid']) && $file = file_load($user_picture_default['fid'])) {
++      elseif (!empty($user_picture_default['fid']) && $file = File::load($user_picture_default['fid'])) {
+         $file_uri = $file->getFileUri();
+         $data['avatar'] = !empty($file_uri) ? $file_uri : NULL;
+       }
+diff --git a/src/Element/Disqus.php b/src/Element/Disqus.php
+index 4ad250e..e54ac4e 100644
+--- a/src/Element/Disqus.php
++++ b/src/Element/Disqus.php
+@@ -80,7 +80,7 @@ class Disqus extends RenderElement {
+     $account = \Drupal::currentUser();
+     if ($disqus_settings->get('behavior.disqus_inherit_login') && !$account->isAnonymous()) {
+       $renderer->addCacheableDependency($element, $account);
+-      $disqus['name'] = $account->getUsername();
++      $disqus['name'] = $account->getDisplayName();
+       $disqus['email'] = $account->getEmail();
+     }
+ 
+diff --git a/src/Plugin/migrate/destination/DisqusComment.php b/src/Plugin/migrate/destination/DisqusComment.php
+index ab276b9..cf8494b 100644
+--- a/src/Plugin/migrate/destination/DisqusComment.php
++++ b/src/Plugin/migrate/destination/DisqusComment.php
+@@ -3,7 +3,7 @@
+ namespace Drupal\disqus\Plugin\migrate\destination;
+ 
+ use Drupal\migrate\Plugin\migrate\destination\DestinationBase;
+-use Drupal\migrate\Entity\MigrationInterface;
++use Drupal\migrate\Plugin\MigrationInterface;
+ use Drupal\migrate\Row;
+ use Psr\Log\LoggerInterface;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+@@ -41,7 +41,7 @@ class DisqusComment extends DestinationBase {
+    *   The plugin_id for the plugin instance.
+    * @param mixed $plugin_definition
+    *   The plugin implemetation definition.
+-   * @param \Drupal\migrate\Entity\MigrationInterface $migration
++   * @param \Drupal\migrate\Plugin\MigrationInterface $migration
+    *   The migration.
+    * @param \Psr\Log\LoggerInterface $logger
+    *   A logger instance.
+diff --git a/src/Plugin/migrate/source/DisqusComment.php b/src/Plugin/migrate/source/DisqusComment.php
+index 8f76bf8..338bb32 100644
+--- a/src/Plugin/migrate/source/DisqusComment.php
++++ b/src/Plugin/migrate/source/DisqusComment.php
+@@ -2,10 +2,11 @@
+ 
+ namespace Drupal\disqus\Plugin\migrate\source;
+ 
++use Drupal\Core\Messenger\MessengerInterface;
+ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+ use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
+ use Drupal\migrate\Row;
+-use Drupal\migrate\Entity\MigrationInterface;
++use Drupal\migrate\Plugin\MigrationInterface;
+ use Psr\Log\LoggerInterface;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\Entity\Query\QueryFactory;
+@@ -57,7 +58,7 @@ class DisqusComment extends SourcePluginBase implements ContainerFactoryPluginIn
+    *   The plugin_id for the plugin instance.
+    * @param mixed $plugin_definition
+    *   The plugin implemetation definition.
+-   * @param \Drupal\migrate\Entity\MigrationInterface $migration
++   * @param \Drupal\migrate\Plugin\MigrationInterface $migration
+    *   The migration.
+    * @param \Psr\Log\LoggerInterface $logger
+    *   A logger instance.
+@@ -107,7 +108,7 @@ class DisqusComment extends SourcePluginBase implements ContainerFactoryPluginIn
+       'name' => $this->t("The comment author's name."),
+       'user_id' => $this->t('The disqus user-id of the author who commented.'),
+       'email' => $this->t("The comment author's email address."),
+-      'url' => $this->t("The author's home page address	."),
++      'url' => $this->t("The author's home page address."),
+       'ipAddress' => $this->t("The author's IP address."),
+       'isAnonymous' => $this->t('If true, this comments has been posted by an anonymous user.'),
+       'isApproved' => $this->t('If the comment is approved or not.'),
+@@ -141,17 +142,21 @@ class DisqusComment extends SourcePluginBase implements ContainerFactoryPluginIn
+    * {@inheritdoc}
+    */
+   public function initializeIterator() {
++    $items = array();
++    
+     if ($disqus = disqus_api()) {
+       try {
+         $posts = $disqus->forums->listPosts(array('forum' => $this->config->get('disqus_domain')));
+       }
+       catch (\Exception $exception) {
+-        drupal_set_message(t('There was an error loading the forum details. Please check you API keys and try again.', 'error'));
++        $this->messenger()->addMessage(
++          t('There was an error loading the forum details. Please check you API keys and try again.'),
++          MessengerInterface::TYPE_ERROR
++        );
+         $this->logger->error('Error loading the Disqus PHP API. Check your forum name.', array());
+-        return FALSE;
++        return new \ArrayIterator($items);
+       }
+ 
+-      $items = array();
+       foreach ($posts as $post) {
+         $id = $post['id'];
+         $items[$id]['id'] = $id;
+@@ -169,6 +174,7 @@ class DisqusComment extends SourcePluginBase implements ContainerFactoryPluginIn
+         $items[$id]['isEdited'] = $post['isEdited'];
+       }
+     }
++
+     return new \ArrayIterator($items);
+   }
+ 
+diff --git a/src/Plugin/migrate/source/DisqusCommentsStatus.php b/src/Plugin/migrate/source/DisqusCommentsStatus.php
+index 572f31f..ef54c96 100644
+--- a/src/Plugin/migrate/source/DisqusCommentsStatus.php
++++ b/src/Plugin/migrate/source/DisqusCommentsStatus.php
+@@ -59,7 +59,7 @@ class DisqusCommentsStatus extends DrupalSqlBase {
+   /**
+    * {@inheritdoc}
+    */
+-  public function count() {
++  public function count($refresh = FALSE) {
+     return $this->getDatabase()
+       ->select('node', 'n')
+       ->condition('n.type', $this->getEnabledTypes(), 'IN')
+diff --git a/src/Plugin/migrate/source/DisqusEnabledNodeTypes.php b/src/Plugin/migrate/source/DisqusEnabledNodeTypes.php
+index 1939889..2d5977a 100644
+--- a/src/Plugin/migrate/source/DisqusEnabledNodeTypes.php
++++ b/src/Plugin/migrate/source/DisqusEnabledNodeTypes.php
+@@ -48,7 +48,7 @@ class DisqusEnabledNodeTypes extends DrupalSqlBase {
+   /**
+    * {@inheritdoc}
+    */
+-  public function count() {
++  public function count($refresh = FALSE) {
+     return count($this->values());
+   }
+ 

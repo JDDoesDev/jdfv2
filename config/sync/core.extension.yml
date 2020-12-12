@@ -80,7 +80,6 @@ module:
   lightning_search: 0
   lightning_workflow: 0
   link: 0
-  markdown: 0
   media: 0
   media_entity_instagram: 0
   media_entity_twitter: 0
@@ -146,7 +145,6 @@ theme:
   seven: 0
   adminimal_theme: 0
   bootstrap: 0
-  bootstrap_clean_blog: 0
   bcb_subtheme: 0
   bootstrap4: 0
 profile: lightning

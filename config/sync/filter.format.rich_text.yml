@@ -6,7 +6,6 @@ dependencies:
     - adsense
     - editor
     - entity_embed
-    - markdown
 _core:
   default_config_hash: Mc8Hl-Ya14lrbMXaUx7Ybmv-18vtqE4lw2DpgNHPj-s
 name: 'Rich Text'
@@ -83,10 +82,3 @@ filters:
     status: false
     weight: -39
     settings: {  }
-  markdown:
-    id: markdown
-    provider: markdown
-    status: true
-    weight: -50
-    settings:
-      markdown_library: php-markdown

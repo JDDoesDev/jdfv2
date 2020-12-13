@@ -10,7 +10,6 @@ module:
   devel: 0
   stage_file_proxy: 0
   dblog: 0
-  kint: 0
   seckit: 0
   twig_xdebug: 0
   webprofiler: 0

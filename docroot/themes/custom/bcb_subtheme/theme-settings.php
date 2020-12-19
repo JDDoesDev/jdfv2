@@ -16,14 +16,14 @@ function bcb_subtheme_form_system_theme_settings_alter(&$form, FormStateInterfac
     return;
   }
 
-  $form['header'] = array(
+  $form['header'] = [
     '#type' => 'details',
     '#title' => t('Site header'),
     '#group' => 'bootstrap',
-  );
+  ];
 
-  $article_fields = \Drupal::entityManager()->getFieldDefinitions('node', 'article');
-  $image_fields = array();
+  $article_fields = \Drupal::service('entity_field.manager')->getFieldDefinitions('node', 'article');
+  $image_fields = [];
 
   if (!empty($article_fields)) {
     foreach ($article_fields as $field_name => $field) {
@@ -37,30 +37,30 @@ function bcb_subtheme_form_system_theme_settings_alter(&$form, FormStateInterfac
     }
   }
 
-  $fields = (array) array_merge(array('none' => t('-- Select --')), $image_fields);
+  $fields = (array) array_merge(['none' => t('-- Select --')], $image_fields);
 
-  $form['header']['bcb_subtheme_header_image'] = array(
+  $form['header']['bcb_subtheme_header_image'] = [
     '#type' => 'select',
     '#title' => t('Header image'),
     '#options' => $fields,
     '#description' => t('Big image for nodes, display in header. The field must be created for all types of material.'),
     '#default_value' => theme_get_setting('bcb_subtheme_header_image'),
-  );
+  ];
 
   $default_url = Url::fromUri('base:' . drupal_get_path('theme', 'bcb_subtheme') . '/images/home-bg.jpg')->setAbsolute()->toString();
 
-  $form['header']['bcb_subtheme_header_default'] = array(
+  $form['header']['bcb_subtheme_header_default'] = [
     '#type' => 'textfield',
     '#title' => t('Default header image'),
     '#description' => t('This is the default image.'),
     '#default_value' => theme_get_setting('bcb_subtheme_header_default') ?: $default_url,
-  );
+  ];
 
-  $form['social_buttons'] = array(
+  $form['social_buttons'] = [
     '#type' => 'details',
     '#title' => t('Social buttons'),
     '#group' => 'bootstrap',
-  );
+  ];
 
   $social_networks = [
     'facebook' => t('Facebook'),
@@ -76,10 +76,10 @@ function bcb_subtheme_form_system_theme_settings_alter(&$form, FormStateInterfac
   foreach ($social_networks as $key => $name) {
     $key_name = 'bcb_subtheme_social_' . $key;
 
-    $form['social_buttons'][$key_name] = array(
+    $form['social_buttons'][$key_name] = [
       '#type' => 'textfield',
       '#title' => $name,
       '#default_value' => theme_get_setting($key_name),
-    );
+    ];
   }
 }

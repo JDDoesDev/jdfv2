@@ -8,7 +8,7 @@
     "gatsby-theme-minimal": "^1.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "css-loader": "^2.1.1",
     "date-fns": "^1.30.1",

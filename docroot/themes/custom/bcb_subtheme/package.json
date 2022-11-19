@@ -26,7 +26,7 @@
     "imagemin-pngquant": "^7.0.0",
     "scroll-triggers": "^4.2.0",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
